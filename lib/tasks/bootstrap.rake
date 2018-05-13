@@ -30,5 +30,6 @@ namespace :production do
     puts "name: #{app.name}"
     puts "redirect_uri: #{app.redirect_uri}"
     puts "uid: #{app.uid}"
-    puts "secret: #{app.secret}"end
+    puts "secret: #{app.secret}"
   end
+end
