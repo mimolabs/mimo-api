@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :locations
+      resources :locations do
+        resources :splash_pages
+      end
     end
   end
 

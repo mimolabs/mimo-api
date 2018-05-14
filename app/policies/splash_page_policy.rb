@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LocationPolicy < ApplicationPolicy
+class SplashPagePolicy < ApplicationPolicy
   def index?
     true
   end

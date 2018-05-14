@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.id @location.id
 json.location_name @location.location_name
 json.unique_id @location.unique_id

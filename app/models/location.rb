@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Location < ApplicationRecord
   extend FriendlyId
-  friendly_id :location_name_slugged, use: [:slugged, :finders]
+  friendly_id :location_name_slugged, use: %i[slugged finders]
 
   validates_presence_of :user_id
 
@@ -10,7 +12,7 @@ class Location < ApplicationRecord
     key = "locSplashCreated:#{id}"
     REDIS.get(key).present?
   end
-  
+
   def integration_created
     key = "locIntegCreated:#{id}"
     REDIS.get(key).present?
