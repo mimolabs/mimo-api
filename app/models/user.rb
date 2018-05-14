@@ -14,7 +14,14 @@ class User < ApplicationRecord
   # devise :database_authenticatable, :registerable,
   #        :recoverable, :rememberable, :trackable, :validatable
   
+  after_create :generate_defaults
+
   def set_default_role
     self.role ||= :user
   end
+
+  def generate_defaults
+
+  end
+
 end
