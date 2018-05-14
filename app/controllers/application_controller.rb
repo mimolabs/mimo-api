@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
     if session[:return_to].present?
       session[:return_to]
     else
-      "#{ENV['MIMO_DASHBOARD_URL']}/login"
+      "#{ENV['MIMO_DASHBOARD_URL'] || 'http://mimo.dashboard:9090'}/login"
     end
   end
 
