@@ -11,18 +11,33 @@ class Api::V1::LocationsController < Api::V1::BaseController
   end
 
   def show
-
   end 
+
+  def update
+    respond_to do |format|
+      if @location.update location_params
+        format.json {
+          render template: 'api/v1/locations/show.json.jbuilder',
+          status: 201
+        }
+      else
+        @errors = @location.errors.full_messages
+        format.json {
+          render template: 'api/v1/shared/index.json.jbuilder',
+          status: 422
+        }
+      end
+    end
+  end
   
   private
 
   def set_resource
-    @current_resource ||= Location.find_by(id: params[:id])
-    authorize @current_resource
+    @location ||= Location.find_by(id: params[:id])
+    authorize @location
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
-  # def article_params
-  #   params.require(:article).permit(:title, :body, :user_id)
-  # end
+  def location_params
+    params.require(:location).permit(:location_name)
+  end
 end

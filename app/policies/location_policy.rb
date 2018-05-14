@@ -6,11 +6,11 @@ class LocationPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin? || !record.published?
+    user.admin? || (location.user_id == user.id)
   end
 
   def show?
-    location.user_id == user.id
+    user.admin? || (location.user_id == user.id)
   end
   
   private

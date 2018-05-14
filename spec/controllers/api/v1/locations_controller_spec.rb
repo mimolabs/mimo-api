@@ -46,7 +46,22 @@ describe Api::V1::LocationsController, :type => :controller do
       end
     end
 
-    it 'should allow the user to edit their location'
+    context 'show action' do
+      it 'should not allow the user to edit another location' do
+        name = 'my location name'
+        location = Location.create! user_id: 100
+        patch :update, format: :json, params: { id: location.id, location: { location_name: name } }
+        expect(response).to_not be_success
+      end
+
+      it 'should allow the user to view their location' do
+        name = 'my location name'
+        location = Location.create! user_id: user.id
+        patch :update, format: :json, params: { id: location.id, location: { location_name: name } }
+        expect(response).to be_success
+        expect(location.reload.location_name).to eq name
+      end
+    end
 
     it 'should allow the user to delete their location'
 

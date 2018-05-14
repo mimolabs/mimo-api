@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  enum role: %i[user vip admin]
+  enum role: %i[ admin editor user ]
   after_initialize :set_default_role, if: :new_record?
 
   has_many :access_grants, class_name: 'Doorkeeper::AccessGrant',
