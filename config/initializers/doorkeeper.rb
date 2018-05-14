@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 Doorkeeper.configure do
   # Change the ORM that doorkeeper will use (needs plugins)
   orm :active_record
 
-  resource_owner_from_credentials do |routes|
-    u = User.find_for_database_authentication(:email => params[:username])
-    u if u && u.valid_password?(params[:password])
+  resource_owner_from_credentials do |_routes|
+    u = User.find_for_database_authentication(email: params[:username])
+    u if u&.valid_password?(params[:password])
   end
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do |routes|
-    current_user || redirect_to(routes.new_user_session_path(return_to: request.fullpath), protocol: "https://")
+    current_user || redirect_to(routes.new_user_session_path(return_to: request.fullpath), protocol: 'https://')
   end
   # resource_owner_authenticator do
   #   User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
@@ -142,10 +144,10 @@ Doorkeeper.configure do
 
   # api_only
 
-  skip_authorization do |owner, client|
+  skip_authorization do |_owner, _client|
     true
   end
-  
+
   native_redirect_uri 'urn:ietf:wg:oauth:2.0:oob'
 
   # WWW-Authenticate Realm (default "Doorkeeper").

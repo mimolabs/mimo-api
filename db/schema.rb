@@ -10,10 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_13_151828) do
+ActiveRecord::Schema.define(version: 2018_05_14_140816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "locations", force: :cascade do |t|
+    t.string "unique_id", limit: 64
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "location_name", limit: 255
+    t.string "location_address", limit: 255
+    t.string "town", limit: 255
+    t.string "street", limit: 255
+    t.string "postcode", limit: 255
+    t.string "country", limit: 255, default: "United Kingdom"
+    t.string "owner", limit: 255
+    t.string "website", limit: 255
+    t.string "geocode", limit: 255
+    t.string "phone1", limit: 255
+    t.integer "user_id"
+    t.string "api_token", limit: 255
+    t.string "slug", limit: 255
+    t.float "latitude"
+    t.float "longitude"
+    t.boolean "has_nas", default: false
+    t.string "timezone", limit: 255, default: "Europe/London"
+    t.integer "lucky_dip"
+    t.string "category", limit: 50
+    t.boolean "demo", default: true
+    t.boolean "eu", default: true
+    t.index ["slug"], name: "index_locations_on_slug", unique: true
+  end
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer "resource_owner_id", null: false

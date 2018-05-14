@@ -1,9 +1,9 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-RSpec.describe User, :type => :model do
+require 'rails_helper'
 
+RSpec.describe User, type: :model do
   describe 'user creating' do
-    
     it 'should create the defaults after creating a user' do
       u = User.create email: Faker::Internet.email, password: 1231, password_confirmation: 1231, role: 2
       expect(u.role).to eq 'admin'
