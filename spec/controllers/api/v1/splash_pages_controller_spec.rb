@@ -18,12 +18,13 @@ describe Api::V1::SplashPagesController, :type => :controller do
   describe "testing the routes mostly" do
     it "should render the splash pages index" do
       location = Location.create id: 1, user_id: user.id
+      sp = SplashPage.create location_id: location.id
 
       get :index, format: :json, params: { location_id: location.slug }
       expect(response).to be_success
               
-      # parsed_body = JSON.parse(response.body)
-      # expect(parsed_body['locations'].length).to eq 0
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body.length).to eq 0
 
       # location.update user_id: user.id
       # get :index, format: :json
