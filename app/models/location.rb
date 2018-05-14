@@ -6,6 +6,21 @@ class Location < ApplicationRecord
 
   before_create :generate_defaults
 
+  def splash_page_created
+    key = "locSplashCreated:#{id}"
+    REDIS.get(key).present?
+  end
+  
+  def integration_created
+    key = "locIntegCreated:#{id}"
+    REDIS.get(key).present?
+  end
+
+  def campaign_created
+    key = "locCampCreated:#{id}"
+    REDIS.get(key).present?
+  end
+
   private
 
   def generate_defaults

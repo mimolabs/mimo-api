@@ -17,4 +17,37 @@ RSpec.describe Location, type: :model do
       expect(location.unique_id).to be_present
     end
   end
+
+  describe 'helpers for the dashboard setup guide' do
+    before(:each) do 
+      REDIS.flushall
+    end
+
+    it 'should have a splash page setup' do
+      location = Location.new id: 1
+      expect(location.splash_page_created).to eq false
+
+      key = "locSplashCreated:#{1}"
+      REDIS.set key, 1
+      expect(location.splash_page_created).to eq true
+    end
+
+    it 'should have an integration setup' do
+      location = Location.new id: 1
+      expect(location.integration_created).to eq false
+
+    key = "locIntegCreated:#{1}"
+      REDIS.set key, 1
+      expect(location.integration_created).to eq true
+    end
+
+    it 'should have a campaign setup' do
+      location = Location.new id: 1
+      expect(location.campaign_created).to eq false
+
+      key = "locCampCreated:#{1}"
+      REDIS.set key, 1
+      expect(location.campaign_created).to eq true
+    end
+  end
 end
