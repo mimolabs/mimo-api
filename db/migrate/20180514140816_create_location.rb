@@ -19,12 +19,13 @@ class CreateLocation < ActiveRecord::Migration[5.2]
       t.string   "slug",                     limit: 255
       t.float    "latitude",                 limit: 24
       t.float    "longitude",                limit: 24
-      t.boolean  "has_nas",                                   default: false
+      t.boolean  "has_devices",                               default: false
       t.string   "timezone",                 limit: 255,      default: "Europe/London"
       t.integer  "lucky_dip",                limit: 4
       t.string   "category",                 limit: 50
       t.boolean  "demo",                     default: true
       t.boolean  "eu",                       default: true
+      t.boolean  "paid",                     default: false
     end
 
     add_index "locations", ["slug"], name: "index_locations_on_slug", unique: true, using: :btree

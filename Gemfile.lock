@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/norman/friendly_id.git
+  revision: ff3f6f82cd8ae19fcb8dee870ae19643b054095c
+  specs:
+    friendly_id (5.2.4)
+      activerecord (>= 4.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -197,6 +204,7 @@ DEPENDENCIES
   doorkeeper
   factory_bot
   faker
+  friendly_id!
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)

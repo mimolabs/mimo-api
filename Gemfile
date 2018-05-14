@@ -17,6 +17,7 @@ gem 'devise'
 gem 'doorkeeper'
 gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
+gem 'friendly_id', git: 'https://github.com/norman/friendly_id.git'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -34,12 +34,13 @@ ActiveRecord::Schema.define(version: 2018_05_14_140816) do
     t.string "slug", limit: 255
     t.float "latitude"
     t.float "longitude"
-    t.boolean "has_nas", default: false
+    t.boolean "has_devices", default: false
     t.string "timezone", limit: 255, default: "Europe/London"
     t.integer "lucky_dip"
     t.string "category", limit: 50
     t.boolean "demo", default: true
     t.boolean "eu", default: true
+    t.boolean "paid", default: false
     t.index ["slug"], name: "index_locations_on_slug", unique: true
   end
 

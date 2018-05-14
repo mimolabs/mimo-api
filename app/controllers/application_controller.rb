@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include Pundit
-  after_action :verify_authorized
+  # after_action :verify_authorized
  
   def after_sign_in_path_for(_resource)
     if session[:return_to].present?

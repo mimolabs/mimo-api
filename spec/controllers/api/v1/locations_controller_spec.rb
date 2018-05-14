@@ -35,14 +35,25 @@ describe Api::V1::LocationsController, :type => :controller do
     context 'show action' do
       it 'should not allow the user to view another location' do
         location = Location.create! user_id: 100
-        get :show, format: :json, params: { id: location.id }
+        get :show, format: :json, params: { id: location.slug }
         expect(response).to_not be_success
       end
 
       it 'should allow the user to view their location' do
         location = Location.create! user_id: user.id
-        get :show, format: :json, params: { id: location.id }
+        get :show, format: :json, params: { id: location.slug }
         expect(response).to be_success
+      end
+    end
+
+    context 'create action' do
+      it 'should allow the user to create a location' do
+        name = 'my location name'
+        post :create, format: :json, params: { location: { location_name: name } }
+        expect(response).to be_success
+
+        location = Location.find_by user_id: user.id
+        expect(location.reload.location_name).to eq name
       end
     end
 
@@ -50,20 +61,32 @@ describe Api::V1::LocationsController, :type => :controller do
       it 'should not allow the user to edit another location' do
         name = 'my location name'
         location = Location.create! user_id: 100
-        patch :update, format: :json, params: { id: location.id, location: { location_name: name } }
+        patch :update, format: :json, params: { id: location.slug, location: { location_name: name } }
         expect(response).to_not be_success
       end
 
       it 'should allow the user to view their location' do
         name = 'my location name'
         location = Location.create! user_id: user.id
-        patch :update, format: :json, params: { id: location.id, location: { location_name: name } }
+        patch :update, format: :json, params: { id: location.slug, location: { location_name: name } }
         expect(response).to be_success
         expect(location.reload.location_name).to eq name
       end
     end
 
-    it 'should allow the user to delete their location'
+    context 'delete action' do
+      it 'should not allow the user to delete another location' do
+        location = Location.create! user_id: 100
+        delete :destroy, format: :json, params: { id: location.slug }
+        expect(response).to_not be_success
+      end
+
+      it 'should allow the user to view their location' do
+        location = Location.create! user_id: user.id
+        delete :destroy, format: :json, params: { id: location.slug }
+        expect(response).to be_success
+      end
+    end
 
   end
 

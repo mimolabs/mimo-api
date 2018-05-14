@@ -12,6 +12,10 @@ class LocationPolicy < ApplicationPolicy
   def show?
     user.admin? || (location.user_id == user.id)
   end
+
+  def destroy?
+    user.admin? || (location.user_id == user.id)
+  end
   
   private
 
