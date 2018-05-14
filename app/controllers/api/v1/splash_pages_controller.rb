@@ -2,7 +2,7 @@
 
 class Api::V1::SplashPagesController < Api::V1::BaseController
   before_action :doorkeeper_authorize!
-  before_action :set_resource, only: %i[index show update destroy]
+  before_action :set_resource, only: %i[index show create update destroy]
   before_action :clean_params, only: %i[update create]
   respond_to :json
 
@@ -11,44 +11,52 @@ class Api::V1::SplashPagesController < Api::V1::BaseController
     authorize @splash_pages
   end
 
-  def show; end
+  def show
+    @splash_page = SplashPage.find_by(id: params[:id], location_id: @location.id)
+  end
 
   def create
-    # @location = Location.new user_id: current_user.id
-    # respond_to do |format|
-    #   if @location.update location_params
-    #     format.json do
-    #       render template: 'api/v1/locations/show.json.jbuilder',
-    #              status: 201
-    #     end
-    #   else
-    #     @errors = @location.errors.full_messages
-    #     format.json do
-    #       render template: 'api/v1/shared/index.json.jbuilder',
-    #              status: 422
-    #     end
-    #   end
-    # end
+    @splash_page = SplashPage.new location_id: @location.id
+    respond_to do |format|
+      if @splash_page.update splash_params
+        format.json do
+          render template: 'api/v1/splash_pages/show.json.jbuilder',
+                 status: 201
+        end
+      else
+        @errors = @splash_page.errors.full_messages
+        format.json do
+          render template: 'api/v1/shared/index.json.jbuilder',
+                 status: 422
+        end
+      end
+    end
   end
 
   def update
-    # respond_to do |format|
-    #   if @location.update location_params
-    #     format.json do
-    #       render template: 'api/v1/locations/show.json.jbuilder',
-    #              status: 201
-    #     end
-    #   else
-    #     @errors = @location.errors.full_messages
-    #     format.json do
-    #       render template: 'api/v1/shared/index.json.jbuilder',
-    #              status: 422
-    #     end
-    #   end
-    # end
+    @splash_page = SplashPage.find_by(
+      id: params[:id], location_id: @location.id
+    )
+    respond_to do |format|
+      if @splash_page.update splash_params
+        format.json do
+          render template: 'api/v1/splash_pages/show.json.jbuilder',
+                 status: 201
+        end
+      else
+        @errors = @splash_page.errors.full_messages
+        format.json do
+          render template: 'api/v1/shared/index.json.jbuilder',
+                 status: 422
+        end
+      end
+    end
   end
 
   def destroy
+    @splash_page = SplashPage.find_by(
+      id: params[:id], location_id: @location.id
+    )
     if @splash_page.destroy
       head :no_content
     else
@@ -61,11 +69,11 @@ class Api::V1::SplashPagesController < Api::V1::BaseController
 
   def set_resource
     @location ||= Location.find_by(slug: params[:location_id])
-    authorize @location
+    authorize @location, :show?
   end
 
   def splash_params
-    params.require(:splash_page).permit(:location_name)
+    params.require(:splash_page).permit(:weight)
   end
 
   def clean_params

@@ -6,20 +6,20 @@ class SplashPagePolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin? || (location.user_id == user.id)
+    # user.admin? || (location.user_id == user.id)
   end
 
   def show?
-    user.admin? || (location.user_id == user.id)
+    # user.admin? || (location.user_id == user.id)
   end
 
   def destroy?
-    user.admin? || (location.user_id == user.id)
+    # user.admin? || (location.user_id == user.id)
   end
 
   private
 
-  def location
+  def splash
     record
   end
 end

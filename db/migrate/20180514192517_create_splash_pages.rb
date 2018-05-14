@@ -32,8 +32,8 @@ class CreateSplashPages < ActiveRecord::Migration[5.2]
       t.text :description
       t.text :header_text
       t.text :error_message_text
-      t.text :gdpr_email_text,                  default: 'I\'d like to receive updates by Email'
-      t.text :gdpr_sms_text,                    default: 'I\'d like to receive updates by SMS'
+      t.text :gdpr_email_field,                  default: 'I\'d like to receive updates by Email'
+      t.text :gdpr_sms_field,                    default: 'I\'d like to receive updates by SMS'
       t.text :gdpr_contact_message,             default: 'Occasionally we\'d like to give you updates about products & services, promotions, special offers, news & events.'
       t.text :font_family,                      default: '\'Helvetica Neue\', Arial, Helvetica, sans-serif'
       t.text :fb_checkin_msg
