@@ -36,7 +36,7 @@ class Api::V1::LocationsController < Api::V1::BaseController
       if @location.update location_params
         format.json do
           render template: 'api/v1/locations/show.json.jbuilder',
-                 status: 201
+                 status: 200
         end
       else
         @errors = @location.errors.full_messages
@@ -65,7 +65,8 @@ class Api::V1::LocationsController < Api::V1::BaseController
   end
 
   def location_params
-    params.require(:location).permit(:location_name)
+    params.require(:location).permit(:location_name, :unique_id, :slug, :created_at, :updated_at, :location_address, :street, :postcode, :town, :country, :phone1, :api_token, :latitude, :longitude, :paid, :has_devices, :user_id, :eu, :demo, :timezone)
+
   end
 
   def clean_params

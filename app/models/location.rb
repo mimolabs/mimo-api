@@ -4,7 +4,7 @@ class Location < ApplicationRecord
   extend FriendlyId
   friendly_id :location_name_slugged, use: %i[slugged finders]
 
-  validates_presence_of :user_id
+  validates_presence_of :user_id, :location_name
 
   before_create :generate_defaults
 

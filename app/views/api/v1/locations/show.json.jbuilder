@@ -20,6 +20,7 @@ json.has_devices @location.has_devices
 json.user_id @location.user_id
 json.eu @location.eu
 json.demo @location.demo
+json.timezone @location.timezone
 
 json.setup do
   json.splash       @location.splash_page_created

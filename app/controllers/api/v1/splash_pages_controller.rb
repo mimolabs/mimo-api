@@ -41,7 +41,7 @@ class Api::V1::SplashPagesController < Api::V1::BaseController
       if @splash_page.update splash_params
         format.json do
           render template: 'api/v1/splash_pages/show.json.jbuilder',
-                 status: 201
+                 status: 200
         end
       else
         @errors = @splash_page.errors.full_messages
