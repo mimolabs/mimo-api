@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_14_192517) do
+ActiveRecord::Schema.define(version: 2018_05_15_185505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,25 @@ ActiveRecord::Schema.define(version: 2018_05_14_192517) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string "unique_id", limit: 64
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "location_id"
+    t.integer "login_count"
+    t.string "campaign_id", limit: 26
+    t.string "client_mac", limit: 26
+    t.string "username", limit: 26
+    t.string "email", limit: 50
+    t.string "first_name", limit: 50
+    t.string "last_name", limit: 50
+    t.string "google_id", limit: 26
+    t.boolean "consented", default: true
+    t.boolean "unsubscribed", default: false
+    t.text "campaign_ids", array: true
+    t.datetime "last_seen"
   end
 
   create_table "splash_pages", force: :cascade do |t|
