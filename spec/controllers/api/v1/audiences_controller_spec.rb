@@ -44,11 +44,11 @@ describe Api::V1::AudiencesController, type: :controller do
           }
         ].to_json
         blob = Base64.encode64(data)
-        post :create, format: :json, params: { 
-          location_id: location.slug, 
-          audience: { 
-            blob: blob 
-          } 
+        post :create, format: :json, params: {
+          location_id: location.slug,
+          audience: {
+            blob: blob
+          }
         }
         expect(response).to be_successful
         s = Audience.last
@@ -74,7 +74,7 @@ describe Api::V1::AudiencesController, type: :controller do
         ].to_json
         blob = Base64.encode64(data)
 
-        patch :update, format: :json, params: { 
+        patch :update, format: :json, params: {
           location_id: location.slug,
           id: s.id,
           audience: {

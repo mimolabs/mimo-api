@@ -18,16 +18,16 @@ class Api::V1::AudiencesController < Api::V1::BaseController
     @audience.location_id = @location.id
     respond_to do |format|
       if @audience.save
-        format.json { 
-          render template: 'api/v1/audiences/show.json.jbuilder', 
-          status: 201
-        }
+        format.json do
+          render template: 'api/v1/audiences/show.json.jbuilder',
+                 status: 201
+        end
       else
         @errors = @audience.errors.full_messages
-        format.json { 
-          render template: 'api/v1/shared/index.json.jbuilder', 
-          status: 422
-        }
+        format.json do
+          render template: 'api/v1/shared/index.json.jbuilder',
+                 status: 422
+        end
       end
     end
   end
@@ -40,15 +40,15 @@ class Api::V1::AudiencesController < Api::V1::BaseController
     )
     respond_to do |format|
       if @audience.present? && @audience.update(audience_params)
-        format.json { 
+        format.json do
           render template: 'api/v1/audiences/show.json.jbuilder',
-          status: 201
-        }
+                 status: 201
+        end
       else
-        format.json { 
+        format.json do
           render template: 'api/v1/shared/index.json.jbuilder',
-          status: 422
-        }
+                 status: 422
+        end
       end
     end
   end
@@ -74,7 +74,7 @@ class Api::V1::AudiencesController < Api::V1::BaseController
     predicates = Base64.decode64(blob)
     data = JSON.parse(predicates, symbolize_names: true)
 
-    params[:audience][:predicates] = data 
+    params[:audience][:predicates] = data
     params[:audience].delete(:blob)
   end
 
@@ -85,6 +85,6 @@ class Api::V1::AudiencesController < Api::V1::BaseController
 
   def audience_params
     params.require(:audience)
-          .permit(predicates: [:attribute, :value, :operator, :relative])
+          .permit(predicates: %i[attribute value operator relative])
   end
 end
