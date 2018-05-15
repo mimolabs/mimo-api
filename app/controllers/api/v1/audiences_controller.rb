@@ -40,9 +40,15 @@ class Api::V1::AudiencesController < Api::V1::BaseController
     )
     respond_to do |format|
       if @audience.present? && @audience.update(audience_params)
-        format.json { render template: 'api/v1/audiences/show.json.jbuilder', status: 201 }
+        format.json { 
+          render template: 'api/v1/audiences/show.json.jbuilder',
+          status: 201
+        }
       else
-        format.json { render template: 'api/v1/shared/index.json.jbuilder', status: 422 }
+        format.json { 
+          render template: 'api/v1/shared/index.json.jbuilder',
+          status: 422
+        }
       end
     end
   end
