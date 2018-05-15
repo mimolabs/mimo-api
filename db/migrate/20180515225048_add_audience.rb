@@ -8,7 +8,7 @@ class AddAudience < ActiveRecord::Migration[5.2]
       t.integer  'location_id'
 
       t.string :name, limit: 50
-      t.text :predicates, array: true
+      t.jsonb :predicates
       t.string :predicate_type, limit: 10
     end
   end

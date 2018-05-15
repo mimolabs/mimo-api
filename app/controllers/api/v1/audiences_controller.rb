@@ -3,7 +3,6 @@
 class Api::V1::AudiencesController < Api::V1::BaseController
   before_action :doorkeeper_authorize!
   before_action :set_resource, only: %i[index create update destroy]
-  before_action :clean_params, only: %i[update create]
   respond_to :json
 
   def index
@@ -13,43 +12,40 @@ class Api::V1::AudiencesController < Api::V1::BaseController
     authorize @audiences
   end
 
-  # def create
-  #   @person = Person.new location_id: @location.id
-  #   respond_to do |format|
-  #     if @person.update people_params
-  #       format.json do
-  #         render template: 'api/v1/people/show.json.jbuilder',
-  #                status: 201
-  #       end
-  #     else
-  #       @errors = @person.errors.full_messages
-  #       format.json do
-  #         render template: 'api/v1/shared/index.json.jbuilder',
-  #                status: 422
-  #       end
-  #     end
-  #   end
-  # end
+  def create
+    parse_blob
+    @audience = Audience.new(audience_params)
+    @audience.location_id = @location.id
+    respond_to do |format|
+      if @audience.save
+        format.json { 
+          render template: 'api/v1/audiences/show.json.jbuilder', 
+          status: 201
+        }
+      else
+        @errors = @audience.errors.full_messages
+        format.json { 
+          render template: 'api/v1/shared/index.json.jbuilder', 
+          status: 422
+        }
+      end
+    end
+  end
 
-  # def update
-  #   @person = Person.find_by(
-  #     id: params[:id], location_id: @location.id
-  #   )
-  #   respond_to do |format|
-  #     if @person.update people_params
-  #       format.json do
-  #         render template: 'api/v1/people/show.json.jbuilder',
-  #                status: 200
-  #       end
-  #     else
-  #       @errors = @person.errors.full_messages
-  #       format.json do
-  #         render template: 'api/v1/shared/index.json.jbuilder',
-  #                status: 422
-  #       end
-  #     end
-  #   end
-  # end
+  def update
+    parse_blob
+    @audience = Audience.find_by(
+      id: params[:id],
+      location_id: @location.id
+    )
+    respond_to do |format|
+      if @audience.present? && @audience.update(audience_params)
+        format.json { render template: 'api/v1/audiences/show.json.jbuilder', status: 201 }
+      else
+        format.json { render template: 'api/v1/shared/index.json.jbuilder', status: 422 }
+      end
+    end
+  end
 
   def destroy
     @audience = Audience.find_by(
@@ -65,19 +61,24 @@ class Api::V1::AudiencesController < Api::V1::BaseController
 
   private
 
+  def parse_blob
+    blob = params[:audience][:blob]
+    return unless blob.present?
+
+    predicates = Base64.decode64(blob)
+    data = JSON.parse(predicates, symbolize_names: true)
+
+    params[:audience][:predicates] = data 
+    params[:audience].delete(:blob)
+  end
+
   def set_resource
     @location ||= Location.find_by(slug: params[:location_id])
     authorize @location, :show?
   end
 
-  # def people_params
-  #   params.require(:person).permit(:last_name, :first_name, :username)
-  # end
-
-  # def clean_params
-  #   return unless params[:person].present?
-  #   options = JSON.parse params[:person]
-  #   params[:person] = options if options
-  # rescue StandardError
-  # end
+  def audience_params
+    params.require(:audience)
+          .permit(predicates: [:attribute, :value, :operator, :relative])
+  end
 end

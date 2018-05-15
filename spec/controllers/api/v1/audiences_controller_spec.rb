@@ -33,23 +33,60 @@ describe Api::V1::AudiencesController, type: :controller do
       expect(parsed_body['audiences'].length).to eq 1
     end
 
-    # context 'create action' do
-    #   it 'should allow the user to create a splash page' do
-    #     post :create, format: :json, params: { location_id: location.slug, person: { last_name: 'Morley' } }
-    #     expect(response).to be_successful
-    #     s = Person.last
-    #     expect(s.last_name).to eq 'Morley'
-    #   end
-    # end
+    context 'create action' do
+      it 'should allow the user to create a splash page' do
+        data = [
+          {
+            attribute: 'last_seen',
+            value: '14',
+            relative: true,
+            operator: '='
+          }
+        ].to_json
+        blob = Base64.encode64(data)
+        post :create, format: :json, params: { 
+          location_id: location.slug, 
+          audience: { 
+            blob: blob 
+          } 
+        }
+        expect(response).to be_successful
+        s = Audience.last
+        expect(s.location_id).to eq location.id
+        expect(s.predicates[0]['attribute']).to eq 'last_seen'
+        expect(s.predicates[0]['value']).to eq '14'
+        expect(s.predicates[0]['relative']).to eq true
+        expect(s.predicates[0]['operator']).to eq '='
+      end
+    end
 
-    # context 'show action' do
-    #   it 'should allow the user to view their location' do
-    #     s = Person.create location_id: location.id
-    #     patch :update, format: :json, params: { location_id: location.slug, id: s.id, person: { first_name: 'Simon' } }
-    #     expect(response).to be_successful
-    #     expect(s.reload.first_name).to eq 'Simon'
-    #   end
-    # end
+    context 'update action' do
+      it 'should allow the user to update their audience' do
+        s = Audience.create location_id: location.id
+
+        data = [
+          {
+            attribute: 'last_seen',
+            value: '14',
+            relative: true,
+            operator: '='
+          }
+        ].to_json
+        blob = Base64.encode64(data)
+
+        patch :update, format: :json, params: { 
+          location_id: location.slug,
+          id: s.id,
+          audience: {
+            blob: blob
+          }
+        }
+        expect(response).to be_successful
+
+        s = Audience.last
+        expect(s.predicates[0]['attribute']).to eq 'last_seen'
+      end
+    end
 
     context 'delete action' do
       it 'should allow the user to view their splash' do
