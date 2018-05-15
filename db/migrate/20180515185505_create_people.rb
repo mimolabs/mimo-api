@@ -6,8 +6,7 @@ class CreatePeople < ActiveRecord::Migration[5.2]
       t.datetime "updated_at"
       t.integer  'location_id'
 
-      t.integer :location_id, type: Integer
-      t.integer :login_count, type: Integer
+      t.integer :login_count
 
       t.string :campaign_id, limit: 26
       t.string :client_mac, limit: 26

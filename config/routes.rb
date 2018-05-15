@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :locations do
         resources :splash_pages
+        resources :people
       end
     end
   end
