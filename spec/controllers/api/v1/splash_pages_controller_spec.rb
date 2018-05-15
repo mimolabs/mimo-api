@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe Api::V1::SplashPagesController, :type => :controller do
-
-  let(:token) { double :acceptable? => true }
+describe Api::V1::SplashPagesController, type: :controller do
+  let(:token) { double acceptable?: true }
 
   before do
     allow(controller).to receive(:doorkeeper_token) { token }
@@ -10,19 +11,19 @@ describe Api::V1::SplashPagesController, :type => :controller do
 
   let!(:application) { FactoryBot.create :application } # OAuth application
   let!(:user)        { FactoryBot.create :doorkeeper_testing_user }
-  let!(:token)       { FactoryBot.create :access_token, :application => application, :resource_owner_id => user.id }
+  let!(:token)       { FactoryBot.create :access_token, application: application, resource_owner_id: user.id }
 
   let(:location) { Location.create user_id: user.id }
 
-  describe "testing the routes mostly" do
-    it "should not render the splash pages index" do
-      location = Location.create id: 1, user_id: 123978123
+  describe 'testing the routes mostly' do
+    it 'should not render the splash pages index' do
+      location = Location.create id: 1, user_id: 123_978_123
 
       get :index, format: :json, params: { location_id: location.slug }
       expect(response).to_not be_successful
     end
 
-    it "should render the splash pages index" do
+    it 'should render the splash pages index' do
       # location = Location.create id: 1, user_id: user.id
       SplashPage.create location_id: location.id
 
@@ -55,9 +56,9 @@ describe Api::V1::SplashPagesController, :type => :controller do
     context 'show action' do
       it 'should allow the user to view their location' do
         s = SplashPage.create location_id: location.id
-        patch :update, format: :json, params: { location_id: location.slug, id: s.id, splash_page: { weight: 10000 } }
+        patch :update, format: :json, params: { location_id: location.slug, id: s.id, splash_page: { weight: 10_000 } }
         expect(response).to be_successful
-        expect(s.reload.weight).to eq 10000
+        expect(s.reload.weight).to eq 10_000
       end
     end
 
@@ -68,7 +69,5 @@ describe Api::V1::SplashPagesController, :type => :controller do
         expect(response).to be_successful
       end
     end
-
   end
-
 end

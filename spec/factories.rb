@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :access_grant, class: Doorkeeper::AccessGrant do
     sequence(:resource_owner_id) { |n| n }
@@ -26,7 +28,7 @@ FactoryBot.define do
   # # from applications that use doorkeeper factories in their own tests
   factory :doorkeeper_testing_user, class: :user do
     email Faker::Internet.email
-    password 123123
-    password_confirmation 123123
+    password 123_123
+    password_confirmation 123_123
   end
 end

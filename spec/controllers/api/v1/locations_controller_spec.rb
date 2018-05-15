@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe Api::V1::LocationsController, :type => :controller do
+describe Api::V1::LocationsController, type: :controller do
   # login_oauth
 
-  let(:token) { double :acceptable? => true }
+  let(:token) { double acceptable?: true }
 
   before do
     allow(controller).to receive(:doorkeeper_token) { token }
@@ -12,22 +14,22 @@ describe Api::V1::LocationsController, :type => :controller do
 
   let!(:application) { FactoryBot.create :application } # OAuth application
   let!(:user)        { FactoryBot.create :doorkeeper_testing_user }
-  let!(:token)       { FactoryBot.create :access_token, :application => application, :resource_owner_id => user.id }
+  let!(:token)       { FactoryBot.create :access_token, application: application, resource_owner_id: user.id }
 
-  describe "testing the routes mostly" do
-    it "should render the locations index" do
-      location = Location.create id: 1, user_id: 123987123
+  describe 'testing the routes mostly' do
+    it 'should render the locations index' do
+      location = Location.create id: 1, user_id: 123_987_123
 
       get :index, format: :json
       expect(response).to be_successful
-              
+
       parsed_body = JSON.parse(response.body)
       expect(parsed_body['locations'].length).to eq 0
 
       location.update user_id: user.id
       get :index, format: :json
       expect(response).to be_successful
-              
+
       parsed_body = JSON.parse(response.body)
       expect(parsed_body['locations'].length).to eq 1
     end
@@ -87,7 +89,5 @@ describe Api::V1::LocationsController, :type => :controller do
         expect(response).to be_successful
       end
     end
-
   end
-
 end

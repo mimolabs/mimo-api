@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 json.splash_pages do
   json.array! @splash_pages do |s|
-
     json.description s.description
     json.splash_name s.splash_name
     json.unique_id s.unique_id
@@ -50,4 +51,3 @@ json.access_types do
     json.name at[:name]
   end
 end
-

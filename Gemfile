@@ -15,9 +15,10 @@ gem 'uglifier', require: 'uglifier'
 
 gem 'devise'
 gem 'doorkeeper'
+gem 'friendly_id', git: 'https://github.com/norman/friendly_id.git'
+gem 'kaminari'
 gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
-gem 'friendly_id', git: 'https://github.com/norman/friendly_id.git'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -34,9 +35,9 @@ group :development do
 end
 
 group :test do
+  gem 'factory_bot'
   gem 'faker'
+  gem 'fakeredis'
   gem 'rspec'
   gem 'rspec-rails', '~> 3.7'
-  gem "factory_bot"
-  gem 'fakeredis'
 end

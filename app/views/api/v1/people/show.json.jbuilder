@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 json.id @person.id.to_s
 json.location_id @person.location_id
 json.username @person.username
-if @person.consented
-  json.email @person.try(:email)
-end
+json.email @person.try(:email) if @person.consented
 json.created_at @person.created_at.to_i
 json.updated_at @person.updated_at.to_i
 json.last_seen @person.last_seen.to_i
@@ -65,9 +65,7 @@ if @emails.present?
   json.emails do
     json.array! @emails do |email|
       json.id             email.id.to_s
-      if email.consented
-        json.email          email.email
-      end
+      json.email email.email if email.consented
       json.created_at     email.created_at.to_i
       json.active         email.active
       json.comments       email.comments

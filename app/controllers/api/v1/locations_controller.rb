@@ -66,7 +66,6 @@ class Api::V1::LocationsController < Api::V1::BaseController
 
   def location_params
     params.require(:location).permit(:location_name, :unique_id, :slug, :created_at, :updated_at, :location_address, :street, :postcode, :town, :country, :phone1, :api_token, :latitude, :longitude, :paid, :has_devices, :user_id, :eu, :demo, :timezone)
-
   end
 
   def clean_params

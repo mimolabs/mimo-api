@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class CreateSplashPages < ActiveRecord::Migration[5.2]
   def change
     create_table :splash_pages do |t|
-      t.string   "unique_id",                limit: 64
-      t.datetime "created_at"
-      t.datetime "updated_at"
+      t.string   'unique_id', limit: 64
+      t.datetime 'created_at'
+      t.datetime 'updated_at'
       t.integer  'location_id'
 
       t.integer :registered_access_id
@@ -171,8 +173,8 @@ class CreateSplashPages < ActiveRecord::Migration[5.2]
       t.boolean:powered_by,                       default: true
       t.boolean:email_required,                   default: false
       t.boolean:newsletter_consent,               default: false
-      t.boolean:vsg_enabled                     
-      t.boolean:no_login                        
+      t.boolean:vsg_enabled
+      t.boolean:no_login
       t.boolean:hide_terms,                       default: false
       t.boolean:single_opt_in,                    default: false
       t.boolean:double_opt_in,                    default: true
@@ -191,9 +193,9 @@ class CreateSplashPages < ActiveRecord::Migration[5.2]
       t.boolean :voucher_button_icon,              default: true
       t.boolean :sms_button_icon,                  default: false
 
-      t.boolean:meraki_enabled                  
-      t.boolean:unifi_enabled                   
-      t.boolean:cloudtrax_enabled               
+      t.boolean:meraki_enabled
+      t.boolean:unifi_enabled
+      t.boolean:cloudtrax_enabled
       t.boolean:button_shadow,                    default: true
       t.boolean:container_shadow,                 default: true
 
@@ -203,6 +205,6 @@ class CreateSplashPages < ActiveRecord::Migration[5.2]
       t.text:networks,                        array: true
     end
 
-    add_index "splash_pages", ["location_id"], name: "index_splash_on_location_id", unique: false, using: :btree
+    add_index 'splash_pages', ['location_id'], name: 'index_splash_on_location_id', unique: false, using: :btree
   end
 end

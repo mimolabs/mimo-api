@@ -19,7 +19,7 @@ RSpec.describe Location, type: :model do
   end
 
   describe 'helpers for the dashboard setup guide' do
-    before(:each) do 
+    before(:each) do
       REDIS.flushall
     end
 
@@ -27,7 +27,7 @@ RSpec.describe Location, type: :model do
       location = Location.new id: 1
       expect(location.splash_page_created).to eq false
 
-      key = "locSplashCreated:#{1}"
+      key = 'locSplashCreated:1'
       REDIS.set key, 1
       expect(location.splash_page_created).to eq true
     end
@@ -36,7 +36,7 @@ RSpec.describe Location, type: :model do
       location = Location.new id: 1
       expect(location.integration_created).to eq false
 
-    key = "locIntegCreated:#{1}"
+      key = 'locIntegCreated:1'
       REDIS.set key, 1
       expect(location.integration_created).to eq true
     end
@@ -45,7 +45,7 @@ RSpec.describe Location, type: :model do
       location = Location.new id: 1
       expect(location.campaign_created).to eq false
 
-      key = "locCampCreated:#{1}"
+      key = 'locCampCreated:1'
       REDIS.set key, 1
       expect(location.campaign_created).to eq true
     end

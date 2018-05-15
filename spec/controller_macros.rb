@@ -1,5 +1,6 @@
-module ControllerMacros
+# frozen_string_literal: true
 
+module ControllerMacros
   def login_oauth
     before(:each) do
       pass = SecureRandom.hex
@@ -7,9 +8,9 @@ module ControllerMacros
       create_oauth_credentials
     end
   end
-  
+
   def create_oauth_credentials
-    app = Doorkeeper::Application.new :name => 'test', :redirect_uri => 'https://localhost:8081'
+    app = Doorkeeper::Application.new name: 'test', redirect_uri: 'https://localhost:8081'
     app.save!
     @oauth = OAuth2::Client.new(app.uid, app.secret) do |b|
       b.request :url_encoded

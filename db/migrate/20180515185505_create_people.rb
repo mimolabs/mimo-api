@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class CreatePeople < ActiveRecord::Migration[5.2]
   def change
     create_table :people do |t|
-      t.string   "unique_id",                limit: 64
-      t.datetime "created_at"
-      t.datetime "updated_at"
+      t.string   'unique_id', limit: 64
+      t.datetime 'created_at'
+      t.datetime 'updated_at'
       t.integer  'location_id'
 
       t.integer :login_count

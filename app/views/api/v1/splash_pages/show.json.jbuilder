@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.splash_page do
   json.id @splash_page.id.to_s
   json.location_id @splash_page.location_id
