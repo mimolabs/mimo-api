@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_124926) do
+ActiveRecord::Schema.define(version: 2018_05_16_160443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -216,6 +216,20 @@ ActiveRecord::Schema.define(version: 2018_05_16_124926) do
     t.text "locations", array: true
     t.boolean "tw_verified"
     t.boolean "newsletter", default: false
+  end
+
+  create_table "splash_integrations", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "location_id"
+    t.string "api_token", limit: 50
+    t.string "host", limit: 50
+    t.string "type", limit: 50
+    t.string "port", limit: 50
+    t.string "username", limit: 50
+    t.string "password", limit: 50
+    t.json "metadata", default: {}
+    t.boolean "active"
   end
 
   create_table "splash_pages", force: :cascade do |t|

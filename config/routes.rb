@@ -21,6 +21,7 @@ Rails.application.routes.draw do
         end
         resources :senders, only: [:index, :show, :create]
         resources :splash_pages
+        resources :splash_integrations
       end
     end
   end
