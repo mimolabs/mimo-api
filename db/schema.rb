@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_123406) do
+ActiveRecord::Schema.define(version: 2018_05_16_124926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,6 +132,15 @@ ActiveRecord::Schema.define(version: 2018_05_16_123406) do
     t.boolean "unsubscribed", default: false
     t.text "campaign_ids", array: true
     t.datetime "last_seen"
+  end
+
+  create_table "person_timelines", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "location_id"
+    t.integer "person_id"
+    t.string "event", limit: 20
+    t.json "meta"
   end
 
   create_table "senders", force: :cascade do |t|

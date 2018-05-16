@@ -13,7 +13,9 @@ Rails.application.routes.draw do
       resources :locations do
         resources :audiences
         resources :emails, only: [:index, :show]
-        resources :people
+        resources :people do 
+          resources :person_timelines
+        end
         resources :socials, only: [:index, :show]
         resources :senders, only: [:index, :show, :create]
         resources :splash_pages

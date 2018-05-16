@@ -4,8 +4,8 @@ class CreateEmails < ActiveRecord::Migration[5.2]
       t.datetime 'created_at'
       t.datetime 'updated_at'
       t.integer  'location_id'
-
       t.integer :person_id
+
       t.integer :station_id
 
       t.string :email,               limit: 100
