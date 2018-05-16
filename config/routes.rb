@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     sign_out: 'logout'
   }
   get '/api/v1/me' => 'api/v1/users#me'
+  get 'api/v1/locations/:location_id/splash_integrations' => 'api/v1/splash_integrations#show'
 
   namespace :api do
     namespace :v1 do

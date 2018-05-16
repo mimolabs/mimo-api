@@ -6,49 +6,41 @@ class Api::V1::SplashIntegrationsController < Api::V1::BaseController
   before_action :clean_params, only: %i[update create]
   respond_to :json
 
-  def index
-    @splash_integrations = SplashIntegration.where(location_id: @location.id)
-    authorize @splash_integrations
-  end
-
   def show
-    @splash_integration = SplashIntegration.find_by(id: params[:id], location_id: @location.id)
+    @splash_integration = SplashIntegration.find_or_initialize_by(location_id: @location.id)
   end
 
   def create
-    @splash_integration = SplashIntegration.new location_id: @location.id
+    @splash_integration = SplashIntegration.new
+    @splash_integration.location_id = @location.id
     respond_to do |format|
-      if @splash_integration.update splash_params
-        format.json do
-          render template: 'api/v1/splash_integrations/show.json.jbuilder',
-                 status: 201
-        end
+      if @splash_integration.save
+        format.json { render template: 'api/v1/splash_integrations/show.json.jbuilder', status: 201 }
       else
         @errors = @splash_integration.errors.full_messages
-        format.json do
-          render template: 'api/v1/shared/index.json.jbuilder',
-                 status: 422
-        end
+        format.json { render template: 'api/v1/shared/index.json.jbuilder', status: 422 }
       end
     end
   end
 
   def update
-    @splash_integration = SplashIntegration.find_by(
-      id: params[:id], location_id: @location.id
-    )
-    respond_to do |format|
-      if @splash_integration.update splash_params
-        format.json do
-          render template: 'api/v1/splash_integrations/show.json.jbuilder',
-                 status: 200
-        end
+    @splash_integration = SplashIntegration.find_by(id: params[:id], location_id: @current_resource.id)
+    if !@splash_integration.present?
+      render template: 'api/v1/shared/index.json.jbuilder', status: 422
+    elsif params[:splash_integration][:action] == 'import_boxes'
+      @results = @splash_integration.import_boxes
+      respond_to do |format|
+        format.json { render template: 'api/v1/splash_integrations/import_boxes.json.jbuilder', status: 200 }
+      end
+    else
+      if params[:splash_integration] && params[:splash_integration][:metadata].present?
+        params[:splash_integration][:metadata].reverse_merge! @splash_integration.metadata
+      end
+      if @splash_integration.update(splash_params)
+        render :status=>200, :json=>{:message=>'Successfully updated'}
       else
         @errors = @splash_integration.errors.full_messages
-        format.json do
-          render template: 'api/v1/shared/index.json.jbuilder',
-                 status: 422
-        end
+        render template: 'api/v1/shared/index.json.jbuilder', status: 422
       end
     end
   end
