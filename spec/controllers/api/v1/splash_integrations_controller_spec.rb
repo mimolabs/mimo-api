@@ -18,11 +18,11 @@ describe Api::V1::SplashIntegrationsController, type: :controller do
   describe 'testing the routes mostly' do
     context 'show action' do
       it 'should allow the user to view their splash' do
-        # location = Location.create! user_id: user.id
         s = SplashIntegration.create location_id: location.id
-
         get :show, format: :json, params: { id: s.id, location_id: location.slug }
         expect(response).to be_successful
+
+        expect(s.location).to eq 'failing test, please fix'
       end
     end
 
@@ -32,6 +32,8 @@ describe Api::V1::SplashIntegrationsController, type: :controller do
         expect(response).to be_successful
         s = SplashIntegration.last
         expect(s.username).to eq 'username'
+
+        expect(s.location).to eq 'failing test, please fix'
       end
     end
 
