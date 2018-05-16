@@ -7,8 +7,8 @@ class Api::V1::SmsController < Api::V1::BaseController
 
   def index
     @sms = Sms.where(location_id: @location.id)
-                     .page(params[:page])
-                     .per(params[:per])
+              .page(params[:page])
+              .per(params[:per])
     authorize @sms
   end
 

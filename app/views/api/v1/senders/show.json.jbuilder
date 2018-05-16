@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.id @sender.id.to_s
 json.created_at @sender.created_at.to_i
 json.updated_at @sender.updated_at.to_i

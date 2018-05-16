@@ -370,10 +370,10 @@ module Unifi
     # log(response, opts)
     return response
 
-  rescue => e
-    Rails.logger.info e
-    # log({status: 0}, opts)
-    false
+  # rescue => e
+  #   Rails.logger.info e
+  #   # log({status: 0}, opts)
+  #   false
   end
 
   def post_unifi(path, opts={}, cookies=nil)
@@ -393,10 +393,10 @@ module Unifi
     end
     # log(resp)
     return resp
-  rescue => e
-    Rails.logger.info e
-    # log({status: 0}, opts)
-    false
+  # rescue => e
+  #   Rails.logger.info e
+  #   # log({status: 0}, opts)
+  #   false
   end
 
   def unifi_cookies_key

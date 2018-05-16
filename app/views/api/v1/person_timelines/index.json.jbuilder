@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.timelines do
   json.array! @timelines do |timeline|
     json.id timeline.id.to_s

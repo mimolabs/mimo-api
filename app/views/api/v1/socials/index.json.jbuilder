@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.social @socials do |s|
   json.id               s.id.to_s
   json.email            s.email
@@ -8,7 +10,7 @@ json.social @socials do |s|
   json.twitter_id       s.twitter_id
   json.facebook_id      s.facebook_id
   json.gender           s.gender
-  json.current_location  s.current_location
+  json.current_location s.current_location
   json.first_name       s.first_name
   json.last_name        s.last_name
   json.checkins         s.checkins

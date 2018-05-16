@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.emails do
   json.array! @emails do |e|
     json.id             e.id.to_s
@@ -8,9 +10,7 @@ json.emails do
     json.location_id    e.location_id
     json.list_id        e.list_id
     json.list_type      e.list_type
-    if e.consented
-      json.email        e.email
-    end
+    json.email e.email if e.consented
     json.station_id     e.station_id
     json.active         e.active
     json.unsubscribed   e.unsubscribed

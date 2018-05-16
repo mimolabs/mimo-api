@@ -7,8 +7,8 @@ class Api::V1::EmailsController < Api::V1::BaseController
 
   def index
     @emails = Email.where(location_id: @location.id)
-                     .page(params[:page])
-                     .per(params[:per])
+                   .page(params[:page])
+                   .per(params[:per])
     authorize @emails
   end
 

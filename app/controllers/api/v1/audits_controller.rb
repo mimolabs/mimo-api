@@ -7,8 +7,8 @@ class Api::V1::AuditsController < Api::V1::BaseController
 
   def index
     @audits = Audit.where(location_id: @location.id)
-                     .page(params[:page])
-                     .per(params[:per])
+                   .page(params[:page])
+                   .per(params[:per])
     authorize @audits
   end
 

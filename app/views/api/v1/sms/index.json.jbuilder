@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.sms do
   json.array! @sms do |sms|
     json.id sms.id.to_s

@@ -17,12 +17,24 @@ describe Api::V1::SplashIntegrationsController, type: :controller do
 
   describe 'testing the routes mostly' do
     context 'show action' do
-      it 'should allow the user to view their splash' do
-        s = SplashIntegration.create location_id: location.id
-        get :show, format: :json, params: { id: s.id, location_id: location.slug }
+      it 'should initialise an integration' do
+        get :show, format: :json, params: { 
+          location_id: location.slug
+        }
         expect(response).to be_successful
+        parsed = JSON.parse(response.body)
+        expect(parsed['new_record']).to eq true
+      end
 
-        expect(s.location).to eq 'failing test, please fix'
+      it 'should show an integration' do
+        s = SplashIntegration.create location_id: location.id
+        get :show, format: :json, params: { 
+          location_id: location.slug
+        }
+        expect(response).to be_successful
+        parsed = JSON.parse(response.body)
+        expect(parsed['new_record']).to eq false
+        expect(parsed['id']).to eq s.id
       end
     end
 
@@ -30,10 +42,11 @@ describe Api::V1::SplashIntegrationsController, type: :controller do
       it 'should allow the user to create a splash integration' do
         post :create, format: :json, params: { location_id: location.slug, splash_integration: { username: 'username' } }
         expect(response).to be_successful
-        s = SplashIntegration.last
-        expect(s.username).to eq 'username'
 
-        expect(s.location).to eq 'failing test, please fix'
+        s = SplashIntegration.last
+
+        expect(s.username).to eq 'username'
+        expect(s.location_id).to eq location.id
       end
     end
 

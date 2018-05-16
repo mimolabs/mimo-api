@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.stations @stations do |client|
   json.client_mac client.client_mac
   json.created_at client.created_at.to_i

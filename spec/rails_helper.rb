@@ -31,6 +31,9 @@ ActiveRecord::Migration.maintain_test_schema!
 require 'factory_bot'
 require 'vcr'
 
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -72,11 +75,18 @@ RSpec.configure do |config|
 
   config.render_views
 
+  if ENV['CI']
+    Rails.logger.info 'Not filtering any tests!'
+  else
+    config.filter_run focus: true
+    config.filter_run_excluding :slow unless ENV["SLOW_SPECS"]
+    config.run_all_when_everything_filtered = true
+  end
+
   # config.extend ControllerMacros, :type => :controller
 end
 
-VCR.configure do |config|
-  config.cassette_library_dir = "fixtures/vcr_cassettes"
-  config.hook_into :webmock
-end
-
+# VCR.configure do |config|
+#   config.cassette_library_dir = "fixtures/vcr_cassettes"
+#   config.hook_into :webmock
+# end

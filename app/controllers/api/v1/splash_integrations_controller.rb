@@ -7,18 +7,26 @@ class Api::V1::SplashIntegrationsController < Api::V1::BaseController
   respond_to :json
 
   def show
-    @splash_integration = SplashIntegration.find_or_initialize_by(location_id: @location.id)
+    @splash_integration = SplashIntegration.find_or_initialize_by(
+      location_id: @location.id
+    )
   end
 
   def create
-    @splash_integration = SplashIntegration.new
+    @splash_integration = SplashIntegration.new(splash_params)
     @splash_integration.location_id = @location.id
     respond_to do |format|
       if @splash_integration.save
-        format.json { render template: 'api/v1/splash_integrations/show.json.jbuilder', status: 201 }
+        format.json { 
+          render template: 'api/v1/splash_integrations/show.json.jbuilder',
+          status: 201
+        }
       else
         @errors = @splash_integration.errors.full_messages
-        format.json { render template: 'api/v1/shared/index.json.jbuilder', status: 422 }
+        format.json {
+          render template: 'api/v1/shared/index.json.jbuilder', 
+          status: 422
+        }
       end
     end
   end
@@ -37,7 +45,7 @@ class Api::V1::SplashIntegrationsController < Api::V1::BaseController
         params[:splash_integration][:metadata].reverse_merge! @splash_integration.metadata
       end
       if @splash_integration.update(splash_params)
-        render :status=>200, :json=>{:message=>'Successfully updated'}
+        render status: 200, json: { message: 'Successfully updated' }
       else
         @errors = @splash_integration.errors.full_messages
         render template: 'api/v1/shared/index.json.jbuilder', status: 422
@@ -65,7 +73,7 @@ class Api::V1::SplashIntegrationsController < Api::V1::BaseController
   end
 
   def splash_params
-    params.require(:splash_integration).permit(:username, :password, :host, :type, :action, metadata: [:unifi_site_name, :unifi_site_id, :ssid, :zoneUUID, :organisation, :ssid, :network, :northbound_password, :ssid_id])
+    params.require(:splash_integration).permit(:username, :password, :host, :type, :action, metadata: %i[unifi_site_name unifi_site_id ssid zoneUUID organisation ssid network northbound_password ssid_id])
   end
 
   def clean_params

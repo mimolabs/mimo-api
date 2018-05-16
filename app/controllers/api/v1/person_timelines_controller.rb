@@ -7,8 +7,8 @@ class Api::V1::PersonTimelinesController < Api::V1::BaseController
 
   def index
     @timelines = PersonTimeline.where(location_id: @location.id)
-                                      .page(params[:page])
-                                      .per(params[:per])
+                               .page(params[:page])
+                               .per(params[:per])
     authorize @timelines
   end
 

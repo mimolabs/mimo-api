@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.senders do
   json.array! @senders do |sender|
     json.id sender.id.to_s
