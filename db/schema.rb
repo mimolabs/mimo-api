@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_170950) do
+ActiveRecord::Schema.define(version: 2018_05_16_180256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,17 @@ ActiveRecord::Schema.define(version: 2018_05_16_170950) do
     t.boolean "consented", default: false
     t.text "macs", array: true
     t.text "lists", array: true
+  end
+
+  create_table "event_logs", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "location_id"
+    t.string "resource_id", limit: 10
+    t.json "meta"
+    t.json "data"
+    t.json "response"
+    t.string "event_type", limit: 12
   end
 
   create_table "locations", force: :cascade do |t|

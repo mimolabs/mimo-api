@@ -29,6 +29,7 @@ require 'rspec/rails'
 ActiveRecord::Migration.maintain_test_schema!
 
 require 'factory_bot'
+require 'vcr'
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -73,3 +74,9 @@ RSpec.configure do |config|
 
   # config.extend ControllerMacros, :type => :controller
 end
+
+VCR.configure do |config|
+  config.cassette_library_dir = "fixtures/vcr_cassettes"
+  config.hook_into :webmock
+end
+

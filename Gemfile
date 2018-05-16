@@ -19,6 +19,7 @@ gem 'friendly_id', git: 'https://github.com/norman/friendly_id.git'
 gem 'kaminari'
 gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
+gem 'faraday'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -40,4 +41,6 @@ group :test do
   gem 'fakeredis'
   gem 'rspec'
   gem 'rspec-rails', '~> 3.7'
+  gem 'vcr'
+  gem 'webmock'
 end
