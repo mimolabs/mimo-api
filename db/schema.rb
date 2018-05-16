@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_111400) do
+ActiveRecord::Schema.define(version: 2018_05_16_115523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,28 @@ ActiveRecord::Schema.define(version: 2018_05_16_111400) do
     t.boolean "unsubscribed", default: false
     t.text "campaign_ids", array: true
     t.datetime "last_seen"
+  end
+
+  create_table "senders", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "location_id"
+    t.integer "user_id"
+    t.string "sender_name", limit: 50
+    t.string "sender_type", limit: 50
+    t.string "from_name", limit: 50
+    t.string "from_email", limit: 50
+    t.string "from_sms", limit: 50
+    t.string "from_twitter", limit: 50
+    t.string "twitter_token", limit: 50
+    t.string "twitter_secret", limit: 50
+    t.string "reply_email", limit: 50
+    t.string "address", limit: 50
+    t.string "town", limit: 50
+    t.string "postcode", limit: 50
+    t.string "country", limit: 50
+    t.string "token", limit: 50
+    t.boolean "is_validated"
   end
 
   create_table "sms", force: :cascade do |t|

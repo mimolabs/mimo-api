@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         resources :audiences
         resources :people
         resources :socials, only: [:index, :show]
+        resources :senders, only: [:index, :show, :create]
         resources :splash_pages
         resources :sms, only: [:index, :show]
         resources :stations, only: [:index, :show]
