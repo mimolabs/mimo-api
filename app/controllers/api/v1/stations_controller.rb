@@ -2,8 +2,7 @@
 
 class Api::V1::StationsController < Api::V1::BaseController
   before_action :doorkeeper_authorize!
-  before_action :set_resource, only: %i[index show update destroy]
-  before_action :clean_params, only: %i[update]
+  before_action :set_resource
   respond_to :json
 
   def index

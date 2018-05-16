@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_110438) do
+ActiveRecord::Schema.define(version: 2018_05_16_111400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,36 +112,43 @@ ActiveRecord::Schema.define(version: 2018_05_16_110438) do
     t.datetime "last_seen"
   end
 
+  create_table "sms", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "location_id"
+    t.string "number", limit: 15
+    t.integer "person_id"
+    t.string "client_mac", limit: 18
+  end
+
   create_table "socials", force: :cascade do |t|
     t.string "unique_id", limit: 64
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "location_id"
-    t.string "facebookId", limit: 24
-    t.string "googleId", limit: 24
-    t.string "linkedinId", limit: 24
+    t.string "facebook_id", limit: 24
+    t.string "google_id", limit: 24
     t.string "tw_profile_image", limit: 24
     t.string "email", limit: 50
-    t.string "firstName", limit: 24
-    t.string "lastName", limit: 24
+    t.string "first_name", limit: 24
+    t.string "last_name", limit: 24
     t.string "gender", limit: 6
-    t.string "fbUsername", limit: 24
-    t.string "fbLink", limit: 24
-    t.string "fbFullName", limit: 24
-    t.string "fbCurrentLocation", limit: 24
-    t.string "gLink", limit: 24
-    t.string "gImageUrl"
-    t.string "gEtag", limit: 24
-    t.string "gFullName", limit: 24
-    t.string "gCurrentLocation", limit: 24
-    t.string "currentLocation", limit: 24
+    t.string "fb_username", limit: 24
+    t.string "fb_link", limit: 24
+    t.string "fb_full_name", limit: 24
+    t.string "fb_current_location", limit: 24
+    t.string "g_link", limit: 24
+    t.string "g_image_url"
+    t.string "g_etag", limit: 24
+    t.string "g_full_name", limit: 24
+    t.string "g_urrent_location", limit: 24
+    t.string "current_location", limit: 24
     t.string "twitter_id", limit: 24
     t.string "tw_full_name", limit: 24
     t.string "tw_screen_name", limit: 24
     t.string "tw_description", limit: 24
     t.string "tw_url"
     t.integer "person_id"
-    t.integer "gCircledByCount"
     t.integer "tw_followers"
     t.integer "tw_friends"
     t.integer "checkins"
@@ -351,6 +358,7 @@ ActiveRecord::Schema.define(version: 2018_05_16_110438) do
     t.string "36"
     t.string "client_mac"
     t.string "18"
+    t.integer "person_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         resources :people
         resources :socials, only: [:index, :show]
         resources :splash_pages
+        resources :sms, only: [:index, :show]
         resources :stations, only: [:index, :show]
       end
     end

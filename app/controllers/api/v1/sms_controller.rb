@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-class Api::V1::SocialsController < Api::V1::BaseController
+class Api::V1::SmsController < Api::V1::BaseController
   before_action :doorkeeper_authorize!
   before_action :set_resource
   respond_to :json
 
   def index
-    @socials = Social.where(location_id: @location.id)
+    @sms = Sms.where(location_id: @location.id)
                      .page(params[:page])
                      .per(params[:per])
-    authorize @socials
+    authorize @sms
   end
 
   def show
-    @social = Social.find_by(id: params[:id], location_id: @location.id)
+    @station = Sms.find_by(id: params[:id], location_id: @location.id)
   end
 
   private
