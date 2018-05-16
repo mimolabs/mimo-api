@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :locations do
         resources :audiences
+        resources :emails, only: [:index, :show]
         resources :people
         resources :socials, only: [:index, :show]
         resources :senders, only: [:index, :show, :create]
