@@ -14,19 +14,20 @@ describe Api::V1::StationsController, type: :controller do
   let!(:token)       { FactoryBot.create :access_token, application: application, resource_owner_id: user.id }
 
   let(:location) { Location.create user_id: user.id }
+  let(:person) { Person.create }
 
   describe 'testing the routes mostly' do
     it 'should not render the splash pages index' do
       location = Location.create id: 1, user_id: 123_978_123
 
-      get :index, format: :json, params: { location_id: location.slug }
+      get :index, format: :json, params: { location_id: location.slug, person_id: person.id }
       expect(response).to_not be_successful
     end
 
     it 'should render the station index' do
       Station.create location_id: location.id
 
-      get :index, format: :json, params: { location_id: location.slug }
+      get :index, format: :json, params: { location_id: location.slug, person_id: person.id }
       expect(response).to be_successful
 
       parsed_body = JSON.parse(response.body)
@@ -37,7 +38,7 @@ describe Api::V1::StationsController, type: :controller do
       it 'should allow the user to view a person' do
         s = Station.create location_id: location.id
 
-        get :show, format: :json, params: { id: s.id, location_id: location.slug }
+        get :show, format: :json, params: { id: s.id, location_id: location.slug, person_id: person.id }
         expect(response).to be_successful
       end
     end

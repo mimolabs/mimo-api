@@ -12,15 +12,15 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :locations do
         resources :audiences
-        resources :emails, only: [:index, :show]
         resources :people do 
+          resources :emails, only: [:index, :show]
           resources :person_timelines
+          resources :socials, only: [:index, :show]
+          resources :sms, only: [:index, :show]
+          resources :stations, only: [:index, :show]
         end
-        resources :socials, only: [:index, :show]
         resources :senders, only: [:index, :show, :create]
         resources :splash_pages
-        resources :sms, only: [:index, :show]
-        resources :stations, only: [:index, :show]
       end
     end
   end
