@@ -12,8 +12,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :locations do
         resources :audiences
-        resources :splash_pages
         resources :people
+        resources :socials, only: [:index, :show]
+        resources :splash_pages
+        resources :stations, only: [:index, :show]
       end
     end
   end
