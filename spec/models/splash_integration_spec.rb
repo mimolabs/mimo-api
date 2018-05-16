@@ -38,9 +38,6 @@ describe SplashIntegration, :type => :model do
           s.save
           c = s.unifi_get_credentials
           expect(c).to be_an Object
-
-          puts c
-          puts 888888888888888
           expect(c["cookie"]).not_to eq nil
         end
       end

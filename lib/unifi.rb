@@ -76,7 +76,6 @@ module Unifi
 
     opts = { username: username, password: password }
     response = post_unifi('/login', opts)
-    puts response.inspect
 
     return false unless response.present?
     case response.status
@@ -110,7 +109,7 @@ module Unifi
         req.options.open_timeout      = 2
       end
 
-      log(response, opts)
+      # log(response, opts)
       case response.status
       when 200
         puts "wooohooo!"
@@ -123,7 +122,7 @@ module Unifi
     rescue => e
       Rails.logger.info e
       errors.add :base, 'Timeout error, please check host'
-      log({status: 0}, opts)
+      # log({status: 0}, opts)
       false
     end
   end
@@ -368,12 +367,12 @@ module Unifi
       req.options.timeout           = 3
       req.options.open_timeout      = 2
     end
-    log(response, opts)
+    # log(response, opts)
     return response
 
   rescue => e
     Rails.logger.info e
-    log({status: 0}, opts)
+    # log({status: 0}, opts)
     false
   end
 
@@ -392,11 +391,11 @@ module Unifi
       req.options.timeout           = 3
       req.options.open_timeout      = 2
     end
-    log(resp)
+    # log(resp)
     return resp
   rescue => e
     Rails.logger.info e
-    log({status: 0}, opts)
+    # log({status: 0}, opts)
     false
   end
 
