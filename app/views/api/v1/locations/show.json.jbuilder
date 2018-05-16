@@ -15,7 +15,7 @@ json.phone1 @location.phone1
 json.api_token @location.api_token
 json.latitude @location.latitude
 json.longitude @location.longitude
-json.paid @location.paid
+json.paid true #@location.paid
 json.has_devices @location.has_devices
 json.user_id @location.user_id
 json.eu @location.eu

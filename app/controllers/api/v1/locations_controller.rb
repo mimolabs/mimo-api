@@ -8,6 +8,8 @@ class Api::V1::LocationsController < Api::V1::BaseController
 
   def index
     @locations = Location.where(user_id: current_user.id)
+                         .page(params[:page])
+                         .per(params[:per])
     authorize @locations
   end
 

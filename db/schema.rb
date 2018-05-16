@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_160443) do
+ActiveRecord::Schema.define(version: 2018_05_16_170950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 2018_05_16_160443) do
     t.string "name", limit: 50
     t.jsonb "predicates"
     t.string "predicate_type", limit: 10
+  end
+
+  create_table "boxes", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "location_id"
+    t.string "mac_address", limit: 18
+    t.string "state", limit: 10
   end
 
   create_table "emails", force: :cascade do |t|

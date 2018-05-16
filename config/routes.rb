@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :locations do
         resources :audiences
+        resources :boxes, only: [:destroy, :index]
+        resources :sessions
         resources :people do 
           resources :emails, only: [:index, :show]
           resources :person_timelines
