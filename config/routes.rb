@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',
     constraints: SplashIntegrationSites
 
-
   namespace :api do
     namespace :v1 do
       resources :locations do
@@ -31,6 +30,7 @@ Rails.application.routes.draw do
         resources :splash_pages
         resources :splash_integrations
       end
+      resources :users, except: [:show]
     end
   end
 

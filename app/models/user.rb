@@ -13,14 +13,25 @@ class User < ApplicationRecord
                            dependent: :delete_all
 
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :lockable, :timeoutable
-  # devise :database_authenticatable, :registerable,
-  #        :recoverable, :rememberable, :trackable, :validatable
 
-  after_create :generate_defaults
+  before_create :generate_defaults
 
   def set_default_role
     self.role ||= :user
   end
 
-  def generate_defaults; end
+  def generate_defaults
+    self.account_id = generate_account_id
+  end
+  
+  private
+
+  def generate_account_id
+    loop do
+      @token = "M#{SecureRandom.uuid.split('-').first.upcase[0..5]}"
+      break @token unless User.where(account_id: @token)
+                              .select('account_id')
+                              .first
+    end
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_180256) do
+ActiveRecord::Schema.define(version: 2018_05_17_135044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -467,6 +467,17 @@ ActiveRecord::Schema.define(version: 2018_05_16_180256) do
     t.integer "role"
     t.time "locked_at"
     t.integer "failed_attempts"
+    t.string "username", limit: 50
+    t.string "timezone", limit: 26
+    t.string "country", limit: 26
+    t.string "account_id", limit: 10
+    t.string "slug"
+    t.string "locale", limit: 2
+    t.string "radius_secret"
+    t.string "alerts_window_start", limit: 5
+    t.string "alerts_window_end", limit: 5
+    t.text "alerts_window_days", array: true
+    t.boolean "alerts", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
