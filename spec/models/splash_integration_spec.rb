@@ -3,13 +3,9 @@ require 'rails_helper'
 describe SplashIntegration, :type => :model do
 
   before(:all) do
-    @username = 'simon'
-    @password = 'morley'
-    @hostname = 'https://1.2.3.4:8443'
-
-    # @username = ENV['UNIFI_USER']
-    # @password = ENV['UNIFI_PASS']
-    # @hostname = ENV['UNIFI_HOST']
+    @username = ENV['UNIFI_USER'] || 'simon'
+    @password = ENV['UNIFI_PASS'] || 'morley'
+    @hostname = ENV['UNIFI_HOST'] || 'https://1.2.3.4:8443'
   end
 
 
@@ -31,7 +27,7 @@ describe SplashIntegration, :type => :model do
     end
   end
 
-  describe 'unifi' do
+  describe 'unifi controller tests - overly complex' do
 
     before(:each) do 
       REDIS.flushall
@@ -49,6 +45,30 @@ describe SplashIntegration, :type => :model do
           to_return(status: 200, body: "", headers: headers)
     end
 
+    describe 'validating unifi integration' do
+      it 'validates integration' do
+        s = SplashIntegration.new username: @username, password: @password, host: @hostname
+        s.save
+        expect(s.validate_unifi).to eq true
+      end
+
+      it 'fails to validate integration' do
+        s = SplashIntegration.new username: 'bob', password: 'marley', host: @hostname
+        s.save
+        stub_request(:post, "https://1.2.3.4:8443/api/login").
+          with(
+            body: "{\"username\":\"bob\",\"password\":\"marley\"}",
+            headers: {
+              'Accept'=>'*/*',
+              'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'Content-Type'=>'application/json',
+              'User-Agent'=>'Faraday v0.15.1'
+            }).
+            to_return(status: 401, body: "", headers: {})
+        expect(s.validate_unifi).to eq false
+      end
+    end
+
     describe '#get_credentials' do
       it 'authenticates user and returns unifi cookie' do
         VCR.use_cassette('unifi_201801051204', record: :none) do
@@ -57,7 +77,7 @@ describe SplashIntegration, :type => :model do
 
           c = s.unifi_get_credentials
           expect(c).to be_an Object
-          expect(c["cookie"]).not_to eq nil
+          expect(c["cookie"]).to eq 'e4JCiThbp4rocuwYIr6TZo3b1yC7hTFU'
         end
       end
     end
@@ -193,6 +213,45 @@ describe SplashIntegration, :type => :model do
         expect(s.unifi_cookies_to_object(cookie_response_string)).to eq expectation
       end
     end
+
+    describe '#validation callbacks' do
+
+      it "should validate the integration after save" do
+        s = SplashIntegration.new username: @username, password: @password, host: @hostname, action: 'validate'
+        expect(s.save).to eq true
+      end
+
+      it "should not validate the integration after save - bad passy" do
+        s = SplashIntegration.new username: 'bob', password: 'marley', host: @hostname, action: 'validate', integration_type: 'unifi'
+        
+        stub_request(:post, "https://1.2.3.4:8443/api/login").
+          with(
+            body: "{\"username\":\"bob\",\"password\":\"marley\"}",
+            headers: {
+              'Accept'=>'*/*',
+              'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'Content-Type'=>'application/json',
+              'User-Agent'=>'Faraday v0.15.1'
+            }).
+            to_return(status: 401, body: "", headers: {})
+
+        expect(s.save).to eq false
+      end
+
+      context 'creating the setup' do
+        it "should create the setup for a unifi" do
+          s = SplashIntegration.new username: @username, password: @password, host: @hostname, action: 'create_setup'
+          ## We don't have an ssid ##
+          expect(s.save).to eq false
+
+          s.metadata['ssid'] = 'Simon Says'
+          expect(s.save).to eq true
+
+          expect(s.reload.active).to eq true
+        end
+      end
+    end
+
   end
 
   def device_body

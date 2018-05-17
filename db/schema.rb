@@ -30,6 +30,9 @@ ActiveRecord::Schema.define(version: 2018_05_16_180256) do
     t.integer "location_id"
     t.string "mac_address", limit: 18
     t.string "state", limit: 10
+    t.string "machine_type", limit: 26
+    t.text "description"
+    t.datetime "last_heartbeat"
   end
 
   create_table "emails", force: :cascade do |t|
@@ -241,12 +244,12 @@ ActiveRecord::Schema.define(version: 2018_05_16_180256) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "location_id"
-    t.string "api_token", limit: 50
-    t.string "host", limit: 50
-    t.string "type", limit: 50
-    t.string "port", limit: 50
-    t.string "username", limit: 50
-    t.string "password", limit: 50
+    t.string "api_token"
+    t.string "host"
+    t.string "integration_type", limit: 10
+    t.string "port", limit: 5
+    t.string "username", limit: 26
+    t.string "password", limit: 26
     t.json "metadata", default: {}
     t.boolean "active"
   end

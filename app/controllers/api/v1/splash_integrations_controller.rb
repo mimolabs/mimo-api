@@ -2,8 +2,9 @@
 
 class Api::V1::SplashIntegrationsController < Api::V1::BaseController
   before_action :doorkeeper_authorize!
-  before_action :set_resource, only: %i[index show create update destroy]
+  before_action :set_resource
   before_action :clean_params, only: %i[update create]
+
   respond_to :json
 
   def show
@@ -32,14 +33,21 @@ class Api::V1::SplashIntegrationsController < Api::V1::BaseController
   end
 
   def update
-    @splash_integration = SplashIntegration.find_by(id: params[:id], location_id: @current_resource.id)
-    if !@splash_integration.present?
-      render template: 'api/v1/shared/index.json.jbuilder', status: 422
+    @splash_integration = SplashIntegration.find_by(id: params[:id], location_id: @location.id)
+
+    ## Should not happen but worth including
+    if @splash_integration.blank?
+      @splash_integration = SplashIntegration.find_or_initialize_by(
+        location_id: @location.id
+      )
+
     elsif params[:splash_integration][:action] == 'import_boxes'
       @results = @splash_integration.import_boxes
       respond_to do |format|
-        format.json { render template: 'api/v1/splash_integrations/import_boxes.json.jbuilder', status: 200 }
+        format.json { 
+          render template: 'api/v1/splash_integrations/import_boxes.json.jbuilder', status: 200 }
       end
+
     else
       if params[:splash_integration] && params[:splash_integration][:metadata].present?
         params[:splash_integration][:metadata].reverse_merge! @splash_integration.metadata
@@ -65,6 +73,23 @@ class Api::V1::SplashIntegrationsController < Api::V1::BaseController
     end
   end
 
+  #### Custom Methods ####
+  
+  def fetch_settings
+    @splash_integration = SplashIntegration.find_by(
+      id: params[:id],
+      location_id: @location.id
+    )
+    @sites = @splash_integration.fetch_settings
+    respond_to do |format|
+      if @sites.present?
+        format.json { render template: 'api/v1/splash_integrations/fetch_settings.json.jbuilder', status: 200 }
+      else
+        render template: 'api/v1/shared/index.json.jbuilder', status: 422, format: :json
+      end
+    end
+  end
+
   private
 
   def set_resource
@@ -73,7 +98,7 @@ class Api::V1::SplashIntegrationsController < Api::V1::BaseController
   end
 
   def splash_params
-    params.require(:splash_integration).permit(:username, :password, :host, :type, :action, metadata: %i[unifi_site_name unifi_site_id ssid zoneUUID organisation ssid network northbound_password ssid_id])
+    params.require(:splash_integration).permit(:username, :password, :host, :integration_type, :action, metadata: %i[unifi_site_name unifi_site_id ssid zoneUUID organisation ssid network northbound_password ssid_id])
   end
 
   def clean_params

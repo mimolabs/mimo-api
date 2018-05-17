@@ -66,5 +66,46 @@ describe Api::V1::SplashIntegrationsController, type: :controller do
         expect(response).to be_successful
       end
     end
+
+    describe "custom actions" do
+      context 'fetch sites action' do
+        it 'should allow the user to create a splash integration' do
+          s = SplashIntegration.create location_id: location.id, integration_type: 'unifi', host: 'https://1.2.3.4:8443'
+
+          headers = { 'set-cookie': "csrf_token=oJ63k2Ol84ZrjEQg8KuMZYFjvgrdFnl3; Path=/; Secure, unifises=e4JCiThbp4rocuwYIr6TZo3b1yC7hTFU; Path=/; Secure; HttpOnly" }
+          stub_request(:post, "https://1.2.3.4:8443/api/login").
+            with(
+              body: "{\"username\":null,\"password\":null}",
+              headers: {
+                'Accept'=>'*/*',
+                'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                'Content-Type'=>'application/json',
+                'User-Agent'=>'Faraday v0.15.1'
+              }).
+              to_return(status: 200, body: "", headers: headers)
+
+          data = '{ "data" : [ { "_id" : "5a79c2e0ef0a7045891ad735" , "desc" : "Site 3" , "name" : "jcuq87bb" , "role" : "admin"} , { "_id" : "5a79c2e5ef0a7045891ad746" , "desc" : "Site 4" , "name" : "ja75u8cb" , "role" : "admin"} , { "_id" : "5a54f92bef0a81e2fb4d5317" , "desc" : "another site" , "name" : "4qqm5t2d" , "role" : "admin"} , { "_id" : "5a4fa885ef0a81e2fb4d52ea" , "attr_hidden_id" : "default" , "attr_no_delete" : true , "desc" : "Default" , "name" : "default" , "role" : "admin"} , { "_id" : "5a730d28ef0a7045891ad6ce" , "desc" : "11111" , "name" : "hycuz8ba" , "role" : "admin"} , { "_id" : "5a79c2d7ef0a7045891ad724" , "desc" : "Site 2" , "name" : "e8g5rn6t" , "role" : "admin"}] , "meta" : { "rc" : "ok"}}'
+          data = JSON.parse data
+          data = data.to_json
+
+          stub_request(:get, "https://1.2.3.4:8443/api/self/sites").
+            with(
+              headers: {
+                'Accept'=>'*/*',
+                'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                'Content-Type'=>'application/json',
+                'Cookie'=>'csrf_token=oJ63k2Ol84ZrjEQg8KuMZYFjvgrdFnl3; Path=/; Secure, unifises=e4JCiThbp4rocuwYIr6TZo3b1yC7hTFU; Path=/; Secure; HttpOnly',
+                'Csrf-Token'=>'oJ63k2Ol84ZrjEQg8KuMZYFjvgrdFnl3',
+                'User-Agent'=>'Faraday v0.15.1'
+              }).
+              to_return(status: 200, body: data, headers: {})
+
+          get :fetch_settings, format: :json, params: { location_id: location.slug, id: s.id }
+          expect(response).to be_successful
+          parsed = JSON.parse response.body
+          expect(parsed[0]['id']).to be_present
+        end
+      end
+    end
   end
 end

@@ -20,7 +20,7 @@ module Unifi
     failed = []
 
     boxes.each do |box|
-      mac = Polkaspots.clean_mac box['mac']
+      mac = Helpers.clean_mac box['mac']
       puts "Importing #{mac}"
       n = process_import_boxes(box, 'unifi')
       n.save ? (success += 1) : (failed << mac)
@@ -93,7 +93,7 @@ module Unifi
     return unless cookies.present?
 
     conn = Faraday.new(
-      url: host + "/api/s/#{metadata[:unifi_site_name]}/cmd/stamgr",
+      url: host + "/api/s/#{metadata['unifi_site_name']}/cmd/stamgr",
       ssl: { verify: false }
     )
 
@@ -143,7 +143,7 @@ module Unifi
     wlan_group_id = unifi_fetch_wlan_groups
 
     opts = {}
-    site_name = metadata[:unifi_site_name] || 'default'
+    site_name = metadata['unifi_site_name'] || 'default'
     path = "/s/#{site_name}/rest/wlanconf"
 
     opts[:enabled]      = true
@@ -172,7 +172,7 @@ module Unifi
     cookies = unifi_get_credentials
     return unless cookies.present?
 
-    site_name = metadata[:unifi_site_name] || 'default'
+    site_name = metadata['unifi_site_name'] || 'default'
     path = "/s/#{site_name}/rest/wlangroup"
 
     resp = get_unifi(path, {}, cookies)
@@ -189,7 +189,7 @@ module Unifi
     cookies = unifi_get_credentials
     return unless cookies.present?
 
-    site_name = metadata[:unifi_site_name] || 'default'
+    site_name = metadata['unifi_site_name'] || 'default'
     path = "/s/#{site_name}/stat/device"
     resp = get_unifi(path, {}, cookies)
 
@@ -242,7 +242,7 @@ module Unifi
     cookies = unifi_get_credentials
     return unless cookies.present?
 
-    site_name = metadata[:unifi_site_name] || 'default'
+    site_name = metadata['unifi_site_name'] || 'default'
     path = "/s/#{site_name}/get/setting"
     resp = get_unifi(path, {}, cookies)
 
@@ -268,7 +268,7 @@ module Unifi
     guest_id = fetch_guest_id
 
     return unless guest_id
-    site_id = metadata[:unifi_site_id]
+    site_id = metadata['unifi_site_id']
 
     sites = unifi_fetch_sites
     return unless sites.present?
@@ -277,7 +277,7 @@ module Unifi
     return unless site.present?
 
     site_name = site['name']
-    metadata[:unifi_site_name] = site_name
+    metadata['unifi_site_name'] = site_name
 
     path = "/s/#{site_name}/set/setting/guest_access/#{guest_id}"
     opts = {}
@@ -370,10 +370,10 @@ module Unifi
     # log(response, opts)
     return response
 
-  # rescue => e
-  #   Rails.logger.info e
-  #   # log({status: 0}, opts)
-  #   false
+  rescue => e
+    Rails.logger.info e
+    # log({status: 0}, opts)
+    false
   end
 
   def post_unifi(path, opts={}, cookies=nil)
@@ -393,10 +393,10 @@ module Unifi
     end
     # log(resp)
     return resp
-  # rescue => e
-  #   Rails.logger.info e
-  #   # log({status: 0}, opts)
-  #   false
+  rescue => e
+    Rails.logger.info e
+    # log({status: 0}, opts)
+    false
   end
 
   def unifi_cookies_key
