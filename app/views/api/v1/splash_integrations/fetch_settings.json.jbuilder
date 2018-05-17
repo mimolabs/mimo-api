@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.array! @sites do |site|
   if site['_id'].present?
     # UniFI

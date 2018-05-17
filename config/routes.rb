@@ -13,6 +13,11 @@ Rails.application.routes.draw do
   get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',
     constraints: SplashIntegrationSites
 
+  get 'api/v1/logins' => 'api/v1/login_pages#show_welcome', constraints: LoginsWelcome
+  get 'api/v1/logins' => 'api/v1/login_pages#show'
+
+  get 'api/v1/logins' => 'api/v1/login_pages#create', constraints: ApiLoginsCreate
+
   namespace :api do
     namespace :v1 do
       resources :locations do

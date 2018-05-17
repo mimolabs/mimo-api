@@ -18,16 +18,16 @@ class Api::V1::SplashIntegrationsController < Api::V1::BaseController
     @splash_integration.location_id = @location.id
     respond_to do |format|
       if @splash_integration.save
-        format.json { 
+        format.json do
           render template: 'api/v1/splash_integrations/show.json.jbuilder',
-          status: 201
-        }
+                 status: 201
+        end
       else
         @errors = @splash_integration.errors.full_messages
-        format.json {
-          render template: 'api/v1/shared/index.json.jbuilder', 
-          status: 422
-        }
+        format.json do
+          render template: 'api/v1/shared/index.json.jbuilder',
+                 status: 422
+        end
       end
     end
   end
@@ -44,8 +44,9 @@ class Api::V1::SplashIntegrationsController < Api::V1::BaseController
     elsif params[:splash_integration][:action] == 'import_boxes'
       @results = @splash_integration.import_boxes
       respond_to do |format|
-        format.json { 
-          render template: 'api/v1/splash_integrations/import_boxes.json.jbuilder', status: 200 }
+        format.json do
+          render template: 'api/v1/splash_integrations/import_boxes.json.jbuilder', status: 200
+        end
       end
 
     else
@@ -74,7 +75,7 @@ class Api::V1::SplashIntegrationsController < Api::V1::BaseController
   end
 
   #### Custom Methods ####
-  
+
   def fetch_settings
     @splash_integration = SplashIntegration.find_by(
       id: params[:id],

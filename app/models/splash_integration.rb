@@ -5,9 +5,8 @@ class SplashIntegration < ApplicationRecord
 
   attr_accessor :action
 
-  before_validation :validate_integration,  if: lambda { |i| i.action == 'validate' }
-  before_validation :create_setup,          if: lambda { |i| i.action == 'create_setup' }
-
+  before_validation :validate_integration,  if: ->(i) { i.action == 'validate' }
+  before_validation :create_setup,          if: ->(i) { i.action == 'create_setup' }
 
   def log(response, meta = {}, opts = {})
     @body = JSON.parse(response.body) if response.try(:body).present?
@@ -28,15 +27,15 @@ class SplashIntegration < ApplicationRecord
   def fetch_settings
     case integration_type
     when 'unifi'
-      return unifi_fetch_sites
+      unifi_fetch_sites
     end
   end
 
   def create_setup
-    return ssid_error if !metadata['ssid'].present?
+    return ssid_error unless metadata['ssid'].present?
     case integration_type
     when 'unifi'
-      return unless create_unifi_guest({name: metadata['ssid']})
+      return unless create_unifi_guest(name: metadata['ssid'])
     end
 
     self.active = true
@@ -50,8 +49,8 @@ class SplashIntegration < ApplicationRecord
     end
   end
 
-  def process_import_boxes(box,type)
-    return Box.new(
+  def process_import_boxes(box, _type)
+    Box.new(
       mac_address:      box['mac'],
       description:      box['name'],
       location_id:      location_id,

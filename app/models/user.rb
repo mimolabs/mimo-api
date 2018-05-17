@@ -23,7 +23,7 @@ class User < ApplicationRecord
   def generate_defaults
     self.account_id = generate_account_id
   end
-  
+
   private
 
   def generate_account_id

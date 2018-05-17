@@ -8,4 +8,8 @@ module Helpers
   def self.add_dash(mac)
     mac.scan(/.{2}/).join('-') rescue mac
   end
+
+  def self.words
+    File.read(File.dirname(__FILE__) + '/..' + "/config/words.txt").split.sample
+  end
 end
