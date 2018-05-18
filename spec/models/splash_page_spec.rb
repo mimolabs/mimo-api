@@ -25,7 +25,15 @@ RSpec.describe SplashPage, type: :model do
     end
   end
 
-  describe 'tests for viewing the login pages' do
+  describe 'tests for logging in' do
+    it 'should log a unifi customer in' do
+      s = SplashPage.new
+
+      opts = {}
+      expect(s.login(opts)).to eq true
+    end
+
+    it 'should login the email users bro'
 
   end
 

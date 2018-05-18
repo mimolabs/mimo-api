@@ -70,6 +70,10 @@ class SplashPage < ApplicationRecord
     splash
   end
 
+  def login(ops)
+
+  end
+
   private
 
   def generate_defaults
