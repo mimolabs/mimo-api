@@ -51,8 +51,8 @@ class SplashPage < ApplicationRecord
   end
 
   def form_code(_client_mac, _ip = nil)
-    form = LOGIN_FORM[20]['form']
     @splash = self
+    form = LOGIN_FORM[20]['form']
     Mustache.render(form, @splash).gsub(/\r\n/m, "\n")
   end
 
@@ -60,7 +60,6 @@ class SplashPage < ApplicationRecord
     true
   end
 
-  ### TODO include the time restrictions
   def self.splash_by_unique_id(opts)
     splash = SplashPage.where(
       unique_id: opts[:splash_id],
@@ -71,8 +70,50 @@ class SplashPage < ApplicationRecord
   end
 
   def login(ops)
+    return unless validate_credentials(opts)
 
+    ## now login bla
+    # credentials = get_credentials(opts)
+    ### auth checks
+    ### email checks and validations
+    ### radius checks
+
+    ### check details are right
+    ### 
   end
+
+  def validate_credentials(opts)
+    if otp_login(opts)
+      login_otp_user(opts)
+    elsif password_login(opts)
+      login_password_user(opts)
+    else
+      login_clickthrough_user(opts)
+    end
+  end
+
+  def login_clickthrough_user(opts)
+    return true if backup_clickthrough
+    return SplashErrors.not_clickthrough
+  end
+
+  def backup_clickthrough
+    return true unless backup_sms || backup_email || backup_password ||
+      fb_login_on || g_login_on || tw_login_on
+    false
+  end
+
+  def password_login(opts)
+    opts[:password].present?
+  end
+
+  def otp_login(opts)
+    opts[:password] && opts[:otp]
+  end
+
+    # case integration_type
+    # when 'unifi'
+    # end
 
   private
 

@@ -14,7 +14,10 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
   def show
     @splash = find_splash
     @form = @splash.form_code(@client_mac, params[:uamip])
-    render template: 'api/v1/logins/show.json.jbuilder', status: 200, callback: params[:callback]
+    render template: 'api/v1/logins/show.json.jbuilder', 
+      status: 200, 
+      callback: params[:callback]
+
   rescue Mimo::StandardError => @exception
     render template: 'api/v1/logins/errors.json.jbuilder', status: 200, callback: params[:callback]
   end
@@ -24,6 +27,9 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
     @splash.login(options)
 
     puts @splash.inspect
+  rescue Mimo::StandardError => @exception
+    ### Wrong template
+    render template: 'api/v1/logins/errors.json.jbuilder', status: 200, callback: params[:callback]
   end
 
   def find_splash

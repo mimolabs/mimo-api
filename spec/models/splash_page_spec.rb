@@ -30,11 +30,22 @@ RSpec.describe SplashPage, type: :model do
       s = SplashPage.new
 
       opts = {}
-      expect(s.login(opts)).to eq true
+      # expect(s.login(opts)).to eq false
     end
 
     it 'should login the email users bro'
 
+    it 'should validate the credentials' do
+      s = SplashPage.new
+      opts = {}
+
+      ### a clickthrough user ###
+      expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Clickthrough not enabled')
+
+      s = SplashPage.new backup_sms: false, backup_email: false, backup_password: false, fb_login_on: false, g_login_on: false, tw_login_on: false
+      
+      expect(s.validate_credentials(opts)).to eq true
+    end
   end
 
   describe 'tests for viewing the login pages' do
