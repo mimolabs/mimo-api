@@ -6,7 +6,6 @@ end
 json.splash do
   json.id @splash.unique_id
   # json.google_analytics_id]  = google_analytics_id
-
   json.registration @splash.primary_access_id == 8
   # json.location_name @location.location_name
   json.logo_file_name @splash.logo_file_name

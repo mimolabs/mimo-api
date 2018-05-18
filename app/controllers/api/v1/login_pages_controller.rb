@@ -17,8 +17,13 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
     render template: 'api/v1/logins/show.json.jbuilder', status: 200, callback: params[:callback]
   rescue Mimo::StandardError => @exception
     render template: 'api/v1/logins/errors.json.jbuilder', status: 200, callback: params[:callback]
-  rescue Exception => e
-    raise e
+  end
+
+  def create
+    @splash = SplashPage.find_by unique_id: params[:splash_id]
+    @splash.login(options)
+
+    puts @splash.inspect
   end
 
   def find_splash
@@ -31,7 +36,6 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
       location_id:    @box.location_id
     }
 
-    puts opts
     @splash = SplashPage.find_splash(opts)
   end
 

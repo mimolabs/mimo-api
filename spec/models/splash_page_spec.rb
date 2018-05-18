@@ -25,7 +25,11 @@ RSpec.describe SplashPage, type: :model do
     end
   end
 
-  describe 'tests for the login pages' do
+  describe 'tests for viewing the login pages' do
+
+  end
+
+  describe 'tests for viewing the login pages' do
     it 'should find a splash page by unique id' do
 
       s = SplashPage.new location_id: 1

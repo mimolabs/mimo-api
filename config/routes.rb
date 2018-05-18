@@ -14,9 +14,11 @@ Rails.application.routes.draw do
     constraints: SplashIntegrationSites
 
   get 'api/v1/logins' => 'api/v1/login_pages#show_welcome', constraints: LoginsWelcome
-  get 'api/v1/logins' => 'api/v1/login_pages#show'
-
   get 'api/v1/logins' => 'api/v1/login_pages#create', constraints: ApiLoginsCreate
+
+  post 'api/v1/logins' => 'api/v1/login_pages#create'
+  
+  get 'api/v1/logins' => 'api/v1/login_pages#show'
 
   namespace :api do
     namespace :v1 do
