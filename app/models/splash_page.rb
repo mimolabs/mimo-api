@@ -50,12 +50,6 @@ class SplashPage < ApplicationRecord
     a.first
   end
 
-  def self.first_available_splash(opts)
-    # return allowed if splashes.length >= 1
-
-    # SplashErrors.not_found
-  end
-
   def form_code(_client_mac, _ip = nil)
     form = LOGIN_FORM[20]['form']
     @splash = self

@@ -22,14 +22,17 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
   end
 
   def find_splash
-    @splash = SplashPage.find_splash({
+    opts = {
       client_mac:     @client_mac,
-      ap_mac:         @ap_mac,
+      ap_mac:         @box.mac_address,
       tags:           params[:tags],
       uamip:          params[:uamip],
       splash_id:      params[:splash_id],
-      location_id:    params[:location_id]
-    })
+      location_id:    @box.location_id
+    }
+
+    puts opts
+    @splash = SplashPage.find_splash(opts)
   end
 
   private
