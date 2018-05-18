@@ -30,8 +30,9 @@ ActiveRecord::Migration.maintain_test_schema!
 
 require 'factory_bot'
 require 'vcr'
-
 require 'webmock/rspec'
+require 'errors'
+
 WebMock.disable_net_connect!(allow_localhost: true)
 
 RSpec.configure do |config|

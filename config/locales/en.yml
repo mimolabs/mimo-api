@@ -31,5 +31,5 @@
 
 en:
   splash:
-    404:
+    not_found:
       'No splash page found'

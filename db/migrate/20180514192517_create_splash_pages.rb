@@ -101,8 +101,8 @@ class CreateSplashPages < ActiveRecord::Migration[5.2]
       t.string :password_btn_font_colour,         default: 'rgb(0, 0, 0)', limit: 22
       t.string :access_restrict,                  default: 'none', limit: 10
       t.string :access_restrict_period,           default: 'daily', limit: 10
-      t.string :available_start,                  default: '00:00', limit: 10
-      t.string :available_end,                    default: '00:00', limit: 10
+      t.string :available_start,                  default: '00', limit: 2
+      t.string :available_end,                    default: '00', limit: 2
       t.string :input_padding,                    default: '10px 15px', limit: 10
       t.string :input_height,                     default: '40px', limit: 10
       t.string :input_border_colour,              default: '#d0d0d0', limit: 22

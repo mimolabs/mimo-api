@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::LoginPagesController < Api::V1::BaseController
+  require 'errors'
   before_action :auth_logins # , only: [:update, :show, :create, :show_welcome]
 
   ### The logins are still using JSONP
@@ -12,20 +13,12 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
 
   def show
     @splash = find_splash
-    # @short = params[:short]
-    # @errors = @splash.splash_errors
-    # if @errors
-    #   @short = true
-    # else
     @form = @splash.form_code(@client_mac, params[:uamip])
     render template: 'api/v1/logins/show.json.jbuilder', status: 200, callback: params[:callback]
-  rescue CustomException => e
-    @exception = e
-    puts e.message
-    puts 'xxxxxxxxxxxxxxxxxxxx'
+  rescue Mimo::StandardError => @exception
     render template: 'api/v1/logins/errors.json.jbuilder', status: 200, callback: params[:callback]
-  # rescue Exception => e
-  #   raise e
+  rescue Exception => e
+    raise e
   end
 
   def find_splash

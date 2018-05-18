@@ -1,43 +1,59 @@
+# frozen_string_literal: true
+
 class SplashPage < ApplicationRecord
   before_create :generate_defaults
 
   def self.find_splash(opts)
-    raise CustomException.new()
     return splash_by_unique_id(opts) if opts[:splash_id].present?
     get_splash(opts)
   end
 
-  def get_splash
-    splash = first_available_splash(opts)
-    return splash if splash.present?
-    errors.add :base, 'No splash pages found, please create one.'
+  def self.get_splash(opts)
+    splash = allowed(opts)
+    return SplashErrors.not_found unless splash.present?
+    splash
+  end
+
+  def self.find_all_splash_pages(opts)
+    splash = SplashPage.where(location_id: opts[:location_id], active: true)
+                       .order(weight: :desc)
+    return SplashErrors.not_found unless splash.present?
+    splash
+  end
+
+  def allowed_now
+    hr  = Time.now.hour
+    day = Time.now.strftime('%w')
+
+    start = available_start.to_i
+    endd = available_end.to_i
+
+    ### Start End hours must be >= now and <= now OR zeros
+    return false if (hr < start || hr > endd) && start != 0 && endd != 0
+
+    ### Check the day is allowed also
+    return true if available_days.blank? || (available_days.include? day)
+
     false
   end
 
-  def find_all_splash_pages(opts)
-    SplashPage.where(location_id: location_id, active: true).order(weight: :desc)
+  def self.allowed(opts)
+    splashes = find_all_splash_pages(opts)
+
+    a = []
+    splashes.each do |s|
+      ok = s.allowed_now
+      a << s if ok
+    end
+
+    return SplashErrors.not_available unless a.present?
+    a.first
   end
 
-  def first_available_splash(opts)
-    splashes = find_all_splash_pages(opts)
-    # ss = splashes.first if splashes.present?
-    # if splashes.length > 1
-    #   splash_pages = allowed_splash(splashes, opts[:client_mac], opts[:uamip])
-    #   if splash_pages.present?
-    #     splash = splash_pages.select { |s| s[:allowed] == true }.first
-    #     return splashes.select { |s| s.id.to_s == splash[:id] }.first if splash.present?
-    #   end
-    #   ss.splash_errors = ss.custom_quota_message
-    #   return ss
-    # elsif splashes.length == 1
-    #   unless ss.allowed_access(opts)
-    #     ss.splash_errors = ss.custom_quota_message
-    #   end
-    #   return ss
-    # else
-    #   errors.add :base, "<h2>Splash Not Found.</h2><p> Please check you've added this box to your dashboard and ensure it has a valid zone.</p>"
-    #   false
-    # end
+  def self.first_available_splash(opts)
+    # return allowed if splashes.length >= 1
+
+    # SplashErrors.not_found
   end
 
   def form_code(_client_mac, _ip = nil)
@@ -52,10 +68,12 @@ class SplashPage < ApplicationRecord
 
   ### TODO include the time restrictions
   def self.splash_by_unique_id(opts)
-    SplashPage.where(
+    splash = SplashPage.where(
       unique_id: opts[:splash_id],
       active: true
     ).order(weight: :desc).first
+    return SplashErrors.not_found unless splash.present?
+    splash
   end
 
   private
