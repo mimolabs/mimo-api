@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_17_135044) do
+ActiveRecord::Schema.define(version: 2018_05_19_134903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -436,6 +436,8 @@ ActiveRecord::Schema.define(version: 2018_05_17_135044) do
     t.text "passwd_change_day", array: true
     t.text "tags", array: true
     t.text "networks", array: true
+    t.string "twilio_user", limit: 50
+    t.string "twilio_pass", limit: 50
     t.index ["location_id"], name: "index_splash_on_location_id"
   end
 

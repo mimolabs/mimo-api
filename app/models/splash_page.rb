@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SplashPage < ApplicationRecord
+  include Twilio
   before_create :generate_defaults
 
   def self.find_splash(opts)
@@ -78,22 +79,20 @@ class SplashPage < ApplicationRecord
     process_login(opts)
   end
 
-  def unifi_response
-    { splash_id: id }
-  end
-
   def process_login(opts)
     integration = SplashIntegration.find_by location_id: location_id, active: true
     return SplashErrors.no_integration unless integration.present?
 
     case integration.integration_type
     when 'unifi'
-      return unifi_response if integration.login_unifi_client(opts[:client_mac], session_timeout || 0)
+      return unifi_response if integration.login_unifi_client(opts[:client_mac], session_timeout)
     end
   end
 
   def validate_credentials(opts)
-    if otp_login(opts)
+    if otp_generate(opts)
+      generate_otp(opts)
+    elsif otp_login(opts)
       login_otp_user(opts)
     elsif password_login(opts)
       login_password_user(opts)
@@ -102,14 +101,33 @@ class SplashPage < ApplicationRecord
     end
   end
 
-  def login_clickthrough_user(opts)
+  def login_clickthrough_user(_opts)
     return true if backup_clickthrough
-    return SplashErrors.not_clickthrough
+    SplashErrors.not_clickthrough
   end
 
   def login_password_user(opts)
     return true if opts[:password].downcase === password
     SplashErrors.splash_incorrect_password
+  end
+
+  def generate_otp(opts)
+    validate_number(opts[:number])
+
+    # expires = (Time.now + 5.minutes).to_i
+    # code = SecureRandom.random_number(1000000)
+    # # o = [('a'..'z')].map(&:to_a).flatten
+    # # code = (0...5).map { o[rand(o.length)] }.join
+
+    # otp = "#{code}.#{params[:clientMac]}"
+
+    # otsc = OneTimeSplashCode.new
+    # otsc.otp = otp
+    # otsc.expires = expires
+    # otsc.splash_page_id = id.to_s
+    # return false unless otsc.save
+
+    # send_otp(code, params)
   end
 
   def backup_clickthrough
@@ -123,8 +141,16 @@ class SplashPage < ApplicationRecord
     opts[:password].present? && backup_password
   end
 
+  def otp_generate(opts)
+    opts[:number] && backup_sms
+  end
+
   def otp_login(opts)
     opts[:password] && opts[:otp]
+  end
+
+  def unifi_response
+    { splash_id: id }
   end
 
   private

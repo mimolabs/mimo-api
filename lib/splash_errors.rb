@@ -26,4 +26,16 @@ module SplashErrors
   def self.splash_incorrect_password
     raise Mimo::StandardError.new I18n.t(:"splash.invalid_password", :default => "Password incorrect")
   end
+
+  def self.twilio_missing_creds
+    raise Mimo::StandardError.new I18n.t(:"splash.twilio_missing_creds", :default => "Missing Twilio credentials")
+  end
+
+  def self.twilio_invalid_creds
+    raise Mimo::StandardError.new I18n.t(:"splash.twilio_invalid_creds", :default => "Invalid Twilio credentials")
+  end
+
+  def self.twilio_invalid_number
+    raise Mimo::StandardError.new I18n.t(:"splash.twilio_invalid_number", :default => "Invalid phone number")
+  end
 end

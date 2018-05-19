@@ -52,6 +52,15 @@ RSpec.describe SplashPage, type: :model do
       s.password = 'cheese'
       expect(s.validate_credentials(opts)).to eq true
     end
+
+    it 'should generate an OTP for the OTP logins' do
+      opts = {}
+      s = SplashPage.new backup_sms: true 
+      # expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Invalid phone number')
+      
+      opts[:number] = '+44777777777777'
+      expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Invalid phone number')
+    end
   end
 
   describe 'login UniFi' do
@@ -193,6 +202,55 @@ RSpec.describe SplashPage, type: :model do
       day = Time.now.strftime('%w')
       s = SplashPage.new location_id: 1, available_start: '00', available_end: '00', available_days: [day]
       expect(s.allowed_now).to eq true
+    end
+  end
+
+  describe 'OTP Logins' do
+    fit 'should validate a number via twilio' do
+      s = SplashPage.new
+
+      number = '00000000'
+      expect { s.validate_number(number) }.to raise_error(Mimo::StandardError, 'Missing Twilio credentials')
+
+      s.twilio_user = 'simon'
+      s.twilio_pass = 'morley'
+
+      stub_request(:get, "https://lookups.twilio.com/v1/PhoneNumbers/00000000?Type=carrier").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization'=>'Basic c2ltb246bW9ybGV5',
+            'User-Agent'=>'Faraday v0.15.1'
+          }).
+          to_return(status: 401, body: "", headers: {})
+      
+      expect { s.validate_number(number) }.to raise_error(Mimo::StandardError, 'Invalid Twilio credentials')
+
+      stub_request(:get, "https://lookups.twilio.com/v1/PhoneNumbers/00000000?Type=carrier").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization'=>'Basic c2ltb246bW9ybGV5',
+            'User-Agent'=>'Faraday v0.15.1'
+          }).
+          to_return(status: 404, body: "", headers: {})
+      
+      expect { s.validate_number(number) }.to raise_error(Mimo::StandardError, 'Invalid phone number')
+
+      stub_request(:get, "https://lookups.twilio.com/v1/PhoneNumbers/00000000?Type=carrier").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization'=>'Basic c2ltb246bW9ybGV5',
+            'User-Agent'=>'Faraday v0.15.1'
+          }).
+          to_return(status: 200, body: "", headers: {})
+      
+        expect(s.validate_number(number)).to eq true
+        expect(s.valid_number(number)).to eq true
     end
   end
 end
