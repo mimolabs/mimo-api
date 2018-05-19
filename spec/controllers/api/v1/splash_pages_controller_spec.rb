@@ -46,6 +46,7 @@ describe Api::V1::SplashPagesController, type: :controller do
 
     context 'create action' do
       it 'should allow the user to create a splash page' do
+        SplashPage.destroy_all
         post :create, format: :json, params: { location_id: location.slug, splash_page: { weight: 1 } }
         expect(response).to be_successful
         s = SplashPage.last
@@ -55,10 +56,11 @@ describe Api::V1::SplashPagesController, type: :controller do
 
     context 'show action' do
       it 'should allow the user to view their location' do
+        SplashPage.destroy_all
         s = SplashPage.create location_id: location.id
-        patch :update, format: :json, params: { location_id: location.slug, id: s.id, splash_page: { weight: 10_000 } }
+        patch :update, format: :json, params: { location_id: location.slug, id: s.id, splash_page: { weight: 10000 } }
         expect(response).to be_successful
-        expect(s.reload.weight).to eq 10_000
+        expect(s.reload.weight).to eq 10000
       end
     end
 

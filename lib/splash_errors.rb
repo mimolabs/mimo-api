@@ -8,7 +8,7 @@ module SplashErrors
   end
 
   def self.not_clickthrough
-    raise Mimo::StandardError.new I18n.t(:"splash.not_clickthrough", :default => "Clickthrough not enabled")
+    raise Mimo::StandardError.new I18n.t(:"splash.not_clickthrough", :default => "Clickthrough not allowed")
   end
 
   def self.no_integration

@@ -24,7 +24,10 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
 
   def create
     @splash = SplashPage.find_by unique_id: params[:splash_id]
-    resp = @splash.login(splash_attribtes)
+    resp = @splash.login(splash_attributes)
+    puts 8888888888888888888888888888888
+    puts resp
+    puts 888888888888888888888888888888
     render :status=>200, :json=> resp, callback: params[:callback]
   rescue Mimo::StandardError => @exception
     render template: 'api/v1/logins/errors.json.jbuilder', status: 200

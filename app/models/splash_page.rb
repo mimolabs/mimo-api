@@ -108,8 +108,9 @@ class SplashPage < ApplicationRecord
   end
 
   def backup_clickthrough
-    return true unless backup_sms || backup_email || backup_password ||
-      fb_login_on || g_login_on || tw_login_on
+    return true unless backup_sms 
+    # || backup_email || backup_password ||
+    #   fb_login_on || g_login_on || tw_login_on
     false
   end
 
@@ -120,10 +121,6 @@ class SplashPage < ApplicationRecord
   def otp_login(opts)
     opts[:password] && opts[:otp]
   end
-
-    # case integration_type
-    # when 'unifi'
-    # end
 
   private
 

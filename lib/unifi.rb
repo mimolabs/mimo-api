@@ -116,11 +116,6 @@ module Unifi
     else
       SplashErrors.login_unifi_client_error
     end
-  # rescue Exception => e
-  #   Rails.logger.info e
-  #   errors.add :base, 'Timeout error, please check host'
-  #   # log({status: 0}, opts)
-  #   false
   end
 
   def human_unifi_error(error)
