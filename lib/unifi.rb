@@ -90,7 +90,7 @@ module Unifi
 
   def login_unifi_client(client_mac, minutes=60, logout=false)
     cookies = unifi_get_credentials
-    return unless cookies.present?
+    return SplashErrors.unifi_auth unless cookies.present?
 
     conn = Faraday.new(
       url: host + "/api/s/#{metadata['unifi_site_name']}/cmd/stamgr",
@@ -99,32 +99,28 @@ module Unifi
 
     cmd = logout ? 'unauthorize-guest' : 'authorize-guest'
     opts = {mac: client_mac, cmd: cmd, minutes: minutes}
-    begin
-      response = conn.post do |req|
-        req.body                      = opts.to_json
-        req.headers['Content-Type']   = 'application/json'
-        req.headers['cookie']         = cookies["raw"]
-        req.headers['csrf_token']     = cookies["csrf_token"]
-        req.options.timeout           = 3
-        req.options.open_timeout      = 2
-      end
 
-      # log(response, opts)
-      case response.status
-      when 200
-        puts "wooohooo!"
-        return true
-      else
-        puts resp.inspect
-        # errors.add :base, human_unifi_error(error)
-        return false
-      end
-    rescue => e
-      Rails.logger.info e
-      errors.add :base, 'Timeout error, please check host'
-      # log({status: 0}, opts)
-      false
+    response = conn.post do |req|
+      req.body                      = opts.to_json
+      req.headers['Content-Type']   = 'application/json'
+      req.headers['cookie']         = cookies["raw"]
+      req.headers['csrf_token']     = cookies["csrf_token"]
+      req.options.timeout           = 3
+      req.options.open_timeout      = 2
     end
+
+    # log(response, opts)
+    case response.status
+    when 200
+      return true
+    else
+      SplashErrors.login_unifi_client_error
+    end
+  # rescue Exception => e
+  #   Rails.logger.info e
+  #   errors.add :base, 'Timeout error, please check host'
+  #   # log({status: 0}, opts)
+  #   false
   end
 
   def human_unifi_error(error)

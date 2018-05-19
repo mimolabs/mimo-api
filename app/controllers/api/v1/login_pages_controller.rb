@@ -2,7 +2,7 @@
 
 class Api::V1::LoginPagesController < Api::V1::BaseController
   require 'errors'
-  before_action :auth_logins # , only: [:update, :show, :create, :show_welcome]
+  before_action :auth_logins
 
   ### The logins are still using JSONP
   after_action { |controller| handle_jsonp(controller) }
@@ -24,12 +24,10 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
 
   def create
     @splash = SplashPage.find_by unique_id: params[:splash_id]
-    @splash.login(options)
-
-    puts @splash.inspect
+    resp = @splash.login(splash_attribtes)
+    render :status=>200, :json=> resp, callback: params[:callback]
   rescue Mimo::StandardError => @exception
-    ### Wrong template
-    render template: 'api/v1/logins/errors.json.jbuilder', status: 200, callback: params[:callback]
+    render template: 'api/v1/logins/errors.json.jbuilder', status: 200
   end
 
   def find_splash
@@ -47,6 +45,25 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
 
   private
 
+  def splash_attributes
+    return {
+      mac:              @client_mac,
+      ip:               params[:clientIp] || params[:client_ip],
+      device:           params[:device],
+      email:            params[:email],
+      token:            params[:token],
+      social_type:      params[:social_type],
+      screen_name:      params[:screen_name],
+      username:         params[:username],
+      password:         params[:password],
+      logincode:        params[:logincode],
+      challenge:        params[:challenge],
+      newsletter:       params[:newsletter],
+      gid:              params[:gid],
+      ap_mac:           params[:apMac] || params[:ap_mac],
+      data:             params[:data]
+    }
+  end
   def set_resource; end
 
   def handle_jsonp(controller)
@@ -57,7 +74,8 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
 
   def auth_logins
     if params[:request_uri].blank? || params[:apMac].blank?
-      render status: 200, json: { message: "You're missing some params, please consult the docs.", error: true }.to_json, callback: params[:callback]
+      msg = I18n.t(:"logins.params_error", :default => "You're missing some params, please consult the docs.")
+      render status: 200, json: { message: msg, error: true }.to_json, callback: params[:callback]
       return
     end
 
@@ -67,6 +85,7 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
 
     return if @box.present?
 
-    render status: 200, json: { message: 'Box not added', error: true }.to_json, callback: params[:callback]
+    msg = I18n.t(:"logins.box_not_found", :default => "Box not added")
+    render status: 200, json: { message: msg, error: true }.to_json, callback: params[:callback]
   end
 end

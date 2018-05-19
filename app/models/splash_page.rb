@@ -69,17 +69,27 @@ class SplashPage < ApplicationRecord
     splash
   end
 
-  def login(ops)
+  def login(opts)
     return unless validate_credentials(opts)
 
-    ## now login bla
-    # credentials = get_credentials(opts)
-    ### auth checks
     ### email checks and validations
     ### radius checks
 
-    ### check details are right
-    ### 
+    process_login(opts)
+  end
+
+  def unifi_response
+    { splash_id: id }
+  end
+
+  def process_login(opts)
+    integration = SplashIntegration.find_by location_id: location_id, active: true
+    return SplashErrors.no_integration unless integration.present?
+
+    case integration.integration_type
+    when 'unifi'
+      return unifi_response if integration.login_unifi_client(opts[:client_mac], session_timeout || 0)
+    end
   end
 
   def validate_credentials(opts)

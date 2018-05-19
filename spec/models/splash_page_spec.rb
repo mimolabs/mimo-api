@@ -5,6 +5,7 @@ require 'errors'
 
 RSpec.describe SplashPage, type: :model do
 
+  let(:location) { Location.create }
   let(:client_mac) { (1..6).map{"%0.2X"%rand(256)}.join('-') }
   let(:ap_mac) { (1..6).map{"%0.2X"%rand(256)}.join('-') }
   let(:ip) { '1.2.3.4' }
@@ -35,16 +36,83 @@ RSpec.describe SplashPage, type: :model do
 
     it 'should login the email users bro'
 
-    it 'should validate the credentials' do
+    it 'should validate the credentials - clickthrough user' do
       s = SplashPage.new
       opts = {}
 
-      ### a clickthrough user ###
       expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Clickthrough not enabled')
 
       s = SplashPage.new backup_sms: false, backup_email: false, backup_password: false, fb_login_on: false, g_login_on: false, tw_login_on: false
       
       expect(s.validate_credentials(opts)).to eq true
+    end
+  end
+
+  describe 'login UniFi' do
+
+    before(:each) do
+      SplashIntegration.destroy_all
+    end
+
+    it 'should log a unifi customer in' do
+      s = SplashPage.new(
+        backup_sms: false, backup_email: false, backup_password: false, fb_login_on: false, g_login_on: false, tw_login_on: false, location_id: 1001
+      )
+      opts = {}
+
+      resp = { splash_id: s.id }
+      expect { s.login(opts) }.to raise_error(Mimo::StandardError, "No integration found")
+
+      si = SplashIntegration.create location_id: 1001, integration_type: 'unifi'
+      expect { s.login(opts) }.to raise_error(Mimo::StandardError, "No integration found")
+
+      ### Auth error
+      si.update active: true
+      expect { s.login(opts) }.to raise_error(Mimo::StandardError, "Could not authorise UniFi")
+
+      headers = { 'set-cookie': "csrf_token=oJ63k2Ol84ZrjEQg8KuMZYFjvgrdFnl3; Path=/; Secure, unifises=e4JCiThbp4rocuwYIr6TZo3b1yC7hTFU; Path=/; Secure; HttpOnly" }
+      stub_request(:post, "https://1.2.3.4:8443/api/login").
+        with(
+          body: "{\"username\":\"simon\",\"password\":\"morley\"}",
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Content-Type'=>'application/json',
+            'User-Agent'=>'Faraday v0.15.1'
+          }).
+          to_return(status: 200, body: "", headers: headers)
+
+       stub_request(:post, "https://1.2.3.4:8443/api/s//cmd/stamgr").
+         with(
+           body: "{\"mac\":null,\"cmd\":\"authorize-guest\",\"minutes\":60}",
+           headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Content-Type'=>'application/json',
+          'Cookie'=>'csrf_token=oJ63k2Ol84ZrjEQg8KuMZYFjvgrdFnl3; Path=/; Secure, unifises=e4JCiThbp4rocuwYIr6TZo3b1yC7hTFU; Path=/; Secure; HttpOnly',
+          'Csrf-Token'=>'oJ63k2Ol84ZrjEQg8KuMZYFjvgrdFnl3',
+          'User-Agent'=>'Faraday v0.15.1'
+           }).
+         to_return(status: 200, body: "", headers: {})
+
+      si.update username: 'simon', password: 'morley', host: 'https://1.2.3.4:8443'
+      expect(s.login(opts)).to eq resp
+
+      stub_request(:post, "https://1.2.3.4:8443/api/s//cmd/stamgr").
+         with(
+           body: "{\"mac\":null,\"cmd\":\"authorize-guest\",\"minutes\":60}",
+           headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Content-Type'=>'application/json',
+          'Cookie'=>'csrf_token=oJ63k2Ol84ZrjEQg8KuMZYFjvgrdFnl3; Path=/; Secure, unifises=e4JCiThbp4rocuwYIr6TZo3b1yC7hTFU; Path=/; Secure; HttpOnly',
+          'Csrf-Token'=>'oJ63k2Ol84ZrjEQg8KuMZYFjvgrdFnl3',
+          'User-Agent'=>'Faraday v0.15.1'
+           }).
+         to_return(status: 401, body: "", headers: {})
+
+      si.update username: 'simon', password: 'morley', host: 'https://1.2.3.4:8443'
+      expect { s.login(opts) }.to raise_error(Mimo::StandardError, "Could not login UniFi client")
     end
   end
 
