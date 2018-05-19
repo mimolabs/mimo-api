@@ -107,15 +107,20 @@ class SplashPage < ApplicationRecord
     return SplashErrors.not_clickthrough
   end
 
+  def login_password_user(opts)
+    return true if opts[:password].downcase === password
+    SplashErrors.splash_incorrect_password
+  end
+
   def backup_clickthrough
-    return true unless backup_sms 
+    return true unless backup_sms || backup_password
     # || backup_email || backup_password ||
     #   fb_login_on || g_login_on || tw_login_on
     false
   end
 
   def password_login(opts)
-    opts[:password].present?
+    opts[:password].present? && backup_password
   end
 
   def otp_login(opts)

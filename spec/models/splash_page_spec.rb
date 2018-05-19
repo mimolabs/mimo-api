@@ -27,16 +27,9 @@ RSpec.describe SplashPage, type: :model do
   end
 
   describe 'tests for logging in' do
-    it 'should log a unifi customer in' do
-      s = SplashPage.new
-
-      opts = {}
-      # expect(s.login(opts)).to eq false
-    end
-
     it 'should login the email users bro'
 
-    it 'should validate the credentials - clickthrough user' do
+    it 'should validate a clickthrough user' do
       # s = SplashPage.new
       opts = {}
 
@@ -45,6 +38,18 @@ RSpec.describe SplashPage, type: :model do
 
       s = SplashPage.new backup_sms: false, backup_email: false, backup_password: false, fb_login_on: false, g_login_on: false, tw_login_on: false
       
+      expect(s.validate_credentials(opts)).to eq true
+    end
+
+    it 'should validate a password user' do
+      opts = {}
+      s = SplashPage.new backup_password: true 
+      expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Clickthrough not allowed')
+
+      opts[:password] = 'cheese'
+      expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Password incorrect')
+
+      s.password = 'cheese'
       expect(s.validate_credentials(opts)).to eq true
     end
   end

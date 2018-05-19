@@ -22,4 +22,8 @@ module SplashErrors
   def self.unifi_auth
     raise Mimo::StandardError.new I18n.t(:"splash.unifi_auth_error", :default => "Could not authorise UniFi")
   end
+
+  def self.splash_incorrect_password
+    raise Mimo::StandardError.new I18n.t(:"splash.invalid_password", :default => "Password incorrect")
+  end
 end
