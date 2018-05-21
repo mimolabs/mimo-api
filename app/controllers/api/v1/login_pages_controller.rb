@@ -66,7 +66,9 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
       newsletter:       params[:newsletter],
       gid:              params[:gid],
       ap_mac:           params[:apMac] || params[:ap_mac],
-      data:             params[:data]
+      data:             params[:data],
+      otp:              params[:otp],
+      number:           params[:number]
     }
   end
   def set_resource; end

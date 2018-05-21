@@ -91,6 +91,8 @@ class SplashPage < ApplicationRecord
   end
 
   def record_login(opts)
+    return if opts[:number].present?
+
     @login_params = {}
     @login_params[:location_id]       = location_id
     @login_params[:token]             = opts[:token]
@@ -102,7 +104,6 @@ class SplashPage < ApplicationRecord
     @login_params[:newsletter]        = opts[:newsletter]
     @login_params[:email]             = opts[:email]
     @login_params[:ap_mac]            = opts[:ap_mac]
-    @login_params[:gid]               = opts[:gid]
     @login_params[:consent]           = opts[:consent]
     @login_params[:double_opt_in]     = double_opt_in
     @login_params[:timestamp]         = Time.now.to_i
@@ -135,8 +136,15 @@ class SplashPage < ApplicationRecord
   end
 
   def login_clickthrough_user(_opts)
-    return true if backup_clickthrough
+    return true if backup_clickthrough || backup_sms
     SplashErrors.not_clickthrough
+  end
+
+  def login_otp_user(opts)
+    params = { client_mac: opts[:client_mac], splash_id: id }
+    code = OneTimeSplashCode.find(params)
+    return SplashErrors.splash_incorrect_password if code.blank? || (code.to_s != opts[:password].to_s)
+    true
   end
 
   def login_password_user(opts)
@@ -175,11 +183,11 @@ class SplashPage < ApplicationRecord
   end
 
   def otp_generate(opts)
-    opts[:number] && backup_sms
+    opts[:number] && backup_sms && !opts[:otp]
   end
 
   def otp_login(opts)
-    opts[:password] && opts[:otp]
+    opts[:password] && opts[:otp] && backup_sms
   end
 
   def unifi_response

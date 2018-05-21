@@ -9,7 +9,7 @@ class OneTimeSplashCode
     val = REDIS.get(k)
     return unless val.present?
     REDIS.del k
-    true
+    val
   end
 
   def self.create(opts)
