@@ -53,13 +53,91 @@ RSpec.describe SplashPage, type: :model do
       expect(s.validate_credentials(opts)).to eq true
     end
 
-    it 'should generate an OTP for the OTP logins' do
+    it 'should should validate the phone number against the Twilio API for OTP logins' do
       opts = {}
       s = SplashPage.new backup_sms: true 
-      # expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Invalid phone number')
-      
       opts[:number] = '+44777777777777'
+
+      # expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Invalid phone number')
+      expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Missing Twilio credentials')
+
+      s.twilio_user = 'simon'
+      s.twilio_pass = 'simon'
+
+      stub_request(:get, "https://lookups.twilio.com/v1/PhoneNumbers/+44777777777777?Type=carrier").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization'=>'Basic c2ltb246c2ltb24=',
+            'User-Agent'=>'Faraday v0.15.1'
+          }).
+          to_return(status: 404, body: "", headers: {})
+          
       expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Invalid phone number')
+
+      stub_request(:get, "https://lookups.twilio.com/v1/PhoneNumbers/+44777777777777?Type=carrier").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization'=>'Basic c2ltb246c2ltb24=',
+            'User-Agent'=>'Faraday v0.15.1'
+          }).
+          to_return(status: 200, body: "", headers: {})
+          
+      expect(s.validate_credentials(opts)).to eq true
+    end
+
+    it 'should should generate an OTP and queue job to send message' do
+      opts = {}
+
+      mac = client_mac
+      s = SplashPage.new backup_sms: true, id: 100
+      opts[:number]     = '+44777777777777'
+      opts[:client_mac] = mac 
+
+      s.twilio_user = 'simon'
+      s.twilio_pass = 'simon'
+
+      stub_request(:get, "https://lookups.twilio.com/v1/PhoneNumbers/+44777777777777?Type=carrier").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization'=>'Basic c2ltb246c2ltb24=',
+            'User-Agent'=>'Faraday v0.15.1'
+          }).
+          to_return(status: 200, body: "", headers: {})
+          
+      expect(s.generate_otp(opts)).to eq true
+
+      key = "otp:#{mac}:#{s.id}"
+      expect(REDIS.get(key)).to be_present
+
+      params = { client_mac: mac, splash_id: s.id }
+      expect(OneTimeSplashCode.find(params)).to eq true
+      
+      expect(REDIS.get(key)).to eq nil
+    end
+
+    it 'should validate the email' do
+      s = SplashPage.new id: 282, location_id: 1001
+      SplashIntegration.create location_id: 1001, integration_type: 'unifi', active: true
+
+      opts = { email: 'b' }
+      expect { s.login(opts) }.to raise_error(Mimo::StandardError, 'Invalid email address')
+
+      opts[:email] = 'help@oh-mimo.com'
+
+      ### Raises an error since we've not bothered to log the unifi in
+      expect { s.login(opts) }.to raise_error(Mimo::StandardError, "Could not authorise UniFi")
+
+      opts = { }
+      expect { s.login(opts) }.to raise_error(Mimo::StandardError, "Could not authorise UniFi")
+
+      s.email_required = true
+      expect { s.login(opts) }.to raise_error(Mimo::StandardError, 'Missing email address')
     end
   end
 
@@ -206,7 +284,7 @@ RSpec.describe SplashPage, type: :model do
   end
 
   describe 'OTP Logins' do
-    fit 'should validate a number via twilio' do
+    it 'should validate a number via twilio' do
       s = SplashPage.new
 
       number = '00000000'

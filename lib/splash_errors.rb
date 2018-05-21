@@ -1,4 +1,12 @@
 module SplashErrors
+  def self.missing_email
+    raise Mimo::StandardError.new I18n.t(:"splash.missing_email", :default => "Missing email address")
+  end
+
+  def self.invalid_email
+    raise Mimo::StandardError.new I18n.t(:"splash.invalid_email", :default => "Invalid email address")
+  end
+
   def self.not_available
     raise Mimo::StandardError.new I18n.t(:"splash.not_available", :default => "Not available at this time")
   end
