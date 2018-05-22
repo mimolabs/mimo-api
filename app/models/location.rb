@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Location < ApplicationRecord
+  has_many :location_users, :dependent => :destroy
   extend FriendlyId
   friendly_id :location_name_slugged, use: %i[slugged finders]
 
