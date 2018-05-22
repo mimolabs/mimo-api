@@ -438,6 +438,7 @@ ActiveRecord::Schema.define(version: 2018_05_19_134903) do
     t.text "networks", array: true
     t.string "twilio_user", limit: 50
     t.string "twilio_pass", limit: 50
+    t.string "twilio_from", limit: 15
     t.index ["location_id"], name: "index_splash_on_location_id"
   end
 
