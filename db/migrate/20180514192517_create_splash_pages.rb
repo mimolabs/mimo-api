@@ -159,7 +159,7 @@ class CreateSplashPages < ActiveRecord::Migration[5.2]
       t.boolean:passwd_auto_gen,                  default: false
       # t.boolean:remove_registration_link,         default: false
       # t.boolean:override_form_code,               default: false
-      # t.boolean:newsletter_active,                default: false
+      t.boolean:newsletter_active,                default: false
       # t.boolean:newsletter_checked,               default: true
       # t.boolean:newsletter_force_signup,          default: false
       t.boolean:skip_user_registration,           default: false

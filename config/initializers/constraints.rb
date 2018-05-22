@@ -15,3 +15,9 @@ class LoginsWelcome
     request.query_parameters["welcome"].present?
   end
 end
+
+class EmailConfirm
+  def self.matches?(request)
+    request.query_parameters["code"].present? && request.query_parameters["action"] == 'confirm'
+  end
+end

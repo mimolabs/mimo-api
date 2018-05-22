@@ -20,10 +20,6 @@ class SplashIntegration < ApplicationRecord
     )
   end
 
-  def sync_attributes
-    puts 'Syncing attrbutes'
-  end
-
   def fetch_settings
     case integration_type
     when 'unifi'
@@ -69,9 +65,6 @@ class SplashIntegration < ApplicationRecord
     when 'unifi'
       return unless validate_unifi
     end
-
-    ### can only happen after validating
-    sync_attributes
     true
   end
 end

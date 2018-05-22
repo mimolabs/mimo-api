@@ -57,10 +57,6 @@ class SplashPage < ApplicationRecord
     Mustache.render(form, @splash).gsub(/\r\n/m, "\n")
   end
 
-  def is_eu
-    true
-  end
-
   def self.splash_by_unique_id(opts)
     splash = SplashPage.where(
       unique_id: opts[:splash_id],
@@ -73,10 +69,15 @@ class SplashPage < ApplicationRecord
   def login(opts)
     return unless validate_credentials(opts)
 
+    return unless validate_email(opts)
     ### email checks and validations
     ### radius checks
 
-    process_login(opts)
+    resp = process_login(opts)
+    return unless resp.present?
+    record_login(opts)
+
+    resp
   end
 
   def process_login(opts)
@@ -87,6 +88,39 @@ class SplashPage < ApplicationRecord
     when 'unifi'
       return unifi_response if integration.login_unifi_client(opts[:client_mac], session_timeout)
     end
+  end
+
+  def record_login(opts)
+    return if opts[:number].present?
+
+    @login_params = {}
+    @login_params[:location_id]       = location_id
+    @login_params[:token]             = opts[:token]
+    @login_params[:social_type]       = opts[:social_type]
+    @login_params[:screen_name]       = opts[:screen_name]
+    @login_params[:client_mac]        = opts[:client_mac]
+    @login_params[:member_id]         = opts[:memberId]
+    @login_params[:splash_id]         = id.to_s
+    @login_params[:newsletter]        = opts[:newsletter]
+    @login_params[:email]             = opts[:email]
+    @login_params[:ap_mac]            = opts[:ap_mac]
+    @login_params[:consent]           = opts[:consent]
+    @login_params[:double_opt_in]     = double_opt_in
+    @login_params[:timestamp]         = Time.now.to_i
+    @login_params[:external_capture]  = newsletter_type.to_i > 1
+    @login_params[:otp]               = opts[:otp]
+    
+    Sidekiq::Client.push('class' => "RecordLogin", 'args' => [@login_params])
+  end
+
+  def validate_email(opts)
+    return SplashErrors.missing_email if email_required
+
+    return true unless opts[:email].present?
+
+    return true unless opts[:email].match(email_regex).blank?
+
+    SplashErrors.invalid_email
   end
 
   def validate_credentials(opts)
@@ -102,8 +136,15 @@ class SplashPage < ApplicationRecord
   end
 
   def login_clickthrough_user(_opts)
-    return true if backup_clickthrough
+    return true if backup_clickthrough || backup_sms
     SplashErrors.not_clickthrough
+  end
+
+  def login_otp_user(opts)
+    params = { client_mac: opts[:client_mac], splash_id: id }
+    code = OneTimeSplashCode.find(params)
+    return SplashErrors.splash_incorrect_password if code.blank? || (code.to_s != opts[:password].to_s)
+    true
   end
 
   def login_password_user(opts)
@@ -114,20 +155,20 @@ class SplashPage < ApplicationRecord
   def generate_otp(opts)
     validate_number(opts[:number])
 
-    # expires = (Time.now + 5.minutes).to_i
-    # code = SecureRandom.random_number(1000000)
-    # # o = [('a'..'z')].map(&:to_a).flatten
-    # # code = (0...5).map { o[rand(o.length)] }.join
+    params = { 
+      splash_id: id,
+      client_mac: opts[:client_mac], 
+    }
 
-    # otp = "#{code}.#{params[:clientMac]}"
+    code = OneTimeSplashCode.create(params)
+    params[:code] = code
 
-    # otsc = OneTimeSplashCode.new
-    # otsc.otp = otp
-    # otsc.expires = expires
-    # otsc.splash_page_id = id.to_s
-    # return false unless otsc.save
+    send_otp(params)
+  end
 
-    # send_otp(code, params)
+  def send_otp(params)
+    Sidekiq::Client.push('class' => "OtpWorker", 'args' => [params])
+    return true
   end
 
   def backup_clickthrough
@@ -142,15 +183,23 @@ class SplashPage < ApplicationRecord
   end
 
   def otp_generate(opts)
-    opts[:number] && backup_sms
+    opts[:number] && backup_sms && !opts[:otp]
   end
 
   def otp_login(opts)
-    opts[:password] && opts[:otp]
+    opts[:password] && opts[:otp] && backup_sms
   end
 
   def unifi_response
     { splash_id: id }
+  end
+
+  def is_eu
+    true
+  end
+
+  def email_regex
+    /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   end
 
   private
@@ -158,10 +207,9 @@ class SplashPage < ApplicationRecord
   def generate_defaults
     self.primary_access_id ||= 20
 
-    self.default_password = SecureRandom.hex
+    self.gdpr_form          = false unless is_eu
+    self.default_password   = SecureRandom.hex
     self.password           ||= Helpers.words
     self.unique_id          ||= SecureRandom.random_number(100_000_000_000_000)
-
-    self.gdpr_form = false unless is_eu
   end
 end

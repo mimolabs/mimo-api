@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',
     constraints: SplashIntegrationSites
 
+  ### For the double opt in email confirmation
+  patch 'api/v1/emails/:id' => 'api/v1/emails#confirm', constraints: EmailConfirm
+
   get 'api/v1/logins' => 'api/v1/login_pages#show_welcome', constraints: LoginsWelcome
   get 'api/v1/logins' => 'api/v1/login_pages#create', constraints: ApiLoginsCreate
 

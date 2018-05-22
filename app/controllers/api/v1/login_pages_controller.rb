@@ -24,10 +24,12 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
 
   def create
     @splash = SplashPage.find_by unique_id: params[:splash_id]
+    
+    ### Raise an error if the splash is not found
+    SplashErrors.not_found unless @splash.present?
+
+    ### Log the user in if we have a splash page
     resp = @splash.login(splash_attributes)
-    puts 8888888888888888888888888888888
-    puts resp
-    puts 888888888888888888888888888888
     render :status=>200, :json=> resp, callback: params[:callback]
   rescue Mimo::StandardError => @exception
     render template: 'api/v1/logins/errors.json.jbuilder', status: 200
@@ -64,7 +66,9 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
       newsletter:       params[:newsletter],
       gid:              params[:gid],
       ap_mac:           params[:apMac] || params[:ap_mac],
-      data:             params[:data]
+      data:             params[:data],
+      otp:              params[:otp],
+      number:           params[:number]
     }
   end
   def set_resource; end
