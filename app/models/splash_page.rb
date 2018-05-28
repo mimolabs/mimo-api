@@ -158,6 +158,7 @@ class SplashPage < ApplicationRecord
     params = { 
       splash_id: id,
       client_mac: opts[:client_mac], 
+      location_id: location_id
     }
 
     code = OneTimeSplashCode.create(params)
