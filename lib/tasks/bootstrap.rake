@@ -5,6 +5,7 @@ namespace :production do
   task bootstrap: :environment do
     puts 'xxxxxxxxxxxxxxxxxxxxx BOOTSTRAPPING MIMO xxxxxxxxxxxxxxxxxxxxx'
     puts 'xxxxxxxxxxxxxxxxxxxxx BOOTSTRAPPING MIMO xxxxxxxxxxxxxxxxxxxxx'
+    puts ENV['REDIS_HOST']
   end
 
   desc 'Create the users'
@@ -25,11 +26,11 @@ namespace :production do
     puts 'xxxxxxxxxxxxxxxxxxxxx CREATING APPLICATION xxxxxxxxxxxxxxxxxxxxx'
     app = Doorkeeper::Application.create! name: 'MIMO Standalone Client',
                                           redirect_uri: "#{ENV['MIMO_DASHBOARD_URL']}/auth/login/callback"
-
     puts 'Application: '
     puts "name: #{app.name}"
     puts "redirect_uri: #{app.redirect_uri}"
     puts "uid: #{app.uid}"
     puts "secret: #{app.secret}"
+    puts ''
   end
 end
