@@ -13,7 +13,8 @@ module MimoApi
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
-    config.autoload_paths << "#{Rails.root}/lib"
+    # config.autoload_paths << "#{Rails.root}/lib"
+    # config.eager_load_paths += %W(#{Rails.root}/lib)
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
