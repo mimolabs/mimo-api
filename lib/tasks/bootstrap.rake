@@ -79,6 +79,9 @@ namespace :production do
 
     pretty = JSON.pretty_generate(data)
     pretty = "var opts = #{pretty} \n\nmodule.exports = opts"
+
+    puts pretty
+
     open(fw, 'w') { |f| f << pretty } 
   end
 end
