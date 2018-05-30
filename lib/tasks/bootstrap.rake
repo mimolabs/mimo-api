@@ -48,18 +48,21 @@ namespace :production do
     password = SecureRandom.hex(6)
     email = ENV['MIMO_ADMIN_USER']
 
-    admin = User.find_by role: 0
-    unless admin.present?
-      User.create! email: email, password: password, password_confirmation: password, admin: true, role: 2
+    unless email.present?
+      throw 'No email present, please set in the environment variables'
+    end
+
+    admin = User.find_or_initialize_by(email: email)
+    if admin.new_record?
+      admin.update! password: password, password_confirmation: password, admin: true, role: 0
       puts "User with email #{email} created with password #{password}. Please change this on your first login!"
+    else
+      puts "User with email #{email} already in database"
     end
 
     puts 'xxxxxxx CREATING APPLICATION xxxxxx'
     app = Doorkeeper::Application.find_or_initialize_by(name: 'MIMO Standalone Client')
-    if app.new_record?
-      app.redirect_uri = "#{ENV['MIMO_DASHBOARD_URL']}/auth/login/callback"
-      app.save!
-    end
+    app.update! redirect_uri: "#{ENV['MIMO_DASHBOARD_URL']}/auth/login/callback"
 
     # puts 'Application: '
     # puts "name: #{app.name}"
@@ -72,6 +75,7 @@ namespace :production do
 
     pretty = JSON.pretty_generate(data)
     pretty = "var opts = #{pretty} \n\nmodule.exports = opts"
+
     open(fw, 'w') { |f| f << pretty } 
   end
 end

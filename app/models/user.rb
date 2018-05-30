@@ -16,9 +16,17 @@ class User < ApplicationRecord
 
   before_create :generate_defaults
 
+  ##
+  # Sets the role to a user if none specified
+  # Make sure to update the bootstrapper if this changes 
+  # otherwise it may create another admin user
+
   def set_default_role
     self.role ||= :user
   end
+
+  ## 
+  # Generates the account ID and other attributes for the user
 
   def generate_defaults
     self.account_id = generate_account_id
