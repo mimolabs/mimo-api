@@ -8,8 +8,8 @@ json.locations do
     json.location_address   location.location_address
     json.street             location.street
     json.phone1             location.phone1
-    json.created_at         location.created_at.to_time.to_i
-    json.updated_at         location.updated_at.to_time.to_i
+    json.created_at         location.created_at.to_i
+    json.updated_at         location.updated_at.to_i
     json.user_id            location.user_id
     json.lat                location.latitude
     json.lng                location.longitude

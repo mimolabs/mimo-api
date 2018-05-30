@@ -25,6 +25,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+# Put stuff in here
+/config/mimo-config.yml
+
 # Put anything in here that's sensitive to tests
 config/initializers/test_vars.rb
 

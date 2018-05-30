@@ -30,6 +30,10 @@ namespace :production do
       ENV['MIMO_API_URL'] = 'http://api:3000'
     end
 
+    if ENV['MIMO_AUTH_URL'].blank?
+      ENV['MIMO_AUTH_URL'] = 'http://api:3000'
+    end
+
     if ENV['MIMO_DASHBOARD_URL'].blank?
       ENV['MIMO_DASHBOARD_URL'] = 'http://mimo.dashboard:8080'
     end
@@ -41,8 +45,8 @@ namespace :production do
     data['callbackURL'] = ENV['MIMO_DASHBOARD_URL'] + '/auth/login/callback'
     data['authorizationURL'] = ENV['MIMO_API_URL'] + '/oauth/authorize'
     data['dashboardURL'] = ENV['MIMO_DASHBOARD_URL']
-    data['profileURL'] = ENV['MIMO_API_URL'] + '/api/v1/me.json'
-    data['tokenURL'] = ENV['MIMO_API_URL'] + '/oauth/token'
+    data['profileURL'] = ENV['MIMO_AUTH_URL'] + '/api/v1/me.json'
+    data['tokenURL'] = ENV['MIMO_AUTH_URL'] + '/oauth/token'
 
     puts 'xxxxxx CREATING ADMIN USER xxxxxx'
     password = SecureRandom.hex(6)
@@ -75,7 +79,6 @@ namespace :production do
 
     pretty = JSON.pretty_generate(data)
     pretty = "var opts = #{pretty} \n\nmodule.exports = opts"
-
     open(fw, 'w') { |f| f << pretty } 
   end
 end

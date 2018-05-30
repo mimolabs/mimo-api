@@ -99,6 +99,18 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.action_mailer.default_url_options = { :host => ENV['MIMO_API_URL'] }
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  
+  config.action_mailer.smtp_settings = {
+    address:                ENV['MIMO_SMTP_HOST'],
+    port:                   ENV['MIMO_SMTP_PORT'],
+    domain:                 ENV['MIMO_SMTP_DOMAIN'],
+    user_name:              ENV['MIMO_SMTP_USER'],
+    password:               ENV['MIMO_SMTP_PASS'],
+    authentication:         ENV['MIMO_SMTP_AUTH'] || 'plain',
+    enable_starttls_auto:   ENV['MIMO_SMTP_TLS']  || true
+  }
 end

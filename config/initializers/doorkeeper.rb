@@ -94,8 +94,9 @@ Doorkeeper.configure do
   # #call can be used in order to allow conditional checks (to allow non-SSL
   # redirects to localhost for example).
   #
-  # force_ssl_in_redirect_uri !Rails.env.development?
+  force_ssl_in_redirect_uri false #!Rails.env.development?
   #
+
   # force_ssl_in_redirect_uri { |uri| uri.host != 'localhost' && uri.host != 'mimo' }
 
   # Specify what redirect URI's you want to block during creation. Any redirect
