@@ -3,7 +3,15 @@
 namespace :production do
   desc 'Bootstrap the application'
   task bootstrap: :environment do
+
     puts 'xxxxxx BOOTSTRAPPING MIMO xxxxxx'
+
+    puts 'xxxxxx CREAING DATABASES xxxxxxx'
+
+    Rake::Task['db:create']
+    Rake::Task['db:migrate']
+
+    puts 'xxxxxx SETTING BUILD VARS xxxxxx'
 
     f = '/etc/mimo/build.config.json'
     fw = '/etc/mimo/build.config.js'
@@ -67,20 +75,12 @@ namespace :production do
     puts 'xxxxxxx CREATING APPLICATION xxxxxx'
     app = Doorkeeper::Application.find_or_initialize_by(name: 'MIMO Standalone Client')
     app.update! redirect_uri: "#{ENV['MIMO_DASHBOARD_URL']}/auth/login/callback"
-
-    # puts 'Application: '
-    # puts "name: #{app.name}"
-    # puts "redirect_uri: #{app.redirect_uri}"
-    # puts "uid: #{app.uid}"
-    # puts "secret: #{app.secret}"
     
     data['appID'] = app.uid
     data['appSecret'] = app.secret
 
     pretty = JSON.pretty_generate(data)
     pretty = "var opts = #{pretty} \n\nmodule.exports = opts"
-
-    puts pretty
 
     open(fw, 'w') { |f| f << pretty } 
   end
