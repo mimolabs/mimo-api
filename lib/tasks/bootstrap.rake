@@ -30,11 +30,11 @@ namespace :production do
     end
 
     if ENV['MIMO_API_URL'].blank?
-      ENV['MIMO_API_URL'] = 'http://api:3000'
+      ENV['MIMO_API_URL'] = 'http://api:8080'
     end
 
     if ENV['MIMO_AUTH_URL'].blank?
-      ENV['MIMO_AUTH_URL'] = 'http://api:3000'
+      ENV['MIMO_AUTH_URL'] = 'http://api:8080'
     end
 
     if ENV['MIMO_DASHBOARD_URL'].blank?

@@ -13,3 +13,5 @@ RUN \
   bundle install
 COPY . /myapp
 COPY ./build/puma.rb /myapp/config/puma.rb
+
+EXPOSE 8080
