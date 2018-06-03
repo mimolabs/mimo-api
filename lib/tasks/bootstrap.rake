@@ -63,11 +63,11 @@ namespace :production do
     if admin.new_record?
       admin.update! password: password, password_confirmation: password, admin: true, role: 0
       puts "User with email #{email} created with password #{password}. Please change this on your first login!"
-      UserMailer.with(user: admin).welcome_email.deliver_now
     else
       puts "User with email #{email} already in database"
     end
       
+    UserMailer.with(user: admin).welcome_email.deliver_now
 
     puts 'xxxxxxx CREATING APPLICATION xxxxxx'
     app = Doorkeeper::Application.find_or_initialize_by(name: 'MIMO Standalone Client')
