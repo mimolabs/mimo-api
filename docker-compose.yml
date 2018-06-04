@@ -20,10 +20,7 @@ services:
     build: .
     env_file:
       - dev.vars
-    environment:
-      - RAILS_ENV=test
-    command: bash -c "bin/rails db:environment:set RAILS_ENV=development && bundle exec rake db:create && rails s -p 3030 -b 0.0.0.0"
-    # command: bash -c "sleep 10 && RAILS_ENV=development bundle exec rake db:create && RAILS_ENV=development rake db:migrate && RAILS_ENV=development bundle exec rake production:bootstrap && bundle exec rake assets:precompile && bundle exec rails s -p 3030 -b '0.0.0.0'" %>
+    command: bash -c "sleep 10 && RAILS_ENV=development bundle exec rake db:create && RAILS_ENV=development rake db:migrate && RAILS_ENV=development bundle exec rake production:bootstrap && bundle exec rake assets:precompile && bundle exec rails s -p 3030 -b '0.0.0.0'"
     depends_on:
       - redis
       - db
