@@ -12,6 +12,6 @@ COPY Gemfile Gemfile.lock /myapp/
 RUN \
   bundle install
 COPY . /myapp
-COPY ./build/puma.rb /myapp/config/puma.rb
+# COPY ./build/puma.rb /myapp/config/puma.rb
 
 EXPOSE 8080
