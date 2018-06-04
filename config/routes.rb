@@ -7,7 +7,10 @@ Rails.application.routes.draw do
     sign_out: 'logout'
   }
 
+  get '/api/v1/ping', controller: 'api/v1/ping', action: 'ping'
   get '/api/v1/me' => 'api/v1/users#me'
+  get '/wizard/start' => 'wizard#start'
+  patch '/wizard/update' => 'wizard#update'
 
   get 'api/v1/locations/:location_id/splash_integrations' => 'api/v1/splash_integrations#show'
   get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',

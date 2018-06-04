@@ -1,24 +1,36 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Running in development
 
-Things you may want to cover:
+```
+git clone https://github.com/mimolabs/mimo-api.git
+cd mimo-api
+docker-compose up
+```
 
-* Ruby version
+Update your hosts file
 
-* System dependencies
+```
+vi /etc/hosts
+127.0.0.1       mimo.api
+127.0.0.1       mimo.dashboard
+```
 
-* Configuration
+### Update your client ID and secret
 
-* Database creation
+You'll need to update some variables in the MIMO frontend if you're hitting the api from your local machine.
 
-* Database initialization
+In a terminal (within this folder):
 
-* How to run the test suite
+```
+docker-compose run api rails c
+d = Doorkeeper::Application.first
+d.uid
+d.secret
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+Update server/config/local.env.sample.js and insert those variables around line 47.
 
-* Deployment instructions
+A username and password will have been generated for you when you ran docker-compose up. They can be found in the log.
 
-* ...
+DO NOT USE LIKE THIS IN PRODUCTION

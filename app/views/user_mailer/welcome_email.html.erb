@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to MIMO!</h1>
+    <p>
+      You have successfully installed your MIMO Community Edition!.
+    </p>
+    <p>
+      To complete your installation, click this link: <%= @url %>.
+    </p>
+    <p>
+      If you haven't already done so, please ensure you've setup your DNS correctly. You must add the following A-records:
+      <ul>
+        <li>api</li>
+        <li>admin</li>
+        <li>dashboard</li>
+        <li>splash</li>
+      </ul>
+    </p>
+
+    <%- if ENV["PUBLIC_IP"].present? %>
+      <p>By the looks of it, your public IP is <b><%= ENV["PUBLIC_IP"] %></b>. Usually, these entries should point to this address.</p>
+    <%- end %>
+
+    <p>You stay classy!</p>
+  </body>
+</html>
