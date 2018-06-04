@@ -27,7 +27,7 @@ services:
     volumes:
         - shared-volume:/etc/mimo
     ports:
-      - 3030:3030
+      - 3000:3030
 
 volumes:
   shared-volume:
