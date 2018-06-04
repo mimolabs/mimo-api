@@ -11,6 +11,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def me
+    @settings = Settings.first_or_initialize
     @current_user = current_user
     @refresh_token = doorkeeper_token.refresh_token
     respond_with @current_user

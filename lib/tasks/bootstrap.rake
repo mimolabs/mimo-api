@@ -67,7 +67,7 @@ namespace :production do
       puts "User with email #{email} already in database"
     end
       
-    UserMailer.with(user: admin).welcome_email.deliver_now
+    UserMailer.with(user: admin).welcome_email.deliver_later(wait: 30.seconds)
 
     puts 'xxxxxxx CREATING APPLICATION xxxxxx'
     app = Doorkeeper::Application.find_or_initialize_by(name: 'MIMO Standalone Client')

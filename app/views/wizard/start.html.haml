@@ -10,6 +10,12 @@
         - @settings.errors.full_messages.each do |msg|
           %li= msg
 
+  = f.password_field :password, placeholder: "Enter a top secret password"
+  %br/
+  = label_tag(:password, "Who your system notification emails come from:")
+  %br/
+  %br/
+
   = f.text_field :from_email, placeholder: "user@#{@domain}"
   %br/
   = label_tag(:from_email, "Who your system notification emails come from:")
@@ -40,8 +46,18 @@
   %br/
   %br/
 
+  %br/
+  = label_tag(:logo, "Upload your favicon for the dashboard")
+  = f.file_field :favicon
+  %br/
+  %br/
+
+  = f.hidden_field :code, value: @code
+
   - if @settings.logo.present?
     = image_tag @settings.logo.thumb.url
-  -# - else
-  -#   %img{:src => "/square-logo.png", class: 'settings-image'}
+
+  - if @settings.favicon.present?
+    = image_tag @settings.favicon.url
+
   = f.submit "Create"

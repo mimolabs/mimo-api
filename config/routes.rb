@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/api/v1/me' => 'api/v1/users#me'
   get '/wizard/start' => 'wizard#start'
   patch '/wizard/update' => 'wizard#update'
+  get '/wizard/complete' => 'wizard#complete'
 
   get 'api/v1/locations/:location_id/splash_integrations' => 'api/v1/splash_integrations#show'
   get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',

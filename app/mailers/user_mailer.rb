@@ -4,7 +4,13 @@ class UserMailer < ApplicationMailer
  
   def welcome_email
     @user = params[:user]
-    @url  = "#{ENV['MIMO_DASHBOARD_URL']}/setup?code=#{params[:code]}"
+    @url  = "#{ENV['MIMO_DASHBOARD_URL']}/wizard/start?code=#{generate_code}"
     mail(to: @user.email, subject: 'Welcome to MIMO!')
+  end
+
+  def generate_code
+    code = SecureRandom.uuid
+    REDIS.setex code, 86400, 1
+    code
   end
 end
