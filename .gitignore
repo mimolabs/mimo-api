@@ -33,3 +33,6 @@ config/initializers/test_vars.rb
 
 # Cos the fixtures include password deets
 fixtures/vcr_cassettes/*
+
+db/*
+db
