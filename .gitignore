@@ -36,3 +36,5 @@ fixtures/vcr_cassettes/*
 
 db/redis
 db/postgres
+
+public/uploads
