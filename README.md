@@ -18,7 +18,7 @@ vi /etc/hosts
 
 ### Update your client ID and secret
 
-You'll need to update some variables in the MIMO frontend if you're hitting the api from your own installation.
+You'll need to update some variables in the MIMO frontend if you're hitting the api from your local machine.
 
 In a terminal (within this folder):
 

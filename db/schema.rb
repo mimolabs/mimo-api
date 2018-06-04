@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_28_142257) do
+ActiveRecord::Schema.define(version: 2018_06_04_175221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -197,6 +197,22 @@ ActiveRecord::Schema.define(version: 2018_05_28_142257) do
     t.string "country", limit: 50
     t.string "token", limit: 50
     t.boolean "is_validated"
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "unique_id", limit: 64
+    t.string "business_name"
+    t.string "locale", limit: 4, default: "en"
+    t.string "docs_url"
+    t.string "contact_url"
+    t.string "terms_url"
+    t.string "from_email"
+    t.string "logo"
+    t.string "favicon"
+    t.boolean "invite_admins", default: false
+    t.boolean "invite_users", default: false
   end
 
   create_table "sms", force: :cascade do |t|

@@ -1,0 +1,47 @@
+%h1 You've installed MIMO!
+
+= form_for @settings, url: wizard_update_path(@settings) , method: :patch, html: {class: "nifty_form"} do |f|
+  - if @settings.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@settings.errors.count, "error")
+        prohibited this task from being saved:
+      %ul
+        - @settings.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.text_field :from_email, placeholder: "user@#{@domain}"
+  %br/
+  = label_tag(:from_email, "Who your system notification emails come from:")
+  %br/
+  %br/
+
+  = f.text_field :business_name, placeholder: 'My Great Business'
+  %br/
+  = label_tag(:business_name, "Used on your terms and dashboard")
+  %br/
+  %br/
+
+  = f.text_field :docs_url, placeholder: "https://docs.#{@domain}"
+  %br/
+  = label_tag(:docs_url, "If you have documentation, enter the URL here")
+  %br/
+  %br/
+
+  = f.text_field :terms_url, placeholder: "https://terms.#{@domain}"
+  %br/
+  = label_tag(:terms_url, "If you have terms, enter the URL here otherwise we'll generate one for you")
+  %br/
+  %br/
+
+  %br/
+  = label_tag(:logo, "Upload your logo for the dashboard and splash pages")
+  = f.file_field :logo
+  %br/
+  %br/
+
+  - if @settings.logo.present?
+    = image_tag @settings.logo.thumb.url
+  -# - else
+  -#   %img{:src => "/square-logo.png", class: 'settings-image'}
+  = f.submit "Create"
