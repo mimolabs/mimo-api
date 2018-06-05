@@ -43,6 +43,6 @@ class WizardController < ApplicationController
   end
 
   def settings_params
-    params.require(:settings).permit(:business_name, :from_email, :logo, :favicon, :code, :password)
+    params.require(:settings).permit(:business_name, :from_email, :logo, :favicon, :code, :password, :intercom_id, :drift_id)
   end
 end
