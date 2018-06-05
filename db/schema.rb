@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_04_175221) do
+ActiveRecord::Schema.define(version: 2018_06_05_132042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,6 +215,11 @@ ActiveRecord::Schema.define(version: 2018_06_04_175221) do
     t.string "drift_id", limit: 16
     t.boolean "invite_admins", default: false
     t.boolean "invite_users", default: false
+    t.boolean "integration_unifi", default: true
+    t.boolean "integration_openmesh", default: false
+    t.boolean "integration_vsz", default: false
+    t.boolean "integration_meraki", default: false
+    t.boolean "integration_ct", default: false
   end
 
   create_table "sms", force: :cascade do |t|
