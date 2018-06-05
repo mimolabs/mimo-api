@@ -1,65 +1,67 @@
-%h1.card-title You've installed MIMO
+%img.mimo-logo{:src => "/mimo-logo.svg"}/
+.card
+  %h1.card-title You've installed MIMO
 
-%p Congrats! Just a few more things and you're good to go!
+  %p Congrats! Just a few more things and you're good to go!
 
-= form_for @settings, url: wizard_update_path(@settings) , method: :patch, html: {class: "nifty_form"} do |f|
-  - if @settings.errors.any?
-    #error_explanation
-      .error-container
-        %h2
-          = pluralize(@settings.errors.count, "error")
-          prohibited this task from being saved:
-        %ul
-          - @settings.errors.full_messages.each do |msg|
-            %li= msg
+  = form_for @settings, url: wizard_update_path(@settings) , method: :patch, html: {class: "nifty_form"} do |f|
+    - if @settings.errors.any?
+      #error_explanation
+        .error-container
+          %h2
+            = pluralize(@settings.errors.count, "error")
+            prohibited this task from being saved:
+          %ul
+            - @settings.errors.full_messages.each do |msg|
+              %li= msg
 
-  .input-container
-    = label_tag(:password, "Password")
-    = f.password_field :password, placeholder: "Enter a top secret password"
-    %small Used with the email you created during the console setup.
+    .input-container
+      = label_tag(:password, "Password")
+      = f.password_field :password, placeholder: "Enter a top secret password"
+      %small Used with the email you created during the console setup.
 
-  .input-container
-    = label_tag(:from_email, "From Email")
-    = f.text_field :from_email, placeholder: "user@#{@domain}"
-    %small Who your system notification emails come from.
+    .input-container
+      = label_tag(:from_email, "From Email")
+      = f.text_field :from_email, placeholder: "user@#{@domain}"
+      %small Who your system notification emails come from.
 
-  .input-container
-    = label_tag(:business_name, "Company Name")
-    = f.text_field :business_name, placeholder: 'My Great Business'
-    %small Will be used in your privacy statement and dashboard.
+    .input-container
+      = label_tag(:business_name, "Company Name")
+      = f.text_field :business_name, placeholder: 'My Great Business'
+      %small Will be used in your privacy statement and dashboard.
 
-  .input-container
-    = label_tag(:docs_url, "Documentation URL")
-    = f.text_field :docs_url, placeholder: "https://docs.#{@domain}"
-    %small If you have your own documentation enter your URL here.
+    .input-container
+      = label_tag(:docs_url, "Documentation URL")
+      = f.text_field :docs_url, placeholder: "https://docs.#{@domain}"
+      %small If you have your own documentation enter your URL here.
 
-  .input-container
-    = label_tag(:terms_url, "Terms URL")
-    = f.text_field :terms_url, placeholder: "https://terms.#{@domain}"
-    %small If you don't have your own terms, leave blank and we'll generate one for you.
+    .input-container
+      = label_tag(:terms_url, "Terms URL")
+      = f.text_field :terms_url, placeholder: "https://terms.#{@domain}"
+      %small If you don't have your own terms, leave blank and we'll generate one for you.
 
-  .input-container
-    = label_tag(:intercom_id, "Intercom ID")
-    = f.text_field :intercom_id, placeholder: "Intercom ID"
-    %small Input to enable dashboard support via your Intercom account.
+    .input-container
+      = label_tag(:intercom_id, "Intercom ID")
+      = f.text_field :intercom_id, placeholder: "Intercom ID"
+      %small Input to enable dashboard support via your Intercom account.
 
-  .input-container
-    = label_tag(:drift_id, "Drift ID")
-    = f.text_field :drift_id, placeholder: "Drift ID"
-    %small Input to enable dashboard support via your Drift account.
+    .input-container
+      = label_tag(:drift_id, "Drift ID")
+      = f.text_field :drift_id, placeholder: "Drift ID"
+      %small Input to enable dashboard support via your Drift account.
 
-  %p Intercom will take priority if both Intercom ID and Drift ID are filled in.
+    %p Intercom will take priority if both Intercom ID and Drift ID are filled in.
 
-  .input-container
-    = label_tag(:logo, "Upload your logo for the dashboard and splash pages")
-    = f.file_field :logo
-    %small Upload a square shaped logo for use in the dashboard.
+    .input-container
+      = label_tag(:logo, "Upload your logo for the dashboard and splash pages")
+      = f.file_field :logo
+      %small Upload a square shaped logo for use in the dashboard.
 
-  .input-container
-    = label_tag(:logo, "Upload your favicon for the dashboard")
-    = f.file_field :favicon
-    %small Must be .ico format.
+    .input-container
+      = label_tag(:logo, "Upload your favicon for the dashboard")
+      = f.file_field :favicon
+      %small Must be .ico format.
 
-  = f.hidden_field :code, value: @code
+    = f.hidden_field :code, value: @code
 
-  = f.submit "Create"
+    = f.submit "Create"
