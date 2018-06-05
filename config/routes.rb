@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
     sign_out: 'logout'
-  }
+  }, controllers: {sessions: "sessions", passwords: 'passwords', unlocks: 'unlocks'}
 
   get '/api/v1/ping', controller: 'api/v1/ping', action: 'ping'
   get '/api/v1/me' => 'api/v1/users#me'

@@ -1,10 +1,10 @@
 class WizardController < ApplicationController
-  # before_action :authenticate_user!, except: [:show]
   before_action :authenticate_wizard, only: [:start, :update, :complete]
 
   def start
     @domain = request.host || 'example.com'
     @settings = Settings.first_or_initialize
+    @logo = '/mimo-logo.svg'
   end
 
   def complete
@@ -31,15 +31,15 @@ class WizardController < ApplicationController
 
     val = REDIS.get "wizardCode:#{@code}"
 
-    # return if val.present?
-    # if action_name == 'complete'
-    #   redirect_to ENV['MIMO_DASHBOARD_URL'] || new_user_session_path
-    # else
-    #   raise ActionController::RoutingError.new('Not Found') unless val.present?
-    # end
+    return if val.present?
+    if action_name == 'complete'
+      redirect_to ENV['MIMO_DASHBOARD_URL'] || new_user_session_path
+    else
+      raise ActionController::RoutingError.new('Not Found') unless val.present?
+    end
 
     @settings = Settings.first_or_initialize
-    # raise ActionController::RoutingError.new('Not Found') unless @settings.new_record?
+    raise ActionController::RoutingError.new('Not Found') unless @settings.new_record?
   end
 
   def settings_params
