@@ -62,12 +62,19 @@ namespace :production do
     admin = User.find_or_initialize_by(email: email)
     if admin.new_record?
       admin.update! password: password, password_confirmation: password, admin: true, role: 0
-      puts "User with email #{email} created with password #{password}. Please change this on your first login!"
+      puts "User with email #{email} created. Please change this on your first login!"
     else
       puts "User with email #{email} already in database"
     end
       
     UserMailer.with(user: admin).welcome_email.deliver_later(wait: 30.seconds)
+
+    puts 'xxxxxxx CREATING THE DEMO DATA xxxx'
+  
+    settings = Settings.first
+    unless settings.present?
+      Sidekiq::Client.push('class' => "GenerateDemoData", 'args' => [])
+    end
 
     puts 'xxxxxxx CREATING APPLICATION xxxxxx'
     app = Doorkeeper::Application.find_or_initialize_by(name: 'MIMO Standalone Client')
