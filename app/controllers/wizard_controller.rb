@@ -1,10 +1,22 @@
 class WizardController < ApplicationController
-  before_action :authenticate_wizard, only: [:start, :update, :complete]
+  before_action :authenticate_wizard, only: [:update, :complete]
 
   def start
-    @domain = request.host || 'example.com'
-    @settings = Settings.first_or_initialize
     @logo = '/mimo-logo.svg'
+    if params[:code]
+      authenticate_wizard
+      @domain = request.host || 'example.com'
+      @settings = Settings.first_or_initialize
+    else
+      REDIS.del('codeReq')
+      @requested = REDIS.get('codeReq').present?
+      @user = User.find_by(role: 0) unless @requested.present?
+    end
+  end
+
+  def send_code
+    @user = User.find_by(role: 0)
+    @user.resend_code
   end
 
   def complete
