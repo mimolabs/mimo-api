@@ -25,7 +25,6 @@ services:
       - redis
       - db
     volumes:
-      - .:/myapp  
+      - .:/myapp
     ports:
       - 3000:3030
-
