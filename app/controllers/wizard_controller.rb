@@ -8,7 +8,7 @@ class WizardController < ApplicationController
       @domain = request.host || 'example.com'
       @settings = Settings.first_or_initialize
     else
-      REDIS.del('codeReq')
+      # REDIS.del('codeReq')
       @requested = REDIS.get('codeReq').present?
       @user = User.find_by(role: 0) unless @requested.present?
     end
