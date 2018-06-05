@@ -38,3 +38,5 @@ db/redis
 db/postgres
 
 public/uploads
+
+yarn.lock
