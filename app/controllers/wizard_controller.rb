@@ -16,7 +16,7 @@ class WizardController < ApplicationController
   def update
     @domain = request.host || 'example.com'
     @settings = Settings.first_or_initialize
-    if @settings.update settings_params 
+    if @settings.update settings_params
       redirect_to wizard_complete_path(code: @code)
     else
       render 'start'
@@ -31,18 +31,18 @@ class WizardController < ApplicationController
 
     val = REDIS.get "wizardCode:#{@code}"
 
-    return if val.present?
-    if action_name == 'complete'
-      redirect_to ENV['MIMO_DASHBOARD_URL'] || new_user_session_path 
-    else
-      raise ActionController::RoutingError.new('Not Found') unless val.present?
-    end
+    # return if val.present?
+    # if action_name == 'complete'
+    #   redirect_to ENV['MIMO_DASHBOARD_URL'] || new_user_session_path
+    # else
+    #   raise ActionController::RoutingError.new('Not Found') unless val.present?
+    # end
 
     @settings = Settings.first_or_initialize
     # raise ActionController::RoutingError.new('Not Found') unless @settings.new_record?
   end
 
   def settings_params
-    params.require(:settings).permit(:business_name, :from_email, :logo, :favicon, :code, :password, :intercom_id, :drift_id)
+    params.require(:settings).permit(:business_name, :from_email, :logo, :favicon, :code, :password)
   end
 end

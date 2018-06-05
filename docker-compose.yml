@@ -25,7 +25,7 @@ services:
       - redis
       - db
     volumes:
-        - shared-volume:/etc/mimo
+      - shared-volume:/etc/mimo
       - .:/myapp
     ports:
       - 3000:3030

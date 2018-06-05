@@ -1,75 +1,77 @@
-%h1 You've installed MIMO!
+.card.centered
+  %h1.card-title You've installed MIMO!
 
-= form_for @settings, url: wizard_update_path(@settings) , method: :patch, html: {class: "nifty_form"} do |f|
-  - if @settings.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@settings.errors.count, "error")
-        prohibited this task from being saved:
-      %ul
-        - @settings.errors.full_messages.each do |msg|
-          %li= msg
+  = form_for @settings, url: wizard_update_path(@settings) , method: :patch, html: {class: "nifty_form"} do |f|
+    - if @settings.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(@settings.errors.count, "error")
+          prohibited this task from being saved:
+        %ul
+          - @settings.errors.full_messages.each do |msg|
+            %li= msg
 
-  = f.password_field :password, placeholder: "Enter a top secret password"
-  %br/
-  = label_tag(:password, "Who your system notification emails come from:")
-  %br/
-  %br/
+    = label_tag(:from_email, "Who your system notification emails come from:")
+    = f.text_field :from_email, placeholder: "user@#{@domain}"
+    %br/
+    %br/
+    %br/
 
-  = f.text_field :from_email, placeholder: "user@#{@domain}"
-  %br/
-  = label_tag(:from_email, "Who your system notification emails come from:")
-  %br/
-  %br/
+    = label_tag(:password, "Password")
+    = f.password_field :password, placeholder: "Enter a top secret password"
+    %br/
+    %br/
+    %br/
 
-  = f.text_field :business_name, placeholder: 'My Great Business'
-  %br/
-  = label_tag(:business_name, "Used on your terms and dashboard")
-  %br/
-  %br/
 
-  = f.text_field :docs_url, placeholder: "https://docs.#{@domain}"
-  %br/
-  = label_tag(:docs_url, "If you have documentation, enter the URL here")
-  %br/
-  %br/
+    = label_tag(:business_name, "Used on your terms and dashboard")
+    = f.text_field :business_name, placeholder: 'My Great Business'
+    %br/
+    %br/
+    %br/
 
-  = f.text_field :terms_url, placeholder: "https://terms.#{@domain}"
-  %br/
-  = label_tag(:terms_url, "If you have terms, enter the URL here otherwise we'll generate one for you")
-  %br/
-  %br/
+    = label_tag(:docs_url, "If you have documentation, enter the URL here")
+    = f.text_field :docs_url, placeholder: "https://docs.#{@domain}"
+    %br/
+    %br/
+    %br/
 
-  = f.text_field :intercom_id, placeholder: "Intercom ID"
-  %br/
-  = label_tag(:intercom_id, "Intercom ID")
-  %br/
-  %br/
+    = label_tag(:terms_url, "If you have terms, enter the URL here otherwise we'll generate one for you")
+    = f.text_field :terms_url, placeholder: "https://terms.#{@domain}"
+    %br/
+    %br/
+    %br/
 
-  = f.text_field :drift_id, placeholder: "Drift ID"
-  %br/
-  = label_tag(:drift_id, "Drift ID")
-  %br/
-  %br/
+    = label_tag(:intercom_id, "Intercom ID")
+    = f.text_field :intercom_id, placeholder: "Intercom ID"
+    %br/
+    %br/
+    %br/
 
-  %br/
-  = label_tag(:logo, "Upload your logo for the dashboard and splash pages")
-  = f.file_field :logo
-  %br/
-  %br/
+    = label_tag(:drift_id, "Drift ID")
+    = f.text_field :drift_id, placeholder: "Drift ID"
+    %br/
+    %br/
+    %br/
 
-  %br/
-  = label_tag(:logo, "Upload your favicon for the dashboard")
-  = f.file_field :favicon
-  %br/
-  %br/
+    %br/
+    = label_tag(:logo, "Upload your logo for the dashboard and splash pages")
+    = f.file_field :logo
+    %br/
+    %br/
 
-  = f.hidden_field :code, value: @code
+    %br/
+    = label_tag(:logo, "Upload your favicon for the dashboard")
+    = f.file_field :favicon
+    %br/
+    %br/
 
-  - if @settings.logo.present?
-    = image_tag @settings.logo.thumb.url
+    = f.hidden_field :code, value: @code
 
-  - if @settings.favicon.present?
-    = image_tag @settings.favicon.url
+    - if @settings.logo.present?
+      = image_tag @settings.logo.thumb.url
 
-  = f.submit "Create"
+    - if @settings.favicon.present?
+      = image_tag @settings.favicon.url
+
+    = f.submit "Create"
