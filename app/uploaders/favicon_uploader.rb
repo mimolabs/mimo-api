@@ -7,7 +7,7 @@ class FaviconUploader < CarrierWave::Uploader::Base
     "uploads"
   end
 
-  # process :resize_to_fit => [200, 200]
+  process :resize_to_fit => [64,64]
 
   def extension_whitelist
     %w(ico)
