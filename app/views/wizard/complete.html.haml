@@ -2,12 +2,11 @@
 .card
   %h1.card-title We've updated your settings
 
-  %p Please note you won't be able to access this wizard again.
+  %p
+    %b Please note you won't be able to access this wizard again!
+    Further changes can be made in your dashboard.
 
-  %p In order to change your settings, you can do this in your dashboard.
+  %p You can now login to your dashboard here:
 
-  %p Someone fix this text.
-
-  %p Also, you can now login to your dashboard here:
-
-  %p dashboard.xxxxxxxxxxxxxxxx
+  %p
+    %a{:href => "https://dashboard.#{ENV['MIMO_DASHBOARD_URL'] || 'example.com'}"} https://dashboard.#{ENV['MIMO_DASHBOARD_URL'] || 'example.com'}
