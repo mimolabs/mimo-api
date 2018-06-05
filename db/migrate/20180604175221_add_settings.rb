@@ -13,6 +13,8 @@ class AddSettings < ActiveRecord::Migration[5.2]
       t.string :from_email
       t.string :logo
       t.string :favicon
+      t.string :intercom_id, limit: 16
+      t.string :drift_id, limit: 16
       t.boolean :invite_admins, default: false
       t.boolean :invite_users, default: false
     end
