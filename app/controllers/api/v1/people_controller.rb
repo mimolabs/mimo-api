@@ -4,6 +4,8 @@ class Api::V1::PeopleController < Api::V1::BaseController
   before_action :doorkeeper_authorize!
   before_action :set_resource, only: %i[index show create update destroy]
   before_action :clean_params, only: %i[update create]
+  before_action :demo_data, only: [:index, :show]
+
   respond_to :json
 
   def index
