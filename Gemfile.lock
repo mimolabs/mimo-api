@@ -6,7 +6,7 @@ GIT
       activerecord (>= 4.0.0)
 
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     actioncable (5.2.0)
       actionpack (= 5.2.0)
