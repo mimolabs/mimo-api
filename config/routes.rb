@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/wizard/complete' => 'wizard#complete'
   post '/wizard/code' => 'wizard#send_code'
   patch '/wizard/update' => 'wizard#update'
+  get 'api/v1/person_timelines/:person_id' => 'api/v1/person_timelines#portal_timeline', constraints: PortalTimeline
 
   get 'api/v1/locations/:location_id/splash_integrations' => 'api/v1/splash_integrations#show'
   get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',
@@ -25,7 +26,7 @@ Rails.application.routes.draw do
   get 'api/v1/logins' => 'api/v1/login_pages#create', constraints: ApiLoginsCreate
 
   post 'api/v1/logins' => 'api/v1/login_pages#create'
-  
+
   get 'api/v1/logins' => 'api/v1/login_pages#show'
 
   namespace :api do
@@ -34,7 +35,7 @@ Rails.application.routes.draw do
         resources :audiences
         resources :boxes, only: [:destroy, :index]
         resources :sessions
-        resources :people do 
+        resources :people do
           resources :emails, only: [:index, :show]
           resources :person_timelines
           resources :socials, only: [:index, :show]

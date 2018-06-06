@@ -21,3 +21,9 @@ class EmailConfirm
     request.query_parameters["code"].present? && request.query_parameters["action"] == 'confirm'
   end
 end
+
+class PortalTimeline
+  def self.matches?(request)
+    request.query_parameters["code"].present?
+  end
+end

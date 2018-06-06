@@ -10,5 +10,5 @@ sidekiq_config = YAML.load(ERB.new(File.read(rails_root + '/config/redis_server.
 # end
 
 Sidekiq.configure_client do |config|
-  config.redis = { :host => "#{sidekiq_config[rails_env]}"}
+  config.redis = { :host => "#{sidekiq_config[rails_env]}", port: ENV['REDIS_PORT'] || 6379 }
 end
