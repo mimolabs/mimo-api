@@ -44,7 +44,7 @@ describe Api::V1::PersonTimelinesController, type: :controller do
     describe 'accessing portal timeline index' do
       it 'should not render index - no timeline events' do
         person = Person.create
-        get :index, format: :json, params: { person_id: person.id }
+        get :portal_timeline, format: :json, params: { person_id: person.id, code: SecureRandom.hex }
         expect(response).to_not be_successful
       end
     end
