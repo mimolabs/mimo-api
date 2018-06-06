@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    resource_class: large
     working_directory: ~/myapp
     docker:
       - image: circleci/ruby:2.5.1-node
@@ -53,9 +52,8 @@ jobs:
           bundle exec rspec
   deploy:
     steps:
-
       - run:
-          name: Install Docker client
+          name: Trigger Docker build
           command: curl -XPOST https://registry.hub.docker.com/u/ohmimo/mimo-api/trigger/${DOCKER_TOKEN}/
 
 workflows:
