@@ -48,3 +48,26 @@ jobs:
             bundle exec rake db:create db:schema:load --trace
             bundle exec rake db:migrate
 
+      - run: |
+          bundle exec rspec
+  deploy:
+    working_directory: ~/myapp
+    docker:
+      - image: alpine:latest
+    steps:
+      - run:
+          name: Trigger Docker build
+          command: curl -XPOST https://registry.hub.docker.com/u/ohmimo/mimo-api/trigger/${DOCKER_TOKEN}/
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
