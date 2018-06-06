@@ -33,4 +33,6 @@ Update server/config/local.env.sample.js and insert those variables around line 
 
 A username and password will have been generated for you when you ran docker-compose up. They can be found in the log.
 
+### Run some migrations ###
+
 DO NOT USE LIKE THIS IN PRODUCTION
