@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::LoginPagesController < Api::V1::BaseController
-  require 'errors'
+  # require 'errors'
   before_action :auth_logins
 
   ### The logins are still using JSONP

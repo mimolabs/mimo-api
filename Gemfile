@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
@@ -12,7 +12,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 4.0'
 gem 'uglifier', require: 'uglifier'
-
 gem 'devise'
 gem 'doorkeeper'
 gem 'friendly_id', git: 'https://github.com/norman/friendly_id.git'
