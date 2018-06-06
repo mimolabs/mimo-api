@@ -6,8 +6,6 @@ namespace :production do
 
     puts 'xxxxxx BOOTSTRAPPING MIMO xxxxxx'
 
-    puts 'xxxxxx SETTING BUILD VARS xxxxxx'
-
     f = '/etc/mimo/build.config.json'
     fw = '/etc/mimo/build.config.js'
 
@@ -67,7 +65,7 @@ namespace :production do
       puts "User with email #{email} already in database"
     end
       
-    UserMailer.with(user: admin).welcome_email.deliver_later(wait: 30.seconds)
+    UserMailer.with(user: admin).welcome_email.deliver_now
 
     puts 'xxxxxxx CREATING THE DEMO DATA xxxx'
   

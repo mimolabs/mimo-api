@@ -17,7 +17,7 @@ class UserMailer < ApplicationMailer
   def generate_code
     code = SecureRandom.uuid
     key = "wizardCode:#{code}"
-    REDIS.setex key, 86400, 1
+    REDIS.setex key, 6000, 1
     code
   end
 end
