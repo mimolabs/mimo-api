@@ -1,6 +1,10 @@
 # MIMO API!
 
-Running in development. Make sure you have Docker, Git and Docker Compose installed.
+Normally this will be run by the installer. Should you need to run as a standalone, please follow the steps below. If you also need the worker, add the ohmimo/mimo-worker section back to the docker-compose file
+
+**Make sure you have Docker, Git and Docker Compose installed.**
+
+Clone the repository:
 
 ```
 git clone https://github.com/mimolabs/mimo-api.git
