@@ -8,10 +8,9 @@ cd mimo-api
 docker-compose up
 ```
 
-Update your hosts file
+Update your hosts file. vi /etc/hosts
 
 ```
-vi /etc/hosts
 127.0.0.1       mimo.api
 127.0.0.1       mimo.dashboard
 ```
