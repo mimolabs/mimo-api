@@ -24,12 +24,17 @@ In a terminal (within this folder):
 
 ```
 docker-compose run api rails c
+```
+
+Get the credentials:
+
+```
 d = Doorkeeper::Application.first
 d.uid
 d.secret
 ```
 
-Update server/config/local.env.sample.js and insert those variables around line 47.
+Then update server/config/local.env.sample.js and insert those variables around line 47.
 
 A username and password will have been generated for you when you ran docker-compose up. They can be found in the log.
 
