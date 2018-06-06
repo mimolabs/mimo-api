@@ -13,7 +13,7 @@ describe Api::V1::EmailsController, type: :controller do
   let!(:user)        { FactoryBot.create :doorkeeper_testing_user }
   let!(:token)       { FactoryBot.create :access_token, application: application, resource_owner_id: user.id }
 
-  let(:location) { Location.create user_id: user.id }
+  let(:location) { Location.create user_id: user.id, demo: false }
   let(:person) { Person.create }
 
   describe 'testing the routes mostly' do

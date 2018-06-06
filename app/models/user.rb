@@ -29,6 +29,8 @@ class User < ApplicationRecord
     requested = REDIS.get('codeReq').present?
     return if requested.present?
 
+    return if Settings.first.present?
+
     REDIS.setex('codeReq', 120, 1)
     UserMailer.with(user: self).new_code.deliver_now
   end

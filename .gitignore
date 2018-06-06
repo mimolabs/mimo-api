@@ -40,3 +40,4 @@ db/postgres
 public/uploads
 
 yarn.lock
+**/.DS_Store

@@ -13,24 +13,35 @@ describe Api::V1::PeopleController, type: :controller do
   let!(:user)        { FactoryBot.create :doorkeeper_testing_user }
   let!(:token)       { FactoryBot.create :access_token, application: application, resource_owner_id: user.id }
 
-  let(:location) { Location.create user_id: user.id }
+  let(:location) { Location.create user_id: user.id, demo: false }
 
   describe 'testing the routes mostly' do
-    it 'should not render the splash pages index' do
-      location = Location.create id: 1, user_id: 123_978_123
+    it 'should not render the people index' do
+      location = Location.create id: 1, user_id: 123_978_123, demo: false
 
       get :index, format: :json, params: { location_id: location.slug }
       expect(response).to_not be_successful
     end
 
     it 'should render the people index' do
-      Person.create location_id: location.id
+      Person.create! location_id: location.id
 
       get :index, format: :json, params: { location_id: location.slug }
       expect(response).to be_successful
 
       parsed_body = JSON.parse(response.body)
       expect(parsed_body['people'].length).to eq 1
+    end
+
+    it 'should render the people index - demo data!' do
+      location.update demo: true
+      Person.create! location_id: location.id
+
+      get :index, format: :json, params: { location_id: location.slug }
+      expect(response).to be_successful
+
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body['people'].length).to eq 0
     end
 
     context 'show action' do

@@ -10,7 +10,7 @@ class UserMailer < ApplicationMailer
 
   def welcome_email
     @user = params[:user]
-    @url  = "#{ENV['MIMO_DASHBOARD_URL']}/wizard/start?code=#{generate_code}"
+    @url  = "#{ENV['MIMO_API_URL']}/wizard/start?code=#{generate_code}"
     mail(to: @user.email, subject: 'Welcome to MIMO!')
   end
 
