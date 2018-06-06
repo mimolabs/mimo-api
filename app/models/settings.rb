@@ -10,7 +10,7 @@ class Settings < ApplicationRecord
   before_create :generate_defaults
   after_update :update_user_passy
 
-  validates_presence_of :business_name, :locale, :from_email
+  validates_presence_of :business_name, :locale, :from_email, :password
 
   private
 

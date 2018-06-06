@@ -32,4 +32,9 @@ class ApplicationController < ActionController::Base
   def doorkeeper_unauthorized_render_options(error: nil)
     { json: '{"status": "failure", "message":"401 Unauthorized"}' }
   end
+
+  def demo_data
+    return unless @location.try(:demo)
+    @location.id = 10_000
+  end
 end

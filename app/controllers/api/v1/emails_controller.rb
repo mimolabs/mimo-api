@@ -3,6 +3,8 @@
 class Api::V1::EmailsController < Api::V1::BaseController
   before_action :doorkeeper_authorize!
   before_action :set_resource
+  before_action :demo_data, only: [:index, :show]
+
   respond_to :json
 
   def index

@@ -5,13 +5,14 @@ Rails.application.routes.draw do
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
     sign_out: 'logout'
-  }
+  }, controllers: {sessions: "sessions", passwords: 'passwords', unlocks: 'unlocks'}
 
   get '/api/v1/ping', controller: 'api/v1/ping', action: 'ping'
   get '/api/v1/me' => 'api/v1/users#me'
   get '/wizard/start' => 'wizard#start'
-  patch '/wizard/update' => 'wizard#update'
   get '/wizard/complete' => 'wizard#complete'
+  post '/wizard/code' => 'wizard#send_code'
+  patch '/wizard/update' => 'wizard#update'
 
   get 'api/v1/locations/:location_id/splash_integrations' => 'api/v1/splash_integrations#show'
   get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',

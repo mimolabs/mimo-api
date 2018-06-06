@@ -25,6 +25,14 @@ class User < ApplicationRecord
     self.role ||= :user
   end
 
+  def resend_code
+    requested = REDIS.get('codeReq').present?
+    return if requested.present?
+
+    REDIS.setex('codeReq', 120, 1)
+    UserMailer.with(user: self).new_code.deliver_now
+  end
+
   ## 
   # Generates the account ID and other attributes for the user
 
