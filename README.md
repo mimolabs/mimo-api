@@ -33,6 +33,14 @@ Update server/config/local.env.sample.js and insert those variables around line 
 
 A username and password will have been generated for you when you ran docker-compose up. They can be found in the log.
 
-### Run some migrations ###
+### Default User ###
+
+The default user is user@mimo.com. If you want to change this:
+
+```
+docker-compose run api rails c
+u = User.first
+u.update email: my-email@bla.com, password: 123123123, password_confirmation: 123123123
+```
 
 DO NOT USE LIKE THIS IN PRODUCTION
