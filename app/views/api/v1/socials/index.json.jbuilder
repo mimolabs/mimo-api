@@ -15,17 +15,6 @@ json.social @socials do |s|
   json.last_name        s.last_name
   json.checkins         s.checkins
   json.lonlat           s.lonlat
-  json.fb_link          s.fb_link
-  json.g_link           s.g_link
-
-  json.tw_full_name     s.tw_full_name
-  json.tw_screen_name   s.tw_screen_name
-  json.tw_description   s.tw_description
-  json.tw_url           s.tw_url
-  json.tw_verified      s.tw_verified
-  json.tw_followers     s.tw_followers
-  json.tw_friends       s.tw_friends
-  json.tw_profile_image s.tw_profile_image
 end
 
 json._links do

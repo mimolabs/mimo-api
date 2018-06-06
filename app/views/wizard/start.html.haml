@@ -36,10 +36,6 @@
         = f.password_field :password, placeholder: "Enter a top secret password"
         %small Used with the email you created during the console setup.
 
-      .input-container
-        = label_tag(:from_email, "From Email")
-        = f.text_field :from_email, placeholder: "user@#{@domain}"
-        %small Who your system notification emails come from.
 
       .input-container
         = label_tag(:business_name, "Company Name")
