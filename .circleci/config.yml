@@ -1,16 +1,12 @@
 version: 2
 jobs:
   build:
-    resource_class: large
     working_directory: ~/myapp
     docker:
       - image: circleci/ruby:2.5.1-node
         environment:
           RAILS_ENV: test
-          CLUSTER_NAME: cluster-1
-          PROJECT_NAME: terraform-bc8052e2
-          CLOUDSDK_COMPUTE_ZONE: europe-west4-a 
-          NOKOGIRI_USE_SYSTEM_LIBRARIES: true
+          RACK_ENV: test
 
       - image: circleci/postgres:9.6.2-alpine
         environment:
@@ -30,7 +26,7 @@ jobs:
 
       - run:
          name: Install deps
-         command: sudo apt-get update -qq && sudo apt-get install -y build-essential libmysqlclient-dev mysql-client default-jdk
+         command: sudo apt-get update -qq && sudo apt-get install -y build-essential
 
       - run:
          name: Bundle Install
@@ -52,13 +48,10 @@ jobs:
             bundle exec rake db:create db:schema:load --trace
             bundle exec rake db:migrate
 
-      - run: |
-          bundle exec rspec
   deploy:
     steps:
-
       - run:
-          name: Install Docker client
+          name: Trigger Docker build
           command: curl -XPOST https://registry.hub.docker.com/u/ohmimo/mimo-api/trigger/${DOCKER_TOKEN}/
 
 workflows:
