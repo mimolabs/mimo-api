@@ -90,8 +90,8 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  config.serve_static_assets = true
-  config.public_file_server.enabled = true #ENV['RAILS_SERVE_STATIC_FILES'].present?
+  # config.serve_static_assets = true
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
