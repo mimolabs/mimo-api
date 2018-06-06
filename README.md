@@ -1,6 +1,6 @@
-# README
+# MIMO API!
 
-Running in development
+Running in development. Make sure you have Docker, Git and Docker Compose installed.
 
 ```
 git clone https://github.com/mimolabs/mimo-api.git
