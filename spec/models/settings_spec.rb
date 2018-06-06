@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Settings, type: :model do
   describe 'validation' do
     it 'should create a unique ID on creation' do
-      s = Settings.new business_name: 'Simon Corp'
+      s = Settings.new business_name: 'Simon Corp', password: SecureRandom.hex
       s.save!
       expect(s.reload.unique_id).to be_present
     end
