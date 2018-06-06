@@ -55,12 +55,14 @@ DO NOT USE LIKE THIS IN PRODUCTION
 
 ## Testing
 
-Create a test_vars.rb file in config/initializers with the following credentials:
+Create a `_test_vars.rb` file in config/initializers with the following credentials:
 
 ```
 ENV['POSTGRES_PORT']='55432'
 ENV['POSTGRES_USER']='mimo-api'
 ENV['POSTGRES_PASSWORD']='passw0rd'
+ENV['REDIS_PORT']='6380'
+ENV['REDIS_HOST']='127.0.0.1'
 ```
 
 These might need to be altered depending on your local variables
