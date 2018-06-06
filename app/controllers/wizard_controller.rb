@@ -10,7 +10,7 @@ class WizardController < ApplicationController
     else
       # REDIS.del('codeReq')
       @requested = REDIS.get('codeReq').present?
-      @user = User.find_by(role: 0) unless @requested.present?
+      @user = User.new #find_by(role: 0) unless @requested.present?
     end
   end
 

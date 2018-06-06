@@ -10,9 +10,9 @@
         %b
           You've just requested a link - please check your email!
     - else
-      = form_for(@user, url: wizard_code_path, remote: true, method: :post) do |f|
-        = f.submit 'Get New Code'
-        
+      #submit
+        = button_to "Get Code", wizard_code_path, remote: true, method: :post, id: 'get_code'
+
   - else
     %h1.card-title You've installed MIMO
 
