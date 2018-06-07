@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_07_135137) do
+ActiveRecord::Schema.define(version: 2018_06_07_140636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -311,10 +311,10 @@ ActiveRecord::Schema.define(version: 2018_06_07_135137) do
     t.text "quota_message"
     t.text "walled_gardens"
     t.string "passwd_change_email", limit: 50
-    t.string "logo_file_name", limit: 25
-    t.string "background_image_name", limit: 25
-    t.string "location_image_name", limit: 25
-    t.string "header_image_name", limit: 25
+    t.string "logo_file_name", limit: 255
+    t.string "background_image_name", limit: 255
+    t.string "location_image_name", limit: 255
+    t.string "header_image_name", limit: 255
     t.string "words_position", limit: 6, default: "right"
     t.string "logo_position", limit: 6, default: "left"
     t.string "container_float", limit: 6, default: "center"
@@ -341,8 +341,8 @@ ActiveRecord::Schema.define(version: 2018_06_07_135137) do
     t.string "heading_3_text_colour", limit: 30, default: "#000000"
     t.string "body_text_colour", limit: 30, default: "#333333"
     t.string "border_colour", limit: 30, default: "#CCCCCC"
-    t.string "btn_text", limit: 25, default: "Login Now"
-    t.string "reg_btn_text", limit: 25, default: "Register"
+    t.string "btn_text", limit: 100, default: "Login Now"
+    t.string "reg_btn_text", limit: 100, default: "Register"
     t.string "btn_font_size", limit: 6, default: "18px"
     t.string "btn_font_colour", limit: 30, default: "#000000"
     t.string "link_colour", limit: 30, default: "#2B68B6"
@@ -379,9 +379,9 @@ ActiveRecord::Schema.define(version: 2018_06_07_135137) do
     t.string "footer_text_colour", limit: 30, default: "#CCC"
     t.string "timezone", limit: 32, default: "Europe/London"
     t.string "popup_background_colour", limit: 30, default: "rgb(255,255,255)"
-    t.string "password", limit: 25
-    t.string "fb_page_id", limit: 25
-    t.string "fb_app_id", limit: 25
+    t.string "password", limit: 100
+    t.string "fb_page_id", limit: 50
+    t.string "fb_app_id", limit: 50
     t.string "fb_link", limit: 255
     t.string "success_url", limit: 255
     t.string "terms_url", limit: 255
