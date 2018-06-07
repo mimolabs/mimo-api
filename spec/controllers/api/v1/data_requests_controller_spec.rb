@@ -112,7 +112,7 @@ describe Api::V1::DataRequestsController, type: :controller do
         last_name: person.last_name
       }
       expect(Sidekiq::Client).to receive(:push).with('class' => 'PersonDestroyRelations', 'args' => [test_options])
-      get :destroy, format: :json, params: { person_id: person.id, code: access_code }
+      delete :destroy, format: :json, params: { person_id: person.id, code: access_code }
       expect(response).to be_successful
       expect(Person.all.size).to eq 0
     end
@@ -123,7 +123,7 @@ describe Api::V1::DataRequestsController, type: :controller do
       access_code = SecureRandom.hex
       REDIS.setex("timelinePortalCode:#{person.id}", 10, access_code)
       expect(Sidekiq::Client).not_to receive(:push)
-      get :destroy, format: :json, params: { person_id: person.id, code: SecureRandom.hex }
+      delete :destroy, format: :json, params: { person_id: person.id, code: SecureRandom.hex }
       expect(response).not_to be_successful
       expect(Person.last.id).to eq person.id
     end
