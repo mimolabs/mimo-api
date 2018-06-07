@@ -69,8 +69,8 @@ namespace :production do
 
     puts 'xxxxxxx CREATING THE DEMO DATA xxxx'
   
-    settings = Settings.first
-    unless settings.present?
+    location = Location.find_by id: 10_000
+    unless location.present?
       Sidekiq::Client.push('class' => "GenerateDemoData", 'args' => [])
     end
 
