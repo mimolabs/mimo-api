@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'errors'
 
 RSpec.describe SplashPage, type: :model do
 
@@ -37,13 +36,13 @@ RSpec.describe SplashPage, type: :model do
       # expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Clickthrough not enabled')
 
       s = SplashPage.new backup_sms: false, backup_email: false, backup_password: false, fb_login_on: false, g_login_on: false, tw_login_on: false
-      
+
       expect(s.validate_credentials(opts)).to eq true
     end
 
     it 'should validate a password user' do
       opts = {}
-      s = SplashPage.new backup_password: true 
+      s = SplashPage.new backup_password: true
       expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Clickthrough not allowed')
 
       opts[:password] = 'cheese'
@@ -55,7 +54,7 @@ RSpec.describe SplashPage, type: :model do
 
     it 'should should validate the phone number against the Twilio API for OTP logins' do
       opts = {}
-      s = SplashPage.new backup_sms: true 
+      s = SplashPage.new backup_sms: true
       opts[:number] = '+44777777777777'
 
       # expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Invalid phone number')
@@ -73,7 +72,7 @@ RSpec.describe SplashPage, type: :model do
             'User-Agent'=>'Faraday v0.15.1'
           }).
           to_return(status: 404, body: "", headers: {})
-          
+
       expect { s.validate_credentials(opts) }.to raise_error(Mimo::StandardError, 'Invalid phone number')
 
       stub_request(:get, "https://lookups.twilio.com/v1/PhoneNumbers/+44777777777777?Type=carrier").
@@ -85,7 +84,7 @@ RSpec.describe SplashPage, type: :model do
             'User-Agent'=>'Faraday v0.15.1'
           }).
           to_return(status: 200, body: "", headers: {})
-          
+
       expect(s.validate_credentials(opts)).to eq true
     end
 
@@ -95,7 +94,7 @@ RSpec.describe SplashPage, type: :model do
       mac = client_mac
       s = SplashPage.new backup_sms: true, id: 100
       opts[:number]     = '+44777777777777'
-      opts[:client_mac] = mac 
+      opts[:client_mac] = mac
 
       s.twilio_user = 'simon'
       s.twilio_pass = 'simon'
@@ -109,7 +108,7 @@ RSpec.describe SplashPage, type: :model do
             'User-Agent'=>'Faraday v0.15.1'
           }).
           to_return(status: 200, body: "", headers: {})
-          
+
       expect(s.generate_otp(opts)).to eq true
 
       key = "otp:#{mac}:#{s.id}"
@@ -117,7 +116,7 @@ RSpec.describe SplashPage, type: :model do
 
       params = { client_mac: mac, splash_id: s.id }
       expect(OneTimeSplashCode.find(params)).to be_present
-      
+
       expect(REDIS.get(key)).to eq nil
     end
 
@@ -153,7 +152,7 @@ RSpec.describe SplashPage, type: :model do
          }).
        to_return(status: 200, body: "", headers: {})
 
-      opts[:client_mac] = mac 
+      opts[:client_mac] = mac
       opts[:otp]        = true
       opts[:password]   = 123
 
@@ -310,7 +309,7 @@ RSpec.describe SplashPage, type: :model do
       #### Now with two - different weights - prioritise the higher
       s2 = SplashPage.create location_id: 1, weight: 1000
       opts[:location_id] = 1
-      
+
       login = SplashPage.find_splash(opts)
       expect(login).to eq s2
     end
@@ -364,7 +363,7 @@ RSpec.describe SplashPage, type: :model do
             'User-Agent'=>'Faraday v0.15.1'
           }).
           to_return(status: 401, body: "", headers: {})
-      
+
       expect { s.validate_number(number) }.to raise_error(Mimo::StandardError, 'Invalid Twilio credentials')
 
       stub_request(:get, "https://lookups.twilio.com/v1/PhoneNumbers/00000000?Type=carrier").
@@ -376,7 +375,7 @@ RSpec.describe SplashPage, type: :model do
             'User-Agent'=>'Faraday v0.15.1'
           }).
           to_return(status: 404, body: "", headers: {})
-      
+
       expect { s.validate_number(number) }.to raise_error(Mimo::StandardError, 'Invalid phone number')
 
       stub_request(:get, "https://lookups.twilio.com/v1/PhoneNumbers/00000000?Type=carrier").
@@ -388,7 +387,7 @@ RSpec.describe SplashPage, type: :model do
             'User-Agent'=>'Faraday v0.15.1'
           }).
           to_return(status: 200, body: "", headers: {})
-      
+
         expect(s.validate_number(number)).to eq true
         expect(s.valid_number(number)).to eq true
     end
