@@ -39,13 +39,37 @@ describe Api::V1::PersonTimelinesController, type: :controller do
   end
 
   context 'portal access' do
-    let(:location) { Location.create user_id: user.id }
+    let(:location) { Location.create }
 
     describe 'accessing portal timeline index' do
-      it 'should not render index - no timeline events' do
-        person = Person.create
+      it 'should not send index - no timeline events' do
+        person = Person.create location_id: location.id
         get :portal_timeline, format: :json, params: { person_id: person.id, code: SecureRandom.hex }
         expect(response).to_not be_successful
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body['message']).to include 'Unable to authenticate code'
+      end
+
+      it 'should send the user\'s timeline events' do
+        person = Person.create location_id: location.id
+        pt = PersonTimeline.create location_id: location.id, person_id: person.id
+        access_code = SecureRandom.hex
+        REDIS.setex("timelinePortalCode:#{person.id}", 10, access_code)
+        get :portal_timeline, format: :json, params: { person_id: person.id, code: access_code }
+        expect(response).to be_successful
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body['timelines'][0]['id']).to eq pt.id.to_s
+      end
+
+      it 'should not send the user\'s timeline events - incorrect access code' do
+        person = Person.create location_id: location.id
+        pt = PersonTimeline.create location_id: location.id, person_id: person.id
+        access_code = SecureRandom.hex
+        REDIS.setex("timelinePortalCode:#{person.id}", 10, access_code)
+        get :portal_timeline, format: :json, params: { person_id: person.id, code: SecureRandom.hex }
+        expect(response).not_to be_successful
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body['message']).to include 'Unable to authenticate code'
       end
     end
   end

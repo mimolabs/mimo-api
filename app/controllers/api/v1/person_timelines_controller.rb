@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::PersonTimelinesController < Api::V1::BaseController
-  before_action :doorkeeper_authorize!
+  before_action :doorkeeper_authorize!, except: [:portal_timeline]
   before_action :set_resource, except: [:portal_timeline]
   respond_to :json
 
