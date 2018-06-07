@@ -72,5 +72,42 @@ describe Api::V1::PersonTimelinesController, type: :controller do
         expect(parsed_body['message']).to include 'Unable to authenticate code'
       end
     end
+
+    describe 'download timeline data' do
+      it 'should allow users to download their data' do
+        person = Person.create location_id: location.id, email: Faker::Internet.email
+        access_code = SecureRandom.hex
+        REDIS.setex("timelinePortalCode:#{person.id}", 10, access_code)
+        expect(Sidekiq::Client).to receive(:push).with('class' => 'DownloadPersonTimeline', 'args' => [{person_id: person.id, email: person.email}])
+        patch :download, format: :json, params: { person_id: person.id, code: access_code, email: person.email, action: 'download' }
+        expect(response).to be_successful
+        expect(REDIS.get("timelineDataDownloaded:#{person.id}").present?).to eq true
+      end
+
+      it 'will not allow download - too soon since last download' do
+        person = Person.create location_id: location.id, email: Faker::Internet.email
+        access_code = SecureRandom.hex
+        REDIS.setex("timelinePortalCode:#{person.id}", 10, access_code)
+        patch :download, format: :json, params: { person_id: person.id, code: access_code, email: person.email, action: 'download' }
+        expect(response).to be_successful
+        expect(REDIS.get("timelineDataDownloaded:#{person.id}").present?).to eq true
+        patch :download, format: :json, params: { person_id: person.id, code: access_code, email: person.email, action: 'download' }
+        expect(response).not_to be_successful
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body['message']).to include 'Cannot download user timeline data more than once a day'
+      end
+
+      it 'will not allow download - invalid code' do
+        person = Person.create location_id: location.id, email: Faker::Internet.email
+        access_code = SecureRandom.hex
+        REDIS.setex("timelinePortalCode:#{person.id}", 10, access_code)
+        expect(Sidekiq::Client).not_to receive(:push).with('class' => 'DownloadPersonTimeline', 'args' => [{person_id: person.id, email: person.email}])
+        patch :download, format: :json, params: { person_id: person.id, code: SecureRandom.hex, email: person.email, action: 'download' }
+        expect(response).not_to be_successful
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body['message']).to include 'Unable to authenticate'
+        expect(REDIS.get("timelineDataDownloaded:#{person.id}").present?).to eq false
+      end
+    end
   end
 end

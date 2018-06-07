@@ -84,7 +84,7 @@ GEM
       i18n (>= 0.7)
     fakeredis (0.7.0)
       redis (>= 3.2, < 5.0)
-    faraday (0.15.2)
+    faraday (0.15.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.25)
     globalid (0.4.1)
@@ -260,7 +260,7 @@ DEPENDENCIES
   factory_bot
   faker
   fakeredis
-  faraday
+  faraday (= 0.15.1)
   friendly_id!
   haml
   jbuilder (~> 2.5)

@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   post '/wizard/code' => 'wizard#send_code'
   patch '/wizard/update' => 'wizard#update'
   get 'api/v1/person_timelines/:person_id' => 'api/v1/person_timelines#portal_timeline', constraints: PortalTimeline
-
+  patch 'api/v1/person_timelines/:person_id' => 'api/v1/person_timelines#download', constraints: PortalTimelineDownload
+  
   get 'api/v1/locations/:location_id/splash_integrations' => 'api/v1/splash_integrations#show'
   get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',
     constraints: SplashIntegrationSites
