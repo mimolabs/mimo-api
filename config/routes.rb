@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       resources :data_requests do
         patch :update, on: :collection
         get :show, on: :collection
+        delete :destroy, on: :collection
       end
       resources :locations do
         resources :audiences

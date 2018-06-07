@@ -59,4 +59,17 @@ class Api::V1::DataRequestsController < Api::V1::BaseController
     end
   end
 
+  def destroy
+    respond_to do |format|
+      @person = Person.find_by(id: params[:person_id])
+      if params[:code] == Person.portal_timeline_code(params[:person_id]) && @person.present? && @person.portal_request_destroy
+        REDIS.del("timelinePortalCode:#{params[:person_id]}")
+        format.json { render template: 'api/v1/shared/index.json.jbuilder', status: 200 }
+      else
+        @errors = @person.errors.full_messages
+        format.json { render template: 'api/v1/shared/index.json.jbuilder', status: 422 }
+      end
+    end
+  end
+
 end

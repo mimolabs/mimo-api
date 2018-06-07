@@ -33,4 +33,23 @@ class Person < ApplicationRecord
     self.errors.add :base, 'Must provide valid email address to download timeline data'
     false
   end
+
+  def portal_request_destroy
+    @portal_request = true
+    self.destroy
+  end
+
+  def remove_relations
+    @options = {
+      person_id: id.to_s,
+      location_id: location_id
+    }
+    if @portal_request
+      @options[:portal_request] = true
+      @options[:email] = email
+      @options[:first_name] = first_name
+      @options[:last_name] = last_name
+    end
+    SidekiqWorker.perform_async(class: 'PersonDestroyRelations', args: [@options] )
+  end
 end

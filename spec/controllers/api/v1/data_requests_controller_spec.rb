@@ -99,7 +99,22 @@ describe Api::V1::DataRequestsController, type: :controller do
 
   describe 'destroy person data' do
     it 'will get the general person data' do
-      
+      person = Person.create location_id: location.id, email: Faker::Internet.email,
+                             first_name: Faker::Name.first_name, last_name: Faker::Name.last_name
+      access_code = SecureRandom.hex
+      REDIS.setex("timelinePortalCode:#{person.id}", 10, access_code)
+      test_options = {
+        person_id: person.id,
+        location_id: person.location_id,
+        first_name: person.first_name,
+        last_name: person.last_name,
+        email: person.email,
+        portal_request: true
+      }
+      expect(Sidekiq::Client).not_to receive(:push).with('class' => 'DownloadPersonTimeline', 'args' => [test_options])
+      get :destroy, format: :json, params: { person_id: person.id, code: access_code }
+      expect(response).to be_successful
+      expect(Person.all.size).to eq 0
     end
   end
 end
