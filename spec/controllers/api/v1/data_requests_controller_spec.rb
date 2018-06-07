@@ -62,7 +62,7 @@ describe Api::V1::DataRequestsController, type: :controller do
       expect(parsed_body['message']).to include 'Cannot download user timeline data more than once a day'
     end
 
-    it 'will not allow download - invalid code' do
+    it 'will not allow download - incorrect code' do
       person = Person.create location_id: location.id, email: Faker::Internet.email
       access_code = SecureRandom.hex
       REDIS.setex("timelinePortalCode:#{person.id}", 10, access_code)
@@ -86,7 +86,7 @@ describe Api::V1::DataRequestsController, type: :controller do
       expect(parsed_body['id']).to eq person.id.to_s
     end
 
-    it 'will not get person data - invalid code' do
+    it 'will not get person data - incorrect code' do
       person = Person.create location_id: location.id, email: Faker::Internet.email
       access_code = SecureRandom.hex
       REDIS.setex("timelinePortalCode:#{person.id}", 10, access_code)
@@ -104,17 +104,28 @@ describe Api::V1::DataRequestsController, type: :controller do
       access_code = SecureRandom.hex
       REDIS.setex("timelinePortalCode:#{person.id}", 10, access_code)
       test_options = {
-        person_id: person.id,
+        person_id: person.id.to_s,
         location_id: person.location_id,
-        first_name: person.first_name,
-        last_name: person.last_name,
+        portal_request: true,
         email: person.email,
-        portal_request: true
+        first_name: person.first_name,
+        last_name: person.last_name
       }
-      expect(Sidekiq::Client).not_to receive(:push).with('class' => 'DownloadPersonTimeline', 'args' => [test_options])
+      expect(Sidekiq::Client).to receive(:push).with('class' => 'PersonDestroyRelations', 'args' => [test_options])
       get :destroy, format: :json, params: { person_id: person.id, code: access_code }
       expect(response).to be_successful
       expect(Person.all.size).to eq 0
+    end
+
+    it 'should not destroy - incorrect code' do
+      person = Person.create location_id: location.id, email: Faker::Internet.email,
+                             first_name: Faker::Name.first_name, last_name: Faker::Name.last_name
+      access_code = SecureRandom.hex
+      REDIS.setex("timelinePortalCode:#{person.id}", 10, access_code)
+      expect(Sidekiq::Client).not_to receive(:push)
+      get :destroy, format: :json, params: { person_id: person.id, code: SecureRandom.hex }
+      expect(response).not_to be_successful
+      expect(Person.last.id).to eq person.id
     end
   end
 end

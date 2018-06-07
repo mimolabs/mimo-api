@@ -3,6 +3,8 @@
 class Person < ApplicationRecord
   self.table_name = 'people'
 
+  before_destroy :remove_relations, prepend: true
+
   def self.portal_timeline_code(person_id)
     REDIS.get("timelinePortalCode:#{person_id}")
   end
@@ -50,6 +52,6 @@ class Person < ApplicationRecord
       @options[:first_name] = first_name
       @options[:last_name] = last_name
     end
-    SidekiqWorker.perform_async(class: 'PersonDestroyRelations', args: [@options] )
+    Sidekiq::Client.push('class' => 'PersonDestroyRelations', 'args' => [@options] )
   end
 end
