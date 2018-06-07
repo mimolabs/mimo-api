@@ -13,15 +13,15 @@ Rails.application.routes.draw do
   get '/wizard/complete' => 'wizard#complete'
   post '/wizard/code' => 'wizard#send_code'
   patch '/wizard/update' => 'wizard#update'
-  get 'api/v1/person_timelines/:person_id' => 'api/v1/person_timelines#portal_timeline', constraints: PortalTimeline
-  patch 'api/v1/person_timelines/:person_id' => 'api/v1/person_timelines#download', constraints: PortalTimelineDownload
-  
+
   get 'api/v1/locations/:location_id/splash_integrations' => 'api/v1/splash_integrations#show'
   get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',
     constraints: SplashIntegrationSites
 
   ### For the double opt in email confirmation
   patch 'api/v1/emails/:id' => 'api/v1/emails#confirm', constraints: EmailConfirm
+
+  get 'api/v1/data_requests/timeline' => 'api/v1/data_requests#timeline'
 
   get 'api/v1/logins' => 'api/v1/login_pages#show_welcome', constraints: LoginsWelcome
   get 'api/v1/logins' => 'api/v1/login_pages#create', constraints: ApiLoginsCreate
@@ -32,6 +32,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :data_requests do
+        patch :update, on: :collection
+        get :show, on: :collection
+      end
       resources :locations do
         resources :audiences
         resources :boxes, only: [:destroy, :index]

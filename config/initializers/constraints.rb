@@ -27,9 +27,3 @@ class PortalTimeline
     request.query_parameters["code"].present?
   end
 end
-
-class PortalTimelineDownload
-  def self.matches?(request)
-    request.query_parameters["code"].present? && request.query_parameters["action"] == 'download'
-  end
-end
