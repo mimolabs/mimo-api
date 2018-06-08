@@ -9,4 +9,4 @@
   %p You can now login to your dashboard here:
 
   %p
-    %a{:href => "https://dashboard.#{ENV['MIMO_DASHBOARD_URL'] || 'example.com'}"} https://dashboard.#{ENV['MIMO_DASHBOARD_URL'] || 'example.com'}
+    %a{:href => "#{ENV['MIMO_DASHBOARD_URL']"} #{ENV['MIMO_DASHBOARD_URL']}

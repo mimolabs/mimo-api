@@ -43,3 +43,6 @@ public/uploads
 
 yarn.lock
 **/.DS_Store
+
+doc/*
+doc

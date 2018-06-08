@@ -65,12 +65,13 @@ namespace :production do
       puts "User with email #{email} already in database"
     end
       
+    ### This should not email in a loop - needs some kind of log that it's been done...
     UserMailer.with(user: admin).welcome_email.deliver_now
 
     puts 'xxxxxxx CREATING THE DEMO DATA xxxx'
   
-    settings = Settings.first
-    unless settings.present?
+    location = Location.find_by id: 10_000
+    unless location.present?
       Sidekiq::Client.push('class' => "GenerateDemoData", 'args' => [])
     end
 
