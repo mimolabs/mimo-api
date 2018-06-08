@@ -46,6 +46,7 @@ RSpec.describe Person, type: :model do
       person = Person.create location_id: 123
       expect(Sidekiq::Client).to receive(:push).with('class' => 'PersonDestroyRelations', 'args' => [person_id: person.id, location_id: 123])
       person.destroy
+      expect(person.instance_variable_get(:@portal_request)).not_to eq true
     end
 
     it 'should record portal request for worker + clear access code' do
@@ -53,6 +54,7 @@ RSpec.describe Person, type: :model do
       REDIS.setex("timelinePortalCode:#{456}", 5, SecureRandom.hex)
       expect(Sidekiq::Client).to receive(:push).with('class' => 'PersonDestroyRelations', 'args' => [person_id: person.id, location_id: 123, portal_request: true])
       person.portal_request_destroy
+      expect(person.instance_variable_get(:@portal_request)).to eq true
       expect(REDIS.get("timelinePortalCode:#{456}")).to eq nil
     end
   end
