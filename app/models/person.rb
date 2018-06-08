@@ -12,6 +12,11 @@ class Person < ApplicationRecord
     REDIS.get("timelinePortalCode:#{person_id}")
   end
 
+  ##
+  # Used for GDPR purposes. Creates a job in the worker to search for people
+  # associated with the given email address, creates a unique access code, and
+  # sends a link via email for the end user to view their data.
+
   def self.create_timeline(email)
     Sidekiq::Client.push('class' => 'PersonTimelineRequest', 'args' => [{email: email}])
   end

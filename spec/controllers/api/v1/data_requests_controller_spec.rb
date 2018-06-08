@@ -15,7 +15,7 @@ describe Api::V1::DataRequestsController, type: :controller do
       expect(parsed_body['message']).to include 'Provide a valid email address to request timeline'
     end
 
-    it 'creates a sidekiq job + saves code to redis' do
+    it 'creates a sidekiq job' do
       person = Person.create location_id: location.id, email: Faker::Internet.email
       expect(Sidekiq::Client).to receive(:push).with('class' => 'PersonTimelineRequest', 'args' => [email: person.email])
       post :create, format: :json, params: { email: person.email }
