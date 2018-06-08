@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :data_requests do
         patch :update, on: :collection
+        post :create, on: :collection
         get :show, on: :collection
         delete :destroy, on: :collection
       end

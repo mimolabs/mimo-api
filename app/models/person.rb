@@ -12,6 +12,10 @@ class Person < ApplicationRecord
     REDIS.get("timelinePortalCode:#{person_id}")
   end
 
+  def self.create_timeline(email)
+    Sidekiq::Client.push('class' => 'PersonTimelineRequest', 'args' => [{email: email}])
+  end
+
   ##
   # This function is for the end user and primarily for GDPR purposes.
   # Via an open endpoint, users can request an email with an attachment of

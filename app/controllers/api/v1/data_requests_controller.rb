@@ -42,12 +42,23 @@ class Api::V1::DataRequestsController < Api::V1::BaseController
     end
   end
 
+  def create
+    respond_to do |format|
+      if params[:email].present? && Person.create_timeline(params[:email])
+        format.json { render template: 'api/v1/data_requests/create.json.jbuilder', status: 201 }
+      else
+        @errors = ['Provide a valid email address to request timeline']
+        format.json { render template: 'api/v1/shared/index.json.jbuilder', status: 422 }
+      end
+    end
+  end
+
   def update
     respond_to do |format|
       @person = Person.find_by(id: params[:person_id])
       if params[:code] == Person.portal_timeline_code(params[:person_id]) && @person.present?
         if @person.download_timeline(params[:email])
-          format.json { render template: 'api/v1/person_timelines/create.json.jbuilder', status: 201 }
+          format.json { render template: 'api/v1/data_requests/update.json.jbuilder', status: 201 }
         else
           @errors = @person.errors.full_messages
           format.json { render template: 'api/v1/shared/index.json.jbuilder', status: 422 }

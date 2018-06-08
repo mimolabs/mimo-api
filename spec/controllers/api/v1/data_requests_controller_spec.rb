@@ -6,6 +6,21 @@ describe Api::V1::DataRequestsController, type: :controller do
 
   let(:location) { Location.create }
 
+  describe 'create portal access' do
+    it 'requires an email address' do
+      post :create, format: :json
+      expect(response).to_not be_successful
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body['message']).to include 'Provide a valid email address to request timeline'
+    end
+
+    it 'creates a sidekiq job + saves code to redis' do
+      person = Person.create location_id: location.id, email: Faker::Internet.email
+      expect(Sidekiq::Client).to receive(:push).with('class' => 'PersonTimelineRequest', 'args' => [email: person.email])
+      post :create, format: :json, params: { email: person.email }
+    end
+  end
+
   describe 'accessing portal timeline index' do
     it 'should not send index - no timeline events' do
       person = Person.create location_id: location.id
@@ -97,7 +112,7 @@ describe Api::V1::DataRequestsController, type: :controller do
     end
   end
 
-  describe 'destroy person data', focus: true do
+  describe 'destroy person data' do
     it 'will get the general person data' do
       person = Person.create location_id: location.id, email: Faker::Internet.email,
                              first_name: Faker::Name.first_name, last_name: Faker::Name.last_name
