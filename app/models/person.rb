@@ -1,4 +1,7 @@
-# frozen_string_literal: true
+##
+## The Person model represents each person that logs into your network via a splash page.
+## It links users by their mac or email addresses and saves their email address, name or whatever else the user might agree to give.
+## A Person can have many Social, Email, Sms and Station.
 
 class Person < ApplicationRecord
   self.table_name = 'people'
@@ -8,6 +11,12 @@ class Person < ApplicationRecord
   def self.portal_timeline_code(person_id)
     REDIS.get("timelinePortalCode:#{person_id}")
   end
+
+  ##
+  # This function is for the end user and primarily for GDPR purposes.
+  # Via an open endpoint, users can request an email with an attachment of
+  # all of the data we have associated with their email address. This can only
+  # be requested once every 24 hours.
 
   def download_timeline(email_address)
     email_address ||= self.email
@@ -36,22 +45,31 @@ class Person < ApplicationRecord
     false
   end
 
+  ##
+  # This function is used for GDPR purposes, to allow the end user to remove
+  # their own data from our database via an open endpoint.
+
   def portal_request_destroy
     @portal_request = true
-    self.destroy
+    clear_redis if self.destroy
   end
+
+  def clear_redis
+    REDIS.del("timelinePortalCode:#{id}")
+  end
+
+  ##
+  # This function is run before a person is deleted from our database. It
+  # triggers a job in the worker that removes all relations of the person. In
+  # the case of the end user requesting the deletion, an email will be sent to
+  # the location admin to notify.
 
   def remove_relations
     @options = {
-      person_id: id.to_s,
+      person_id: id,
       location_id: location_id
     }
-    if @portal_request
-      @options[:portal_request] = true
-      @options[:email] = email
-      @options[:first_name] = first_name
-      @options[:last_name] = last_name
-    end
+    @options[:portal_request] = true if @portal_request
     Sidekiq::Client.push('class' => 'PersonDestroyRelations', 'args' => [@options] )
   end
 end
