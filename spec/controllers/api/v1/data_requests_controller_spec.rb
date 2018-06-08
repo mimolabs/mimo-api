@@ -8,6 +8,7 @@ describe Api::V1::DataRequestsController, type: :controller do
 
   describe 'create portal access' do
     it 'requires an email address' do
+      expect(Sidekiq::Client).not_to receive(:push)
       post :create, format: :json
       expect(response).to_not be_successful
       parsed_body = JSON.parse(response.body)
