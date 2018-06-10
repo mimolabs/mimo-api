@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     sign_out: 'logout'
   }, controllers: {sessions: "sessions", passwords: 'passwords', unlocks: 'unlocks'}
 
+  get '_healthz' => 'static_pages#health'
   get '/api/v1/ping', controller: 'api/v1/ping', action: 'ping'
+
   get '/api/v1/me' => 'api/v1/users#me'
   get '/wizard/start' => 'wizard#start'
   get '/wizard/complete' => 'wizard#complete'
