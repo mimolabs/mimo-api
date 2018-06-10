@@ -6,7 +6,7 @@
     %b Please note you won't be able to access this wizard again!
     Further changes can be made in your dashboard.
 
-  %p You can now login to your dashboard here:
+  %p You can now login to your dashboard:
 
   %p
-    %a{:href => "#{ENV['MIMO_DASHBOARD_URL']"} #{ENV['MIMO_DASHBOARD_URL']}
+    %a{:href => "#{ENV['MIMO_DASHBOARD_URL'] || 'missing'"} #{ENV['MIMO_DASHBOARD_URL'] || 'missing-url'}
