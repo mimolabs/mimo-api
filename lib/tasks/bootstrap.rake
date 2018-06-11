@@ -66,7 +66,10 @@ namespace :production do
     end
       
     ### This should not email in a loop - needs some kind of log that it's been done...
-    UserMailer.with(user: admin).welcome_email.deliver_now
+    settings = Settings.first
+    unless settings.present?
+      UserMailer.with(user: admin).welcome_email.deliver_now
+    end
 
     puts 'xxxxxxx CREATING THE DEMO DATA xxxx'
   
