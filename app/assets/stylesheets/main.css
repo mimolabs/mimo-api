@@ -58,31 +58,9 @@ h3 {
   border-radius: 4px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.10);
   padding: 16px;
-  /* max-width: 600px; */
   margin: auto;
   border: 0px;
 }
-
-/* @media screen and (min-width: 1000px) {
-  .card {
-    width: 40%;
-  }
-}
-@media screen and (max-width: 1000px) {
-  .card {
-    width: 60%;
-  }
-}
-@media screen and (max-width: 650px) {
-  .card {
-    width: 80%;
-  }
-}
-@media screen and (max-width: 500px) {
-  .card {
-    width: 90%;
-  }
-} */
 
 label {
   display: block;
