@@ -55,6 +55,6 @@ class WizardController < ApplicationController
   end
 
   def settings_params
-    params.require(:settings).permit(:business_name, :from_email, :logo, :favicon, :code, :password)
+    params.require(:settings).permit(:business_name, :from_email, :logo, :favicon, :code, :password, :docs_url, :terms_url, :intercom_id, :drift_id)
   end
 end
