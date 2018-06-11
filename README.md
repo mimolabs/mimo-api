@@ -1,5 +1,7 @@
 # MIMO API!
 
+[![CircleCI](https://circleci.com/gh/mimolabs/mimo-api.svg?style=svg)](https://circleci.com/gh/mimolabs/mimo-api)
+
 Normally this will be run by the installer. Should you need to run as a standalone, please follow the steps below. If you also need the worker, add the ohmimo/mimo-worker section back to the docker-compose file
 
 **Make sure you have Docker, Git and Docker Compose installed.**
