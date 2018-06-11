@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_05_132042) do
+ActiveRecord::Schema.define(version: 2018_06_07_140636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -311,10 +311,10 @@ ActiveRecord::Schema.define(version: 2018_06_05_132042) do
     t.text "quota_message"
     t.text "walled_gardens"
     t.string "passwd_change_email", limit: 50
-    t.string "logo_file_name", limit: 25
-    t.string "background_image_name", limit: 25
-    t.string "location_image_name", limit: 25
-    t.string "header_image_name", limit: 25
+    t.string "logo_file_name", limit: 255
+    t.string "background_image_name", limit: 255
+    t.string "location_image_name", limit: 255
+    t.string "header_image_name", limit: 255
     t.string "words_position", limit: 6, default: "right"
     t.string "logo_position", limit: 6, default: "left"
     t.string "container_float", limit: 6, default: "center"
@@ -323,65 +323,65 @@ ActiveRecord::Schema.define(version: 2018_06_05_132042) do
     t.string "container_inner_padding", limit: 6, default: "20px"
     t.string "container_inner_radius", limit: 6, default: "4px"
     t.string "bg_dimension", limit: 6, default: "full"
-    t.string "header_colour", limit: 22, default: "#FFFFFF"
-    t.string "button_colour", limit: 22, default: "#FFFFFF"
+    t.string "header_colour", limit: 30, default: "#FFFFFF"
+    t.string "button_colour", limit: 30, default: "#FFFFFF"
     t.string "button_radius", limit: 6, default: "4px"
-    t.string "button_border_colour", limit: 22, default: "#000"
+    t.string "button_border_colour", limit: 30, default: "#000"
     t.string "button_padding", limit: 10, default: "0px 16px"
     t.string "button_height", limit: 6, default: "50px"
-    t.string "container_colour", limit: 22, default: "#FFFFFF"
+    t.string "container_colour", limit: 30, default: "#FFFFFF"
     t.string "container_width", limit: 6, default: "850px"
-    t.string "body_background_colour", limit: 22, default: "#FFFFFF"
+    t.string "body_background_colour", limit: 30, default: "#FFFFFF"
     t.string "body_font_size", limit: 6, default: "14px"
     t.string "heading_text_size", limit: 6, default: "22px"
-    t.string "heading_text_colour", limit: 22, default: "#000000"
+    t.string "heading_text_colour", limit: 30, default: "#000000"
     t.string "heading_2_text_size", limit: 6, default: "16px"
-    t.string "heading_2_text_colour", limit: 22, default: "#000000"
+    t.string "heading_2_text_colour", limit: 30, default: "#000000"
     t.string "heading_3_text_size", limit: 6, default: "14px"
-    t.string "heading_3_text_colour", limit: 22, default: "#000000"
-    t.string "body_text_colour", limit: 22, default: "#333333"
-    t.string "border_colour", limit: 22, default: "#CCCCCC"
-    t.string "btn_text", limit: 25, default: "Login Now"
-    t.string "reg_btn_text", limit: 25, default: "Register"
+    t.string "heading_3_text_colour", limit: 30, default: "#000000"
+    t.string "body_text_colour", limit: 30, default: "#333333"
+    t.string "border_colour", limit: 30, default: "#CCCCCC"
+    t.string "btn_text", limit: 100, default: "Login Now"
+    t.string "reg_btn_text", limit: 100, default: "Register"
     t.string "btn_font_size", limit: 6, default: "18px"
-    t.string "btn_font_colour", limit: 22, default: "#000000"
-    t.string "link_colour", limit: 22, default: "#2B68B6"
-    t.string "error_colour", limit: 22, default: "#ED561B"
-    t.string "email_button_colour", limit: 22, default: "rgb(255, 255, 255)"
-    t.string "email_button_border_colour", limit: 22, default: "rgb(204, 204, 204)"
-    t.string "email_btn_font_colour", limit: 22, default: "rgb(0, 0, 0)"
-    t.string "sms_button_colour", limit: 22, default: "rgb(239, 83, 80)"
-    t.string "sms_button_border_colour", limit: 22, default: "rgba(239, 83, 80, 0)"
-    t.string "sms_btn_font_colour", limit: 22, default: "rgb(255, 255, 255)"
-    t.string "voucher_button_colour", limit: 22, default: "rgb(255, 255, 255)"
-    t.string "voucher_button_border_colour", limit: 22, default: "rgb(204, 204, 204)"
-    t.string "voucher_btn_font_colour", limit: 22, default: "rgb(0, 0, 0)"
-    t.string "codes_button_colour", limit: 22, default: "rgb(255, 255, 255)"
-    t.string "codes_button_border_colour", limit: 22, default: "rgb(204, 204, 204)"
-    t.string "codes_btn_font_colour", limit: 22, default: "rgb(0, 0, 0)"
-    t.string "password_button_colour", limit: 22, default: "rgb(255, 255, 255)"
-    t.string "password_button_border_colour", limit: 22, default: "rgb(204, 204, 204)"
-    t.string "password_btn_font_colour", limit: 22, default: "rgb(0, 0, 0)"
+    t.string "btn_font_colour", limit: 30, default: "#000000"
+    t.string "link_colour", limit: 30, default: "#2B68B6"
+    t.string "error_colour", limit: 30, default: "#ED561B"
+    t.string "email_button_colour", limit: 30, default: "rgb(255, 255, 255)"
+    t.string "email_button_border_colour", limit: 30, default: "rgb(204, 204, 204)"
+    t.string "email_btn_font_colour", limit: 30, default: "rgb(0, 0, 0)"
+    t.string "sms_button_colour", limit: 30, default: "rgb(239, 83, 80)"
+    t.string "sms_button_border_colour", limit: 30, default: "rgba(239, 83, 80, 0)"
+    t.string "sms_btn_font_colour", limit: 30, default: "rgb(255, 255, 255)"
+    t.string "voucher_button_colour", limit: 30, default: "rgb(255, 255, 255)"
+    t.string "voucher_button_border_colour", limit: 30, default: "rgb(204, 204, 204)"
+    t.string "voucher_btn_font_colour", limit: 30, default: "rgb(0, 0, 0)"
+    t.string "codes_button_colour", limit: 30, default: "rgb(255, 255, 255)"
+    t.string "codes_button_border_colour", limit: 30, default: "rgb(204, 204, 204)"
+    t.string "codes_btn_font_colour", limit: 30, default: "rgb(0, 0, 0)"
+    t.string "password_button_colour", limit: 30, default: "rgb(255, 255, 255)"
+    t.string "password_button_border_colour", limit: 30, default: "rgb(204, 204, 204)"
+    t.string "password_btn_font_colour", limit: 30, default: "rgb(0, 0, 0)"
     t.string "access_restrict", limit: 10, default: "none"
     t.string "access_restrict_period", limit: 10, default: "daily"
     t.string "available_start", limit: 2, default: "00"
     t.string "available_end", limit: 2, default: "00"
     t.string "input_padding", limit: 10, default: "10px 15px"
     t.string "input_height", limit: 10, default: "40px"
-    t.string "input_border_colour", limit: 22, default: "#d0d0d0"
+    t.string "input_border_colour", limit: 30, default: "#d0d0d0"
     t.string "input_border_width", limit: 6, default: "1px"
     t.string "input_border_radius", limit: 6, default: "0px"
     t.string "input_required_colour", limit: 10, default: "#CCC"
     t.string "input_required_size", limit: 10, default: "10px"
-    t.string "input_background", limit: 22, default: "#FFFFFF"
-    t.string "input_text_colour", limit: 22, default: "#3D3D3D"
+    t.string "input_background", limit: 30, default: "#FFFFFF"
+    t.string "input_text_colour", limit: 30, default: "#3D3D3D"
     t.string "input_max_width", limit: 6, default: "400px"
-    t.string "footer_text_colour", limit: 22, default: "#CCC"
+    t.string "footer_text_colour", limit: 30, default: "#CCC"
     t.string "timezone", limit: 32, default: "Europe/London"
-    t.string "popup_background_colour", limit: 22, default: "rgb(255,255,255)"
-    t.string "password", limit: 25
-    t.string "fb_page_id", limit: 25
-    t.string "fb_app_id", limit: 25
+    t.string "popup_background_colour", limit: 30, default: "rgb(255,255,255)"
+    t.string "password", limit: 100
+    t.string "fb_page_id", limit: 50
+    t.string "fb_app_id", limit: 50
     t.string "fb_link", limit: 255
     t.string "success_url", limit: 255
     t.string "terms_url", limit: 255

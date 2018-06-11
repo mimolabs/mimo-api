@@ -12,7 +12,7 @@ class User < ApplicationRecord
                            foreign_key: :resource_owner_id,
                            dependent: :delete_all
 
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :lockable, :timeoutable
+  devise :database_authenticatable, :recoverable, :trackable, :validatable, :lockable, :timeoutable
 
   before_create :generate_defaults
 

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Api::V1::LoginPagesController < Api::V1::BaseController
-  # require 'errors'
   before_action :auth_logins
 
   ### The logins are still using JSONP
@@ -14,8 +13,8 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
   def show
     @splash = find_splash
     @form = @splash.form_code(@client_mac, params[:uamip])
-    render template: 'api/v1/logins/show.json.jbuilder', 
-      status: 200, 
+    render template: 'api/v1/logins/show.json.jbuilder',
+      status: 200,
       callback: params[:callback]
 
   rescue Mimo::StandardError => @exception
@@ -24,7 +23,7 @@ class Api::V1::LoginPagesController < Api::V1::BaseController
 
   def create
     @splash = SplashPage.find_by unique_id: params[:splash_id]
-    
+
     ### Raise an error if the splash is not found
     SplashErrors.not_found unless @splash.present?
 

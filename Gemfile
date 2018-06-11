@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
@@ -15,16 +15,18 @@ gem 'uglifier', require: 'uglifier'
 gem 'devise'
 gem 'doorkeeper'
 gem 'friendly_id', git: 'https://github.com/norman/friendly_id.git'
+# gem 'sentry-ruby', git: 'https://github.com/mimolabs/raven-ruby.git'
 gem 'kaminari'
 gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
-gem 'faraday'
+gem 'faraday', '0.15.1'
 gem 'mustache'
 gem 'rails-i18n'
 gem 'sidekiq'
 gem 'haml'
 gem 'carrierwave', '~> 1.0'
 gem 'mini_magick'
+gem 'sdoc'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
