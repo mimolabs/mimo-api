@@ -5,12 +5,17 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation-flex.min.css" />
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="row">
+      <div class="column small-12">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
