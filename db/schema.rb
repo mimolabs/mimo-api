@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_12_150319) do
+ActiveRecord::Schema.define(version: 2018_06_12_173125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -228,6 +228,7 @@ ActiveRecord::Schema.define(version: 2018_06_12_150319) do
     t.string "splash_google_client_secret"
     t.string "splash_facebook_client_id"
     t.string "splash_facebook_client_secret"
+    t.string "business_address"
   end
 
   create_table "sms", force: :cascade do |t|
