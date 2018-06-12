@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_12_135341) do
+ActiveRecord::Schema.define(version: 2018_06_12_150319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -464,6 +464,9 @@ ActiveRecord::Schema.define(version: 2018_06_12_135341) do
     t.string "twilio_user", limit: 50
     t.string "twilio_pass", limit: 50
     t.string "twilio_from", limit: 15
+    t.string "linkedin_name", limit: 100
+    t.string "instagram_name", limit: 100
+    t.string "pinterest_name", limit: 100
     t.index ["location_id"], name: "index_splash_on_location_id"
   end
 
