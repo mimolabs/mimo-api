@@ -2,6 +2,7 @@ class SettingsController < ApplicationController
   before_action :authenticate_user!
 
   def edit
+    @update = REDIS.get('newVersion#beta')
     @settings = Settings.first
     authorize @settings
   end
