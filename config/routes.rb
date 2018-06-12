@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   }, controllers: {sessions: "sessions", passwords: 'passwords', unlocks: 'unlocks'}
 
   get '_healthz' => 'static_pages#health'
+  post '/api/:id/store', controller: 'static_pages', action: 'eggs'
   get '/api/v1/ping', controller: 'api/v1/ping', action: 'ping'
 
   get '/api/v1/me' => 'api/v1/users#me'
