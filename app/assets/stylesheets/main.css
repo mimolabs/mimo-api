@@ -136,6 +136,7 @@ input[type="file"] {
 
 .success-container {
   background-color: #ffe9b4;
+  color: #000000;
   padding: 10px 10px;
   border: 1px solid #ffd165;
   border-radius: 4px;
