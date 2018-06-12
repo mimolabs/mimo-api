@@ -5,6 +5,8 @@
     .card
 
       %h1.card-title Your MIMO settings
+      %h3
+        Application ID: #{@settings.unique_id}
 
       = form_for @settings, url: '/settings', method: :patch, html: {class: "nifty_form"} do |f|
         - if @success

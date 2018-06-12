@@ -5,9 +5,9 @@ json.form do
 end
 json.splash do
   json.id @splash.unique_id
+  json.splash_name @splash.splash_name
   # json.google_analytics_id]  = google_analytics_id
   json.registration @splash.primary_access_id == 8
-  # json.location_name @location.location_name
   json.logo_file_name @splash.logo_file_name
   json.location_image_name @splash.location_image_name
   json.header_image_name @splash.header_image_name
