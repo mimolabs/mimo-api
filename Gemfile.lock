@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/mimolabs/raven-ruby.git
+  revision: 120a416cf0df0a08803992a7c643741862f000ad
+  specs:
+    sentry-raven (2.7.3)
+      faraday (>= 0.7.6, < 1.0)
+
+GIT
   remote: https://github.com/norman/friendly_id.git
   revision: 9cd4ce2b5d0425aa704872e1334b442cab03c29c
   specs:
@@ -281,6 +288,7 @@ DEPENDENCIES
   rspec
   rspec-rails (~> 3.7)
   sdoc
+  sentry-raven!
   sidekiq
   spring
   spring-watcher-listen (~> 2.0.0)

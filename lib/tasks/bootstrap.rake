@@ -67,7 +67,9 @@ namespace :production do
       
     ### This should not email in a loop - needs some kind of log that it's been done...
     settings = Settings.first
-    unless settings.present?
+    if settings.present?
+      ENV['MIMO_SETTINGS_ID'] = settings.unique_id
+    else
       UserMailer.with(user: admin).welcome_email.deliver_now
     end
 
