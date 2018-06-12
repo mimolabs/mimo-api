@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_07_140636) do
+ActiveRecord::Schema.define(version: 2018_06_12_150319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -220,6 +220,14 @@ ActiveRecord::Schema.define(version: 2018_06_07_140636) do
     t.boolean "integration_vsz", default: false
     t.boolean "integration_meraki", default: false
     t.boolean "integration_ct", default: false
+    t.string "splash_twilio_user"
+    t.string "splash_twilio_pass"
+    t.string "splash_twitter_consumer_key"
+    t.string "splash_twitter_consumer_secret"
+    t.string "splash_google_client_id"
+    t.string "splash_google_client_secret"
+    t.string "splash_facebook_client_id"
+    t.string "splash_facebook_client_secret"
   end
 
   create_table "sms", force: :cascade do |t|
@@ -456,6 +464,9 @@ ActiveRecord::Schema.define(version: 2018_06_07_140636) do
     t.string "twilio_user", limit: 50
     t.string "twilio_pass", limit: 50
     t.string "twilio_from", limit: 15
+    t.string "linkedin_name", limit: 100
+    t.string "instagram_name", limit: 100
+    t.string "pinterest_name", limit: 100
     t.index ["location_id"], name: "index_splash_on_location_id"
   end
 

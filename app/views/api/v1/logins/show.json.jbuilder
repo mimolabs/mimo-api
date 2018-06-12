@@ -5,17 +5,21 @@ json.form do
 end
 json.splash do
   json.id @splash.unique_id
+  json.splash_name @splash.splash_name
   # json.google_analytics_id]  = google_analytics_id
   json.registration @splash.primary_access_id == 8
-  # json.location_name @location.location_name
   json.logo_file_name @splash.logo_file_name
   json.location_image_name @splash.location_image_name
   json.header_image_name @splash.header_image_name
   json.header_image_type @splash.header_image_type
+  json.background_image_name @splash.background_image_name
   json.header_text @splash.header_text
   json.info @splash.info
   json.info_two @splash.info_two
   json.error_message_text @splash.error_message_text
+  json.show_welcome @splash.show_welcome
+  json.welcome_timeout @splash.welcome_timeout
+  json.welcome_text @splash.welcome_text
 
   json.tw_handle @splash.tw_handle
   json.tw_handle @splash.tw_handle
@@ -37,6 +41,9 @@ json.splash do
   json.heading_text_colour @splash.heading_text_colour
   json.body_text_colour @splash.body_text_colour
   json.link_colour @splash.link_colour
+  json.border_colour @splash.border_colour
+  json.container_colour @splash.container_colour
+  json.body_background_colour @splash.body_background_colour
   json.button_colour @splash.button_colour
   json.button_radius @splash.button_radius
   json.button_border_colour @splash.button_border_colour
@@ -111,10 +118,10 @@ json.splash do
 
   json.twitter_name @splash.twitter_name
   json.google_name @splash.google_name
-  # json.pinterest_name @splash.pinterest_name
-  # json.facebook_name @splash.facebook_name
-  # json.linkedin_name @splash.linkedin_name
-  # json.instagram_name @splash.instagram_name
+  json.pinterest_name @splash.pinterest_name
+  json.facebook_name @splash.facebook_name
+  json.linkedin_name @splash.linkedin_name
+  json.instagram_name @splash.instagram_name
   # json.unified_code @splash.unified_login_code
-  # json.website @splash.website
+  json.website @splash.website
 end

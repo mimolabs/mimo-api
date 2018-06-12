@@ -28,6 +28,7 @@ class WizardController < ApplicationController
   def update
     @domain = request.host || 'example.com'
     @settings = Settings.first_or_initialize
+    @settings.wizard = true
     if @settings.update settings_params
       redirect_to wizard_complete_path(code: @code)
     else

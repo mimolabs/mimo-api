@@ -109,7 +109,7 @@ class SplashPage < ApplicationRecord
     @login_params[:timestamp]         = Time.now.to_i
     @login_params[:external_capture]  = newsletter_type.to_i > 1
     @login_params[:otp]               = opts[:otp]
-    
+
     Sidekiq::Client.push('class' => "RecordLogin", 'args' => [@login_params])
   end
 
@@ -155,9 +155,9 @@ class SplashPage < ApplicationRecord
   def generate_otp(opts)
     validate_number(opts[:number])
 
-    params = { 
+    params = {
       splash_id: id,
-      client_mac: opts[:client_mac], 
+      client_mac: opts[:client_mac],
       location_id: location_id
     }
 
@@ -212,5 +212,8 @@ class SplashPage < ApplicationRecord
     self.default_password   = SecureRandom.hex
     self.password           ||= Helpers.words
     self.unique_id          ||= SecureRandom.random_number(100_000_000_000_000)
+
+    location = Location.find_by(id: location_id)
+    self.splash_name = location.location_name if location.try(:location_name).present?
   end
 end

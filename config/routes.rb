@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   post '/wizard/code' => 'wizard#send_code'
   patch '/wizard/update' => 'wizard#update'
 
+  get '/settings' => 'settings#edit'
+  patch '/settings' => 'settings#update'
+
   get 'api/v1/locations/:location_id/splash_integrations' => 'api/v1/splash_integrations#show'
   get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',
     constraints: SplashIntegrationSites
