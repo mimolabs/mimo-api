@@ -3,10 +3,11 @@
 class SettingsPolicy < ApplicationPolicy
 
   def edit?
-    puts 'hello'
-    puts user
-    puts settings
-    true
+    user.present? && user.admin?
+  end
+
+  def update?
+    edit?
   end
 
   private
@@ -14,5 +15,4 @@ class SettingsPolicy < ApplicationPolicy
   def settings
     record
   end
-
 end

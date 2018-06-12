@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   patch '/wizard/update' => 'wizard#update'
 
   get '/settings' => 'settings#edit'
+  patch '/settings' => 'settings#update'
 
   get 'api/v1/locations/:location_id/splash_integrations' => 'api/v1/splash_integrations#show'
   get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',
@@ -34,8 +35,6 @@ Rails.application.routes.draw do
   post 'api/v1/logins' => 'api/v1/login_pages#create'
 
   get 'api/v1/logins' => 'api/v1/login_pages#show'
-
-  resources :settings, only: [:update]
 
   namespace :api do
     namespace :v1 do

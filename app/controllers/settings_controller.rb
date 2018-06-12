@@ -1,17 +1,17 @@
 class SettingsController < ApplicationController
-  # before_action :doorkeeper_authorize!
+  before_action :authenticate_user!
 
   def edit
     @settings = Settings.first
-    @current_user = current_user
     authorize @settings
   end
 
   def update
-    @settings = Settings.find(params[:id])
+    @settings = Settings.first
+    authorize @settings
     if @settings.update settings_params
       @success = true
-      redirect_to '/settings'
+      render 'edit'
     else
       redirect_to '/settings'
     end

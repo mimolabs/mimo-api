@@ -6,7 +6,12 @@
 
       %h1.card-title Your MIMO settings
 
-      = form_for @settings, method: :patch, html: {class: "nifty_form"} do |f|
+      = form_for @settings, url: '/settings', method: :patch, html: {class: "nifty_form"} do |f|
+        - if @success
+          .success-container
+            %h2
+              Changes successfully applied
+
         - if @settings.errors.any?
           #error_explanation
             .error-container
