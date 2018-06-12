@@ -15,3 +15,4 @@ COPY . /myapp
 COPY ./build/puma.rb /myapp/config/puma.rb
 
 EXPOSE 8080
+ENTRYPOINT ["./docker-entrypoint.sh"]

@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
 
   def new_code
     @user = params[:user]
-    @url  = "#{ENV['MIMO_DASHBOARD_URL']}/wizard/start?code=#{generate_code}"
+    @url  = "#{ENV['MIMO_API_URL']}/wizard/start?code=#{generate_code}"
     mail(to: @user.email, subject: 'New setup code!')
   end
 

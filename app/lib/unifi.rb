@@ -94,7 +94,8 @@ module Unifi
 
     conn = Faraday.new(
       url: host + "/api/s/#{metadata['unifi_site_name']}/cmd/stamgr",
-      ssl: { verify: false }
+      ssl: { verify: false },
+      request: { timeout: 2, open_timeout: 2 }
     )
 
     cmd = logout ? 'unauthorize-guest' : 'authorize-guest'
@@ -346,7 +347,8 @@ module Unifi
   def get_unifi(path, opts={}, cookies=nil)
     conn = Faraday.new(
       url: host + "/api#{path}",
-      ssl: { verify: false }
+      ssl: { verify: false },
+      request: { timeout: 2, open_timeout: 2 }
     )
     response = conn.get do |req|
       req.body                      = opts.to_json if opts.present?
@@ -370,7 +372,8 @@ module Unifi
   def post_unifi(path, opts={}, cookies=nil)
     conn = Faraday.new(
       url: host + "/api#{path}",
-      ssl: { verify: false }
+      ssl: { verify: false },
+      request: { timeout: 2, open_timeout: 2 }
     )
     resp = conn.post do |req|
       req.body                      = opts.to_json if opts.present?
