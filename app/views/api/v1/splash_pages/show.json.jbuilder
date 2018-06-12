@@ -99,6 +99,9 @@ json.splash_page do
   json.facebook_name @splash_page.facebook_name
   json.twitter_name @splash_page.twitter_name
   json.google_name @splash_page.google_name
+  json.linkedin_name @splash_page.linkedin_name
+  json.instagram_name @splash_page.instagram_name
+  json.pinterest_name @splash_page.pinterest_name
 
   json.fb_login_on @splash_page.fb_login_on
   json.g_login_on @splash_page.g_login_on
