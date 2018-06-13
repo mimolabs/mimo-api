@@ -12,7 +12,7 @@ class Settings < ApplicationRecord
 
   validates_presence_of :business_name, :locale
   # this is rubbish but we're getting rid of carrierwave soon:
-  validates_presence_of :logo, :favicon, :unless => lambda {|s| Rails.env.test?}
+  validates_presence_of :logo, :favicon, :unless => lambda {Rails.env.test?}
   validates_presence_of :password, :if => :wizard
   validates :intercom_id, length: { maximum: 16 }
   validates :drift_id, length: { maximum: 16 }
