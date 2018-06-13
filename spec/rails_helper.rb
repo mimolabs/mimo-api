@@ -67,7 +67,7 @@ RSpec.configure do |config|
 
   # Dir[Rails.root.join("spec/**/*.rb")].each {|f| require f}
 
-  # config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
 
   config.include FactoryBot::Syntax::Methods
 
