@@ -35,13 +35,13 @@
           %small Will be used in your privacy statement and dashboard.
 
         .input-container
-          = label_tag(:business_name, "Company Address")
+          = label_tag(:business_address, "Company Address")
           = f.text_field :business_address, placeholder: '221B Baker Street'
           %small Will be used in your privacy statement.
 
         .input-container
           = label_tag(:from_email, "From Email")
-          = f.email_field :business_name, placeholder: 'j.doe@email.com'
+          = f.email_field :from_email, placeholder: 'j.doe@email.com'
           %small Will be used in your privacy statement and dashboard.
 
         .input-container
@@ -60,7 +60,6 @@
           %small Input to enable dashboard support via your Drift account.
 
         %p Intercom will take priority if both Intercom ID and Drift ID are filled in.
-
 
         .row.align-middle
           .small-12.medium-6.columns
