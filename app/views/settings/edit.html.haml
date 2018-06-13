@@ -66,45 +66,4 @@
           = f.file_field :favicon
           %small Must be .ico format.
 
-        %hr
-
-        %h1
-          Social Login Credentials
-
-        .input-container
-          = label_tag(:twilio, "Twilio")
-          .row
-            .small-12.medium-6.columns
-              = f.text_field :splash_twilio_user, placeholder: "User"
-            .small-12.medium-6.columns
-              = f.text_field :splash_twilio_pass, placeholder: "Pass"
-          %small Input to enable splash logins via SMS OTP.
-
-        .input-container
-          = label_tag(:twitter, "Twitter")
-          .row
-            .small-12.medium-6.columns
-              = f.text_field :splash_twitter_consumer_key, placeholder: "Consumer Key"
-            .small-12.medium-6.columns
-              = f.text_field :splash_twitter_consumer_secret, placeholder: "Consumer Secret"
-          %small Input to enable splash logins via Twitter.
-
-        .input-container
-          = label_tag(:google, "Google")
-          .row
-            .small-12.medium-6.columns
-              = f.text_field :splash_google_client_id, placeholder: "Client ID"
-            .small-12.medium-6.columns
-              = f.text_field :splash_google_client_secret, placeholder: "Client Secret"
-          %small Input to enable splash logins via Google.
-
-        .input-container
-          = label_tag(:facebook, "Facebook")
-          .row
-            .small-12.medium-6.columns
-              = f.text_field :splash_facebook_client_id, placeholder: "Client ID"
-            .small-12.medium-6.columns
-              = f.text_field :splash_facebook_client_secret, placeholder: "Client Secret"
-          %small Input to enable splash logins via Facebook.
-
         = f.submit "Save"
