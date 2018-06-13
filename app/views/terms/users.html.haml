@@ -1,0 +1,82 @@
+%h1 User Terms
+.small-9.columns
+  %h4 Effective: #{@settings.created_at.strftime("%B %d, %Y")}
+  %p These User Terms of Service (the "User Terms") govern your access and use of our WiFi Hotspot Services. Please read them carefully. We hope your Internet experience is excellent.
+  %p
+  %h3 What's a User?
+  %p You are an Authorized User of a WiFi Hotspot Controlled by a "Customer"
+  %p An organization or other third party that we refer to in these User Terms as "Customer" is letting you access the Internet by way of a splash page provided by #{@settings.business_name}.
+  %p Other things to read - our privacy policy and cookie policy apply to you too.
+  %h4 What This Means for You (and for Us)
+  %p Customer has separately agreed to our Customer Terms of Service or entered into a written agreement with us (in either case, the "Contract") that permitted Customer to create and configure a splash so that you and others can get online when you're visiting their business.
+  %h3 House Rules
+  %h4 You must be over 16 to use the Services.
+  %p To the extent prohibited by applicable law, the Services are not intended for and should not be used by anyone under the age of sixteen. You represent that you are over the legal age and are a legitimate customer of the Customer to the Services. I.e. You're not sitting outside in a car doing naughty things.
+  %h4 Don't Use The Services for Illegal Purposes
+  %p Please don't use the service for anything illegal, abusive, annoying or offensive, including posting offensive content. Don't stalk, bully, harass anyone. Don't use it to spam, disrupt or interfere with the Internet, any network, computers, or other devices. Don't use it to send a virus. Be nice, the Internet is our friend. If we've missed something bad, don't do that either!
+  %h4 File Sharing
+  %p Please don't use the services to download illegal content, using P2P or any other file sharing mechanism. And while we're at it, please don't use the services to run any commercial services like servers etc. Why you would do this, we don't know.
+  %h3 The Service
+  %p This WiFi Service is an Internet access service provided by Cucumber Tony trading as #{@settings.business_name}. It provides you with access to the Internet via a wireless access point (or points). These access points utilise one or more of the 802.11a/b/g/n protocols commonly referred to as "WiFi" (the "Service"). These "Terms and Conditions" between you and #{@settings.business_name} set out duties and responsibilities associated with use of the Service.
+  %p You are solely responsible for all access to and use of the Service including any breach of these Terms and Conditions by you or any user of your device. For the purposes of these Terms and Conditions, "you" means you and every person you authorize to use the Service. By accessing the Service, you agree to these Terms and Conditions and our Privacy Policy. If you do not wish to be bound by these Terms and Conditions, you may not access or use the Service.
+  %p #{@settings.business_name} may modify these Terms and Conditions at any time and will attempt to notify you via the splash pages. You agree to periodically review these Terms and Conditions and/or Privacy Policy in order to be aware of any modifications.
+  %h3 Your Data
+  %p When you sign-in to use the Service, you transmit personal data that may include:
+  %ul
+    %li Your MAC address - the ID for your phone or computer
+    %li IP address - the address your device has on the network
+    %li Your email - if you chose to login with this
+    %li Social data - Facebook, Google, Twitter details
+    %li Your phone number - if they're using SMS logins
+  %p The Customer decides which information to ask for on the Splash Pages. This data is owned by the Customer - the Customer controls the data too. Where applicable, the Customer will include a link to their terms on the Splash Pages - particularly if they're transmitting your data to a third party. We've put this in the Customer Terms too.
+  %h4 Processing Your Data
+  %p We use your MAC address and other data to build a 'profile' so the Customer can understand how their businesses are being used. This includes things like:
+  %ul
+    %li Number of visits including the number of times a user comes in
+    %li Average time of visit - so they can see how long people are staying
+    %li Demographics - where their customers are from based on the social information
+    %li Counts of unique users
+  %p Where social logins are deployed, you can decide which personal information is shared with the Customer. You can opt-out from any email, SMS or Twitter campaigns at any point.
+  %p We're committed to your privacy and do not use any enrichment services. Nor do we sell your data to third parties.
+  %p #{@settings.business_name} also provides 'Automated Campaign Services' to the Customers. This means they can set-up automated messages that get sent when certain events occur. For example, when you first sign-up for the Service or when you've been back 10 times.
+  %p If you've agreed for the Customer to use your details when you signed-in for the Service, the customer may contact you from time to time. We've done our best to ensure they don't send you spam. We validate their email addresses and we require the Customer's emails comply with the US CAN-SPAM Act. Every email sent will contain an unsubscribe link. You can also update your communication preferences in your portal (see below).
+  %p If you think anyone is violating any of these Terms, please notify us immediately. If you received spam you think came from a #{@settings.business_name} user, please report it to our abuse team - team@oh-mimo.com
+  %p Please read the privacy policy to find out how we use your data.
+  %h4 Where is the data stored?
+  %p Please have a read through the privacy policy to see where the data is stored and who it's shared with.
+  %h4 Third Party Tools
+  %p As part of the service, we allow data to be synced automatically with third party tools including:
+  %ul
+    %li MailChimp
+    %li CampaignMonitor
+  %p We've gone to great lengths to ensure we only use legitimate providers who will also protect your data. The Customer has agreed to include which ones they're sharing your data with in their own terms which will appear on the splash pages.
+  %p
+  %h4 Requesting Your Data and Updating Your Profile
+  %p We've built you a self-service portal from which you can view your usage, download and delete all your data. You can also update your communication preferences. In the event you delete your data, the Customer who operates the Service will be sent an email with the deletion details.
+  %p
+    You can access this portal
+    = succeed "." do
+      %a{:href => "https://oh-mimo.com/self-service"} here
+  %h3 Indemnity
+  %p You agree to indemnify and hold #{@settings.business_name}, its directors, officers, shareholders, affiliates, agents and suppliers harmless from all liabilities and expenses related to any violation of these Terms and Conditions by you or any user of your device, or in connection with your or their use of the Service. While using the Service, you may not post, transmit or otherwise distribute information constituting or encouraging conduct that would constitute a criminal offence or give rise to civil liability, or otherwise use the Service in a manner which is contrary to law or to our policies or would serve to restrict or inhibit any other user from using or enjoying the Service or the Internet. Without limiting the foregoing, you agree not to use the Service for any commercial purpose not otherwise permitted by these Terms and Conditions.
+  %h3 Service Availability
+  %p The Service is only available where the Customer has installed an Internet service. #{@settings.business_name} assumes no liability whatsoever for any claims, damages, losses or expenses arising out of or otherwise relating to the unavailability of the Service in your geographical area, in particular, due to changes in the location and configuration of Hotspots.
+  %p We do not operate any Internet connections for the users - #{@settings.business_name} is a splash service.
+  %h3 Connection Speeds
+  %p #{@settings.business_name} does not guarantee the speed and or performance of the Services.
+  %h3 General Provisions
+  %h4 Privacy Policy
+  %p Please review our Privacy Policy for more information on how we collect and use data relating to the use and performance of our products.
+  %h4 Modifications
+  %p As our business evolves, we may change these User Terms or the Acceptable Use Policy. If we make a material change to the User Terms or the Acceptable Use Policy, we will provide you with reasonable notice by way of the splash pages. You can review the most current version of the User Terms at any time by visiting this page, and by visiting the following for the most current versions of the other pages that are referenced in these User Terms: Privacy Policy. Any material revisions to these User Terms will become effective on the date set forth in our notice, and all other changes will become effective on the date we publish the change. If you use the Services after the effective date of any changes, that use will constitute your acceptance of the revised terms and conditions.
+  %h4 Waiver
+  %p No failure or delay by either party in exercising any right under the User Terms, including the Acceptable Use Policy, will constitute a waiver of that right. No waiver under the User Terms will be effective unless made in writing and signed by an authorized representative of the party being deemed to have granted the waiver.
+  %h4 Severability
+  %p The User Terms will be enforced to the fullest extent permitted under applicable law. If any provision of the User Terms is held by a court of competent jurisdiction to be contrary to law, the provision will be modified by the court and interpreted so as best to accomplish the objectives of the original provision to the fullest extent permitted by law, and the remaining provisions of the User Terms will remain in effect.
+  %h4 Assignment
+  %p You may not assign any of your rights or delegate your obligations under these User Terms, whether by operation of law or otherwise, without the prior written consent of us (not to be unreasonably withheld). We may assign these User Terms in their entirety (including all terms and conditions incorporated herein by reference), without your consent, to a corporate affiliate or in connection with a merger, acquisition, corporate reorganization, or sale of all or substantially all of our assets.
+  %h4 Entire Agreement
+  %p The User Terms, including any terms incorporated by reference into the User Terms, constitute the entire agreement between you and us and supersede all prior and contemporaneous agreements, proposals or representations, written or oral, concerning its subject matter. To the extent of any conflict or inconsistency between the provisions in these User Terms and any pages referenced in these User Terms, the terms of these User Terms will first prevail; provided, however, that if there is a conflict or inconsistency between the Contract and the User Terms, the terms of the Contract will first prevail, followed by the provisions in these User Terms, and then followed by the pages referenced in these User Terms (e.g., the Privacy Policy).
+  %h3 Contacting #{@settings.business_name}
+  %p #{@settings.business_name} #{@settings.business_address}
+  %hr/

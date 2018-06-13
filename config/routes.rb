@@ -17,12 +17,19 @@ Rails.application.routes.draw do
   post '/wizard/code' => 'wizard#send_code'
   patch '/wizard/update' => 'wizard#update'
 
+  get '/terms' => 'terms#index'
+  get '/terms/users' => 'terms#users'
+  get '/terms/cookies' => 'terms#cookies'
+  get '/terms/gdpr' => 'terms#gdpr'
+  get '/terms/subprocessors' => 'terms#subprocessors'
+  get '/terms/privacy' => 'terms#privacy'
+  get '/terms/spam' => 'terms#spam'
+
   get '/settings' => 'settings#edit'
   patch '/settings' => 'settings#update'
 
   get 'api/v1/locations/:location_id/splash_integrations' => 'api/v1/splash_integrations#show'
-  get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings',
-    constraints: SplashIntegrationSites
+  get 'api/v1/locations/:location_id/splash_integrations/:id' => 'api/v1/splash_integrations#fetch_settings', constraints: SplashIntegrationSites
 
   ### For the double opt in email confirmation
   patch 'api/v1/emails/:id' => 'api/v1/emails#confirm', constraints: EmailConfirm
