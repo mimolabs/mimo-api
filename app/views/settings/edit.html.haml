@@ -35,6 +35,16 @@
           %small Will be used in your privacy statement and dashboard.
 
         .input-container
+          = label_tag(:business_name, "Company Address")
+          = f.text_field :business_address, placeholder: '221B Baker Street'
+          %small Will be used in your privacy statement.
+
+        .input-container
+          = label_tag(:from_email, "From Email")
+          = f.email_field :business_name, placeholder: 'j.doe@email.com'
+          %small Will be used in your privacy statement and dashboard.
+
+        .input-container
           = label_tag(:docs_url, "Documentation URL")
           = f.text_field :docs_url, placeholder: "https://docs.#{@domain}"
           %small If you have your own documentation enter your URL here.
