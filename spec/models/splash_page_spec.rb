@@ -392,4 +392,17 @@ RSpec.describe SplashPage, type: :model do
         expect(s.valid_number(number)).to eq true
     end
   end
+
+  describe 'splash terms url' do
+    it 'should return the right url' do
+      s = SplashPage.new
+      expect(s.terms_url_full).to eq nil
+
+      ENV['MIMO_API_URL'] = 'https://admin.mimo.test'
+      expect(s.terms_url_full).to eq 'https://admin.mimo.test/terms'
+
+      s.terms_url = 'https://my-terms'
+      expect(s.terms_url_full).to eq 'https://my-terms'
+    end
+  end
 end

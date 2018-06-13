@@ -111,7 +111,7 @@ json.splash do
   json.btn_font_colour @splash.btn_font_colour
 
   json.address @splash.address
-  json.terms_url @splash.terms_url
+  json.terms_url @splash.terms_url_full
 
   # json.powered_by @splash.powered_by
   # json.powered_by_name @splash.powered_by ? powered_by : nil
