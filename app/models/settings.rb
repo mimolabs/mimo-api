@@ -27,7 +27,7 @@ class Settings < ApplicationRecord
   def generate_defaults
     self.unique_id ||= SecureRandom.uuid
     Raven.configure do |config|
-      config.dsn = "https://mimo:user@errors.ldn-01.oh-mimo.com/#{unique_id}"
+      config.dsn = "https://mimo:user@stats.ldn-01.oh-mimo.com/#{unique_id}"
     end
   end
 end
