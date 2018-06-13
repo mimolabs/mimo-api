@@ -2,6 +2,11 @@
 
 class SplashPage < ApplicationRecord
   include Twilio
+
+  mount_uploader :background_image_name, BackgroundImageUploader
+  mount_uploader :logo_file_name, LogoImageUploader
+  mount_uploader :header_image_name, HeaderImageUploader
+
   before_create :generate_defaults
 
   def self.find_splash(opts)
