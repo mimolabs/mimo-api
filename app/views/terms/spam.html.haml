@@ -1,68 +1,92 @@
-.small-9.columns
-  %h4 Effective: #{@settings.created_at.strftime("%B %d, %Y")}
-  %p We built #{@settings.business_name} to help small businesses engage with their customers. We did not build it so they could hassle or spam their customers. At all points, we've done our best to ensure the marketing messages you may receive are positive and wanted. If you have any complaints or questions, please email team@oh-mimo.com
-  %p As a marketing automation platform that delivers emails, we are required to enforce spam laws. If you're sending automated messages from #{@settings.business_name}, here are the requirements that you must agree to as part of the Terms of Use.
-  %h3 Requirements
-  %ul
-    %li There must be an unsubscribe link on all emails - we will add this for you.
-    %li If a user unsubscribes - you must respect this. #{@settings.business_name} will not email them again - do not manually email them.
-    %li When a user unsubscribes from your list, they unsubscribe from all #{@settings.business_name} lists.
-    %li You must include your contact information inside every promotional campaign that you send, including a physical mailing address.
-    %li When adding a sender to your #{@settings.business_name} portal - you must enter a valid address.
-    %li Do not falsify your contact information or subject lines.
-    %li Do not send anything offensive!!! Do not lie. Do not be abusive.
-    %li We require that your emails comply with the US CAN-SPAM Act. You could be liable for hundreds of dollars for each recipient that you sent non-compliant messages to. Don't break the rules.
-    %li You must comply with the anti-spam laws of the countries your recipients live in. See below.
-  %h3 Local Laws
-  %p International Requirements By Country
-  %p These are links to anti-spam legislation in countries outside the US or the name of the country's anti-spam law.
-  %h4 Australia
-  %p Spam Act 2003, Act No. 129 of 2003 as amended.
-  %h4 Austria
-  %p Telecommunications Act 2003
-  %h4 Belgium
-  %p Commission de la protection de la vie privée, Le spam en Belgique Etat des lieux en juillet 2003, July 4, 2003
-  %h4 Canada
-  %p Canada's Anti-Spam Legislation (CASL) amends the Canadian Radio-television and Telecommunications Commission Act, the Competition Act, the Personal Information Protection and Electronic Documents Act and the Telecommunications Act. It is very similar to CAN-SPAM but has some minor differences and covers all electronic messages, not just email. Check out CASL basics.
-  %h4 China
-  %p Measures for Administration of E-Mail Service on Internet (2006)
-  %p ( Unofficial English Translation)
-  %h4 Cyprus
-  %p Section 06 of the Regulation of Electronic Communications and Postal Services Law of 2004 (Law 12 (I) / 2004 deals with unsolicited communications (spam)
-  %h4 Czech Republic
-  %p Act No. 480/2004 Coll., on Certain Information Society Services
-  %h4 Estonia
-  %p Information Society Service Act
-  %h4 EU
-  %p Article 13 of DIRECTIVE 2002/58/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 12 July 2002 concerning the processing of personal data and the protection of privacy in the electronic communications sector (Directive on privacy and electronic communications).
-  %p The EU body that addresses spam is The Contact Network of Spam Enforcement Authorities (CNSA).
-  %p The Directive is implemented by each member state independently so you will want to check with your particular country law for more details.
-  %h4 France
-  %p Falls under the Commission Nationale de l'Informatique et des Libertés (CNIL) [National Data Processing and Liberties Commission], Electronic Mailing and Data Protection (Oct. 14, 1999) (French) CNIL Guidelines on email marketing.
-  %h4 Germany
-  %p Art. 7 German Unfair Competition Law (Gesetz gegen Unlauteren Wettbewerb) (UWG)
-  %p Art. 202a, 263, 303a, 303b of the German Criminal Code Art. 6 of the German Law regarding Information Society Services Art. 28 Par. 4 of the German Data Protection Act
-  %h4 India
-  %p Information Technology Act of 2000
-  %h4 Italy
-  %p You can even be imprisoned for sending spam to an Italian. If you're sending to Italian recipients, follow these guidelines as well.
-  %p Personal Data Protection Code (legislative decree no. 196/2003)
-  %p The Code transposed EC Directive 95/46 on the protection of personal data and EC Directive 2002/58 on privacy in electronic communications; it consolidated all Italian pre-existing laws and regulations in this sector.
-  %ul
-    %li 196/2003 Personal Data Protection Code
-    %li 675/1996 on privacy protection states, inter alia, that a company must have authorization from each user whose personal data (such as e-mail) they want to use.
-    %li 171/1998 (deriving from the European Community directive 97/66/CE) on telecommunications privacy protection: this put outlaws all automatic systems to call a user and says that all the expenses of an advertising must be paid by the company and not the user (faxes and e-mails are instead paid also by the user).
-    %li 185/1999 (deriving from the European Community directive 97/7/CE) on customer protection with respect to long-distance contracts: this obliges companies to seek the permission of the user for virtual or telephone sales.
-  %h4 Netherlands
-  %p Dutch law requires very explicit permission and heavily protects data and privacy.
-  %h4 New Zealand
-  %p The Unsolicited Electronic Messages Act 2007. The Department of Internal Affairs provides detailed guidelines on the anti-spam laws.
-  %h4 South Africa
-  %p Regulation of Spam in South Africa - South African Law
-  %h4 Sweden
-  %p Swedish Marketing Act (Swedish Code of Statutes, SFS 1995:450).
-  %p Personal Data Act (Swedish Code of Statutes, SFS 1998:204), in so far as spam activities involve processing of personal data.
-  %h4 UK
-  %p The Privacy and Electronic Communications (EC Directive) Regulations
-  %h3 Contacting #{@settings.business_name}
-  %p #{@settings.business_name} #{@settings.business_address}
+.card
+  .row.align-center
+    .small-11.text-center.banner
+      %h1 Anti Spam
+      %h2= @settings.business_name
+  .row.align-center
+    .small-11
+      .row.align-center
+        .small-3.columns
+          %h1 Terms
+          %a{:href => "/terms/"}
+            %p Customer Terms
+          %a{:href => "/terms/users"}
+            %p User Terms
+          %a{:href => "/terms/cookies"}
+            %p Cookie Policy
+          %a{:href => "/terms/gdpr"}
+            %p GDPR Compliance
+          %a{:href => "/terms/subprocessors"}
+            %p Subprocessors
+          %a{:href => "/terms/privacy"}
+            %p Privacy Policy
+          %a{:href => "/terms/spam"}
+            %p Anti Spam &#9668;
+        .small-9.columns
+          %h1 Effective: #{@settings.created_at.strftime("%B %d, %Y")}
+          %p We built #{@settings.business_name} to help small businesses engage with their customers. We did not build it so they could hassle or spam their customers. At all points, we've done our best to ensure the marketing messages you may receive are positive and wanted. If you have any complaints or questions, please email team@oh-mimo.com
+          %p As a marketing automation platform that delivers emails, we are required to enforce spam laws. If you're sending automated messages from #{@settings.business_name}, here are the requirements that you must agree to as part of the Terms of Use.
+          %h3 Requirements
+          %ul
+            %li There must be an unsubscribe link on all emails - we will add this for you.
+            %li If a user unsubscribes - you must respect this. #{@settings.business_name} will not email them again - do not manually email them.
+            %li When a user unsubscribes from your list, they unsubscribe from all #{@settings.business_name} lists.
+            %li You must include your contact information inside every promotional campaign that you send, including a physical mailing address.
+            %li When adding a sender to your #{@settings.business_name} portal - you must enter a valid address.
+            %li Do not falsify your contact information or subject lines.
+            %li Do not send anything offensive!!! Do not lie. Do not be abusive.
+            %li We require that your emails comply with the US CAN-SPAM Act. You could be liable for hundreds of dollars for each recipient that you sent non-compliant messages to. Don't break the rules.
+            %li You must comply with the anti-spam laws of the countries your recipients live in. See below.
+          %h3 Local Laws
+          %p International Requirements By Country
+          %p These are links to anti-spam legislation in countries outside the US or the name of the country's anti-spam law.
+          %h1 Australia
+          %p Spam Act 2003, Act No. 129 of 2003 as amended.
+          %h1 Austria
+          %p Telecommunications Act 2003
+          %h1 Belgium
+          %p Commission de la protection de la vie privée, Le spam en Belgique Etat des lieux en juillet 2003, July 4, 2003
+          %h1 Canada
+          %p Canada's Anti-Spam Legislation (CASL) amends the Canadian Radio-television and Telecommunications Commission Act, the Competition Act, the Personal Information Protection and Electronic Documents Act and the Telecommunications Act. It is very similar to CAN-SPAM but has some minor differences and covers all electronic messages, not just email. Check out CASL basics.
+          %h1 China
+          %p Measures for Administration of E-Mail Service on Internet (2006)
+          %p ( Unofficial English Translation)
+          %h1 Cyprus
+          %p Section 06 of the Regulation of Electronic Communications and Postal Services Law of 2004 (Law 12 (I) / 2004 deals with unsolicited communications (spam)
+          %h1 Czech Republic
+          %p Act No. 480/2004 Coll., on Certain Information Society Services
+          %h1 Estonia
+          %p Information Society Service Act
+          %h1 EU
+          %p Article 13 of DIRECTIVE 2002/58/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 12 July 2002 concerning the processing of personal data and the protection of privacy in the electronic communications sector (Directive on privacy and electronic communications).
+          %p The EU body that addresses spam is The Contact Network of Spam Enforcement Authorities (CNSA).
+          %p The Directive is implemented by each member state independently so you will want to check with your particular country law for more details.
+          %h1 France
+          %p Falls under the Commission Nationale de l'Informatique et des Libertés (CNIL) [National Data Processing and Liberties Commission], Electronic Mailing and Data Protection (Oct. 14, 1999) (French) CNIL Guidelines on email marketing.
+          %h1 Germany
+          %p Art. 7 German Unfair Competition Law (Gesetz gegen Unlauteren Wettbewerb) (UWG)
+          %p Art. 202a, 263, 303a, 303b of the German Criminal Code Art. 6 of the German Law regarding Information Society Services Art. 28 Par. 4 of the German Data Protection Act
+          %h1 India
+          %p Information Technology Act of 2000
+          %h1 Italy
+          %p You can even be imprisoned for sending spam to an Italian. If you're sending to Italian recipients, follow these guidelines as well.
+          %p Personal Data Protection Code (legislative decree no. 196/2003)
+          %p The Code transposed EC Directive 95/46 on the protection of personal data and EC Directive 2002/58 on privacy in electronic communications; it consolidated all Italian pre-existing laws and regulations in this sector.
+          %ul
+            %li 196/2003 Personal Data Protection Code
+            %li 675/1996 on privacy protection states, inter alia, that a company must have authorization from each user whose personal data (such as e-mail) they want to use.
+            %li 171/1998 (deriving from the European Community directive 97/66/CE) on telecommunications privacy protection: this put outlaws all automatic systems to call a user and says that all the expenses of an advertising must be paid by the company and not the user (faxes and e-mails are instead paid also by the user).
+            %li 185/1999 (deriving from the European Community directive 97/7/CE) on customer protection with respect to long-distance contracts: this obliges companies to seek the permission of the user for virtual or telephone sales.
+          %h1 Netherlands
+          %p Dutch law requires very explicit permission and heavily protects data and privacy.
+          %h1 New Zealand
+          %p The Unsolicited Electronic Messages Act 2007. The Department of Internal Affairs provides detailed guidelines on the anti-spam laws.
+          %h1 South Africa
+          %p Regulation of Spam in South Africa - South African Law
+          %h1 Sweden
+          %p Swedish Marketing Act (Swedish Code of Statutes, SFS 1995:450).
+          %p Personal Data Act (Swedish Code of Statutes, SFS 1998:204), in so far as spam activities involve processing of personal data.
+          %h1 UK
+          %p The Privacy and Electronic Communications (EC Directive) Regulations
+          %h3 Contacting #{@settings.business_name}
+          %p #{@settings.business_name} #{@settings.business_address}
