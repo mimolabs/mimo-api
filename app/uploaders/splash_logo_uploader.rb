@@ -1,4 +1,9 @@
 class SplashLogoUploader < CarrierWave::Uploader::Base
+  include CarrierWave::MiniMagick
+
+  process resize_to_fit: [200, 200]
+  process convert: 'jpg'
+
   storage :file
 
   def store_dir
@@ -10,12 +15,7 @@ class SplashLogoUploader < CarrierWave::Uploader::Base
   end
 
   def extension_whitelist
-    %w(jpg jpeg gif png bmp tif tiff)
+    %w(jpg jpeg gif png tif tiff)
   end
 
-  private
-
-  # def efficient_conversion(width, height)
-
-  # end
 end
