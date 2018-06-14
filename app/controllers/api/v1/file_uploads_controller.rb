@@ -3,8 +3,10 @@
 class Api::V1::FileUploadsController < Api::V1::BaseController
 
   def create
-    @splash = SplashPage.find_by(id: params[:splash_id])
-    @splash.update(splash_params)
+    if params[:splash_id]
+      @splash = SplashPage.find_by(id: params[:splash_id])
+      @splash.update(splash_params)
+    end
   end
 
   private
