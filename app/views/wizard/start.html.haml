@@ -35,37 +35,14 @@
                     %li= msg
 
           .input-container
-            = label_tag(:password, "Password")
-            = f.password_field :password, placeholder: "Enter a top secret password"
-            %small Used with the email you created during the console setup.
-
-
-          .input-container
             = label_tag(:business_name, "Company Name")
             = f.text_field :business_name, placeholder: 'My Great Business'
             %small Will be used in your privacy statement and dashboard.
 
           .input-container
-            = label_tag(:docs_url, "Documentation URL")
-            = f.text_field :docs_url, placeholder: "https://docs.#{@domain}"
-            %small If you have your own documentation enter your URL here.
-
-          .input-container
-            = label_tag(:terms_url, "Terms URL")
-            = f.text_field :terms_url, placeholder: "https://terms.#{@domain}"
-            %small If you don't have your own terms, leave blank and we'll generate one for you.
-
-          .input-container
-            = label_tag(:intercom_id, "Intercom ID")
-            = f.text_field :intercom_id, placeholder: "Intercom ID", id: 'intercom-id'
-            %small Input to enable dashboard support via your Intercom account.
-
-          .input-container
-            = label_tag(:drift_id, "Drift ID")
-            = f.text_field :drift_id, placeholder: "Drift ID"
-            %small Input to enable dashboard support via your Drift account.
-
-          %p Intercom will take priority if both Intercom ID and Drift ID are filled in.
+            = label_tag(:password, "Account Password")
+            = f.password_field :password, placeholder: "Enter a top secret password"
+            %small Used with the email you created during the console setup.
 
           .input-container
             = label_tag(:logo, "Upload your logo for the dashboard and splash pages")
