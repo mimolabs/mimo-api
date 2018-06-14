@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class Api::V1::FileUploadsController < Api::V1::BaseController
+  before_action :doorkeeper_authorize!
 
   def create
     if params[:splash_id]
-      @splash = SplashPage.find_by(id: params[:splash_id])
-      @splash.update(splash_params)
+      @splash_page = SplashPage.find_by(id: params[:splash_id])
+      authorize @splash_page, :update?
+      @splash_page.update(splash_params)
     end
   end
 
