@@ -200,12 +200,31 @@ class SplashPage < ApplicationRecord
     { splash_id: id }
   end
 
+  ## Works out if the splash pages are in the EU. Currently, everyone is in the EU!
   def is_eu
     true
   end
 
+  ##
+  # Validates the emails sent in via the splash pages.
+
   def email_regex
     /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  end
+
+  ##
+  # Returns the full terms and conditions URL for the splash / login pages.
+  # If the user has added a custom URL, it will take this. Otherwise, it will
+  # calculate from the ENV vars set during the installation
+
+  def terms_url_full
+    return unless ENV['MIMO_API_URL'].present? || terms_url.present?
+    
+    terms_url ? terms_url : calc_terms_url
+  end
+
+  def calc_terms_url
+    ENV['MIMO_API_URL'] + '/terms'
   end
 
   private
