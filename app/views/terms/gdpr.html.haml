@@ -1,6 +1,29 @@
-%h1 GDPR
-
-As a business based in the EU, we're hugely pleased with the latest privacy rules and are committed to partnering with #{@settings.business_name} customers and users to help them understand and prepare for the General Data Protection Regulation (GDPR).
-
-GDPR Tools
-We've also built a number of new tools to help our Customers and Users alike. You can read about these here
+.card
+  .row.align-center
+    .small-11.text-center.banner
+      %h1 GDPR Compliance
+      %h2= @settings.business_name
+  .row.align-center
+    .small-11
+      .row.align-center
+        .small-3.columns
+          %h1 Terms
+          %a{:href => "/terms/"}
+            %p Customer Terms
+          %a{:href => "/terms/users"}
+            %p User Terms
+          %a{:href => "/terms/cookies"}
+            %p Cookie Policy
+          %a{:href => "/terms/gdpr"}
+            %p GDPR Compliance &#9668;
+          %a{:href => "/terms/subprocessors"}
+            %p Subprocessors
+          %a{:href => "/terms/privacy"}
+            %p Privacy Policy
+          %a{:href => "/terms/spam"}
+            %p Anti Spam
+        .small-9.columns
+          %h1 GDPR
+          %p As a business based in the EU, we're hugely pleased with the latest privacy rules and are committed to partnering with #{@settings.business_name} customers and users to help them understand and prepare for the General Data Protection Regulation (GDPR).
+          %h1 GDPR Tools
+          %p We've also built a number of new tools to help our Customers and Users alike. You can read about these here

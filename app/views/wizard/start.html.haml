@@ -40,19 +40,39 @@
             %small Will be used in your privacy statement and dashboard.
 
           .input-container
+            = label_tag(:business_address, "Company Address")
+            = f.text_field :business_address, placeholder: '221B Baker Street'
+            %small Will be used in your privacy statement.
+
+          .input-container
+            = label_tag(:from_email, "From Email")
+            = f.email_field :from_email, placeholder: 'j.doe@email.com'
+            %small Will be used in your privacy statement and dashboard.
+
+          .input-container
             = label_tag(:password, "Account Password")
             = f.password_field :password, placeholder: "Enter a top secret password"
             %small Used with the email you created during the console setup.
 
-          .input-container
-            = label_tag(:logo, "Upload your logo for the dashboard and splash pages")
-            = f.file_field :logo
-            %small Upload a square shaped logo for use in the dashboard.
+          .row.align-middle
+            .small-12.medium-6.columns
+              .input-container
+                = label_tag(:logo, "Upload your logo for the dashboard and splash pages")
+                = f.file_field :logo
+                %small Upload a square shaped logo for use in the dashboard.
+            .small-12.medium-6.columns.text-center
+              - if @settings.logo.present?
+                = image_tag @settings.logo.thumb.url
 
-          .input-container
-            = label_tag(:logo, "Upload your favicon for the dashboard")
-            = f.file_field :favicon
-            %small Must be .ico format.
+          .row.align-middle
+            .small-12.medium-6.columns
+              .input-container
+                = label_tag(:logo, "Upload your favicon for the dashboard")
+                = f.file_field :favicon
+                %small Must be .ico format.
+            .small-12.medium-6.columns.text-center
+              - if @settings.favicon.present?
+                = image_tag @settings.favicon.url
 
           = f.hidden_field :code, value: @code
 
