@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Api::V1::FileUploadsController, type: :controller do
+describe Api::V1::SplashFileUploadsController, type: :controller do
 
   context 'logged in' do
     let(:token) { double acceptable?: true }

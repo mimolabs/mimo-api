@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::FileUploadsController < Api::V1::BaseController
+class Api::V1::SplashFileUploadsController < Api::V1::BaseController
   before_action :doorkeeper_authorize!
 
   def create
