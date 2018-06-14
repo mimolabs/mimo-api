@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 json.splash_page do
-  json.id @splash_page.id.to_s
+  json.id @splash_page.id
   json.location_id @splash_page.location_id
   json.success_url @splash_page.success_url
   json.unique_id @splash_page.unique_id
@@ -82,7 +82,7 @@ json.splash_page do
 
   json.terms_url @splash_page.terms_url
   json.logo_file_name @splash_page.logo_file_name
-  json.background_image_name @splash_page.background_image_name
+  json.background_image_name @splash_page.background_image_name.try(:url)
   json.location_image_name @splash_page.location_image_name
   json.header_image_name @splash_page.header_image_name
   json.header_image_type @splash_page.header_image_type

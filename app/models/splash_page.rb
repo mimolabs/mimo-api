@@ -4,8 +4,12 @@ class SplashPage < ApplicationRecord
   include Twilio
 
   mount_uploader :background_image_name, SplashBackgroundUploader
-  mount_uploader :logo_file_name, SplashLogoUploader
-  mount_uploader :header_image_name, SplashHeaderUploader
+  # mount_uploader :logo_file_name, SplashLogoUploader
+  # mount_uploader :header_image_name, SplashHeaderUploader
+
+  skip_callback :save, :after, :store_background_image_name!
+
+  skip_callback :save, :before, :write_background_image_name_identifier
 
   before_create :generate_defaults
 
