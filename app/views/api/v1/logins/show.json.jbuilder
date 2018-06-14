@@ -34,7 +34,7 @@ json.splash do
   json.gdpr_form @splash.gdpr_form
   json.backup_email @splash.backup_email
   json.backup_vouchers @splash.backup_vouchers
-  # json.is_clickthrough @splash.is_clickthrough
+  json.is_clickthrough @splash.is_clickthrough
   json.g_redirect_to_page @splash.g_redirect_to_page
 
   json.container_width @splash.container_width
