@@ -2,6 +2,11 @@
 
 class SplashPage < ApplicationRecord
   include Twilio
+
+  mount_uploader :background_image_name, SplashBackgroundUploader
+  mount_uploader :logo_file_name, SplashLogoUploader
+  mount_uploader :header_image_name, SplashHeaderUploader
+
   before_create :generate_defaults
 
   def self.find_splash(opts)
@@ -219,7 +224,7 @@ class SplashPage < ApplicationRecord
 
   def terms_url_full
     return unless ENV['MIMO_API_URL'].present? || terms_url.present?
-    
+
     terms_url ? terms_url : calc_terms_url
   end
 
