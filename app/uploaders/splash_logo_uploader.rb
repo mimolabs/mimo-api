@@ -1,4 +1,4 @@
-class HeaderImageUploader < CarrierWave::Uploader::Base
+class SplashLogoUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
@@ -6,7 +6,11 @@ class HeaderImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    "header-image.jpg" if original_filename
+    "logo-image.jpg" if original_filename
+  end
+
+  def extension_whitelist
+    %w(jpg jpeg gif png bmp tif tiff)
   end
 
   private

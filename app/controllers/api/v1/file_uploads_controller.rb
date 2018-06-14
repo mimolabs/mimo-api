@@ -10,7 +10,7 @@ class Api::V1::FileUploadsController < Api::V1::BaseController
   private
 
   def splash_params
-    params.require(:splash).permit(:background_image_name, :header_image_name)
+    params.require(:splash).permit(:background_image_name, :header_image_name, :logo_file_name)
   end
 
 end

@@ -1,4 +1,4 @@
-class BackgroundImageUploader < CarrierWave::Uploader::Base
+class SplashHeaderUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
@@ -6,12 +6,12 @@ class BackgroundImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    "bg-image.jpg" if original_filename
+    "header-image.jpg" if original_filename
   end
 
   private
 
   # def efficient_conversion(width, height)
-  
+
   # end
 end
