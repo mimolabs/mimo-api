@@ -5,9 +5,18 @@ class Api::V1::FileUploadsController < Api::V1::BaseController
 
   def create
     if params[:splash_id]
-      @splash_page = SplashPage.find_by(id: params[:splash_id])
-      authorize @splash_page, :update?
-      @splash_page.update(splash_params)
+      puts 88888888888888888888888888888888888
+      puts 88888888888888888888888888888888888
+      puts 88888888888888888888888888888888888
+      puts 88888888888888888888888888888888888
+      puts params[:splash]
+      puts 88888888888888888888888888888888888
+      puts 88888888888888888888888888888888888
+      puts 88888888888888888888888888888888888
+      puts 88888888888888888888888888888888888
+      # @splash_page = SplashPage.find_by(id: params[:splash_id])
+      # authorize @splash_page, :update?
+      # @splash_page.update(splash_params)
     end
   end
 
