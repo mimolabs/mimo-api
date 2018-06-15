@@ -82,7 +82,7 @@ json.splash_page do
 
   json.terms_url @splash_page.terms_url
   json.logo_file_name @splash_page.logo_file_name
-  json.background_image_name @splash_page.background_image_name.try(:url)
+  json.background_image_name @splash_page.background_image_name
   json.location_image_name @splash_page.location_image_name
   json.header_image_name @splash_page.header_image_name
   json.header_image_type @splash_page.header_image_type
