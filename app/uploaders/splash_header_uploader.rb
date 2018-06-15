@@ -7,15 +7,15 @@ class SplashHeaderUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "uploads/splash-images/#{model.id}"
+    "uploads/splash"
   end
 
   def filename
-    "header-image.jpg" if original_filename
+    "splash-header-image-#{model.id}.jpg" if original_filename
   end
 
   def extension_whitelist
     %w(jpg jpeg gif png tif tiff)
   end
-  
+
 end
