@@ -40,6 +40,10 @@ h3 {
   margin-top: 3px;
 }
 
+.banner {
+  margin: 40px 0px;
+}
+
 .mimo-logo {
   max-width: 150px;
   display: block;

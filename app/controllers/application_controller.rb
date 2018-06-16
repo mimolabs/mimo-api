@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   # after_action :verify_authorized
 
   def after_sign_in_path_for(_resource)
+    if current_user && current_user.admin?
+    else
+      request.env['warden'].logout
+    end
     if session[:return_to].present?
       session[:return_to]
     else

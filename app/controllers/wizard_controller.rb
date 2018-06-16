@@ -7,9 +7,11 @@ class WizardController < ApplicationController
       authenticate_wizard
       @domain = request.host || 'example.com'
       @settings = Settings.first_or_initialize
+    elsif Settings.first.present?
+      redirect_to new_user_session_path
     else
       @requested = REDIS.get('codeReq').present?
-      @user = User.new #find_by(role: 0) unless @requested.present?
+      @user = User.new
     end
   end
 
@@ -56,6 +58,6 @@ class WizardController < ApplicationController
   end
 
   def settings_params
-    params.require(:settings).permit(:business_name, :from_email, :logo, :favicon, :code, :password, :docs_url, :terms_url, :intercom_id, :drift_id)
+    params.require(:settings).permit(:business_name, :business_address, :from_email, :logo, :favicon, :code, :password, :docs_url, :terms_url, :intercom_id, :drift_id)
   end
 end

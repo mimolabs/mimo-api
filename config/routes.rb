@@ -51,6 +51,7 @@ Rails.application.routes.draw do
         get :show, on: :collection
         delete :destroy, on: :collection
       end
+      resources :splash_file_uploads, only: [:create]
       resources :locations do
         resources :audiences
         resources :boxes, only: [:destroy, :index]

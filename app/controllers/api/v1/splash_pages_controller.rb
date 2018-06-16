@@ -12,7 +12,7 @@ class Api::V1::SplashPagesController < Api::V1::BaseController
   end
 
   def show
-    @splash_page = SplashPage.find_by(id: params[:id], location_id: @location.id)
+    @splash_page = SplashPage.find_or_initialize_by(id: params[:id], location_id: @location.id)
   end
 
   def create
