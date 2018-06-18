@@ -103,6 +103,9 @@ json.splash_page do
   json.instagram_name @splash_page.instagram_name
   json.pinterest_name @splash_page.pinterest_name
 
+  json.twilio_user @splash_page.twilio_user
+  json.twilio_pass @splash_page.twilio_pass
+
   json.fb_login_on @splash_page.fb_login_on
   json.g_login_on @splash_page.g_login_on
   json.tw_login_on @splash_page.tw_login_on
