@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_12_173125) do
+ActiveRecord::Schema.define(version: 2018_06_18_164524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -409,7 +409,7 @@ ActiveRecord::Schema.define(version: 2018_06_12_173125) do
     t.string "vsg_pass", limit: 50
     t.string "uamsecret", limit: 32
     t.string "default_password", limit: 32
-    t.string "popup_image", limit: 10
+    t.string "popup_image", limit: 30
     t.boolean "backup_sms", default: false
     t.boolean "backup_email", default: true
     t.boolean "backup_vouchers", default: false
