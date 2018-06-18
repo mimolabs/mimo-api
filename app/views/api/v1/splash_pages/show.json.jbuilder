@@ -31,6 +31,8 @@ json.splash_page do
   json.fb_checkin_msg @splash_page.fb_checkin_msg
   json.fb_checkin @splash_page.fb_checkin
   json.newsletter_consent @splash_page.newsletter_consent
+  json.twilio_user @splash_page.twilio_user
+  json.twilio_pass @splash_page.twilio_pass
 
   json.gdpr_email_field @splash_page.gdpr_email_field
   json.gdpr_sms_field @splash_page.gdpr_sms_field
