@@ -28,11 +28,14 @@ class Api::V1::SplashFileUploadsController < Api::V1::BaseController
     elsif params[:splash][:header_image]
       @file_name = "header-image-#{params[:splash_id]}.jpg"
       params[:splash][:header_image]
+    elsif params[:splash][:popup_file]
+      @file_name = "popup-image-#{params[:splash_id]}.jpg"
+      params[:splash][:popup_file]
     end
   end
 
   def splash_params
-    params.require(:splash).permit(:background_image, :header_image, :logo_file)
+    params.require(:splash).permit(:background_image, :header_image, :logo_file, :popup_file)
   end
 
 end
