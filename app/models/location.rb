@@ -2,6 +2,8 @@
 
 class Location < ApplicationRecord
   has_many :location_users, :dependent => :destroy
+  has_many :people, class_name: "Person", :dependent => :destroy
+  has_many :splash_pages, :dependent => :destroy
   extend FriendlyId
   friendly_id :location_name_slugged, use: %i[slugged finders]
 
