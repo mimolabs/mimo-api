@@ -320,17 +320,15 @@ module Unifi
     opts[:radius_auth_type] = 'mschapv2'
     opts[:facebook_wifi_gw_name] = 'Default'
     opts[:portal_enabled] = true
-    opts[:custom_ip] = '104.27.81.36'
+    opts[:custom_ip] = ENV['PUBLIC_IP']
     opts[:portal_use_hostname] = true
-    opts[:portal_hostname]    = 's.oh-mimo.com'
-    opts[:allowed_subnet_1]   = 'ctapp.io'
-    opts[:allowed_subnet_2]   = 'd247kqobagyqjh.cloudfront.net'
-    opts[:allowed_subnet_3]   = '104.27.81.36'
-    opts[:allowed_subnet_4]   = 'oh-mimo.com'
-    opts[:allowed_subnet_5]   = 'facebook.com'
-    opts[:allowed_subnet_6]   = 'facebook.net'
-    opts[:allowed_subnet_7]   = 'fbcdn.net'
-    opts[:allowed_subnet_8]   = 'www.google-analytics.com'
+    opts[:portal_hostname]    = "splash.#{ENV['MIMO_DOMAIN']}"
+    opts[:allowed_subnet_1]   = ENV['MIMO_DOMAIN']
+    opts[:allowed_subnet_2]   = ENV['PUBLIC_IP']
+    opts[:allowed_subnet_3]   = 'facebook.com'
+    opts[:allowed_subnet_4]   = 'facebook.net'
+    opts[:allowed_subnet_5]   = 'fbcdn.net'
+    opts[:allowed_subnet_6]   = 'www.google-analytics.com'
     opts[:redirect_https] = true
 
     resp = post_unifi(path, opts, cookies)
